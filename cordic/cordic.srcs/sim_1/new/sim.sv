@@ -1,20 +1,23 @@
-module cordic_beh();
+module cordic_fixedpoint();
 /**
 * Cordic algorithm
 */
-real t_angle = 3.14/4; //Input parameter. The angle
+parameter integer FXP_SCALE = 1024;
+parameter integer t_angle = 3.14/4 * FXP_SCALE; //Input parameter. The angle
 //Table of arctan (1/2^i)
 // Note. Table initialization below is not correct for Verilog. Select System-Verilog mode
 // in your simulator in the case of syntax errors
-real arctan[0:11] = { 0.785398163, 0.463647609, 0.244978663, 0.124354995, 0.06241881,
- 0.031239833, 0.015623729, 0.007812341, 0.00390623, 0.001953123,
- 0.000976562, 0.000008522  };
-real Kn = 0.607253 * 0.999999999; //Cordic scaling factor for 10 iterations
+reg signed [11:0] arctan[0:11] = { 0.785398163 * FXP_SCALE, 0.463647609 * FXP_SCALE, 0.244978663 * FXP_SCALE, 0.124354995 * FXP_SCALE, 0.06241881 * FXP_SCALE,
+ 0.031239833 * FXP_SCALE, 0.015623729 * FXP_SCALE, 0.007812341 * FXP_SCALE, 0.00390623 * FXP_SCALE, 0.001953123 * FXP_SCALE,
+ 0.000976562 * FXP_SCALE, 0.000008522 * FXP_SCALE  } ;
+reg signed[11:0] Kn = 0.607253 * 0.999999999 * FXP_SCALE; //Cordic scaling factor for 10 iterations
+real real_sin, real_cos;
 //Variables
-real cos = 1.0; //Initial vector x coordinate
-real sin = 0.0; //and y coordinate
-real angle = 0.0; //A running angle
-integer i, d;
+
+reg signed [23:0] cos = 1.0 * FXP_SCALE; //Initial condition
+reg signed [23:0] sin = 0.0;
+reg signed [11:0] angle = 0.0; //Running angle
+integer i;
 real tmp;
 initial //Execute only once
 begin
@@ -38,6 +41,13 @@ begin
  //Scale sin/cos values
  sin = Kn * sin;
  cos = Kn * cos;
+ 
+ real_sin = sin / (FXP_SCALE); // O B C I N A N S K O po mnozeniu
+ real_cos =  cos /(FXP_SCALE); // same here
+ 
+ real_sin =  real_sin/1024; // skalowanie
+ real_cos = real_cos/1024; //same
+ 
  $display("sin=%f, cos=%f", sin, cos);
 end
-endmodule;
+endmodule
