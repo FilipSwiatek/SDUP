@@ -1,2 +1,4 @@
 *.sim
 *.cache
+*.backup*
+*.log
