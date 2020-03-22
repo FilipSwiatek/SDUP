@@ -5,7 +5,7 @@ wire[11:0]angle;
 wire[11:0]sin;
 wire[11:0]cos;
 reg reset,reset_n;
-real r_angle=1024*3.14*0.2;
+real r_angle=1024*3.14*0.25;
 real r_sin,r_cos;// Dip switches stimulus
 assign angle=r_angle;
 // Reset stimulus
