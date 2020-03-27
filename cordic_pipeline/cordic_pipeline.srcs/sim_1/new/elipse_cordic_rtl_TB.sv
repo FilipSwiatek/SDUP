@@ -1,15 +1,16 @@
 `timescale 1ns / 1ps
 
-module elipse_cordic_behavioural_TB;
+module elipse_cordic_rtl_TB;
 parameter real FIXED_POINT_FACTOR = 1024; 
+parameter integer W = 14; //Width of the fixed-point (15:10) representation
 reg clock, ce, reset;
-reg unsigned[12:0] angle, a, b;
-reg unsigned[12:0] x, y;
+reg unsigned[W-1:0] angle, a, b;
+reg unsigned[W:0] x, y;
 //For easy output value monitoring
 real real_angle, real_x, real_y, real_a, real_b;
 
 //Instantiation (port mapping here)
-elipse_cordic_bahavioural cordic ( .a(a), .b(b), .clock(clock), .reset(reset), .ce(ce), .x(x), .y(y), .angle_in(angle) );
+elipse_cordic_rtl elipse_processor ( .a(a), .b(b), .clock(clock), .reset(reset), .ce(ce), .x(x), .y(y), .angle_in(angle) );
 
 initial
 begin
