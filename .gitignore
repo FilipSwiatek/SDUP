@@ -3,4 +3,6 @@
 *.backup*
 *.log
 *.runs*
-/cordic_pipeline/*.str
+*.jou*
+*.str
+/cordic_pipeline/*.jou
