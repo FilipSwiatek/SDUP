@@ -1,6 +1,6 @@
 
 
 /***************************** Include Files *******************************/
-#include "elipse_processor.h"
+#include "elipse_coprocessor.h"
 
 /************************** Function Definitions ***************************/

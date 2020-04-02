@@ -3,10 +3,10 @@
 <!--                                                         -->
 <!-- Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.   -->
 
-<Project Version="7" Minor="40" Path="d:/sem_i/sdup/ip_repo/elipse_processor/edit_elipse_processor_v1_0.xpr">
+<Project Version="7" Minor="40" Path="d:/sem_i/sdup/ip_repo/elipse_processor/edit_elipse_coprocessor_v1_0.xpr">
   <DefaultLaunch Dir="$PRUNDIR"/>
   <Configuration>
-    <Option Name="Id" Val="445a49806a7d44c0b0cfe6fbcca20740"/>
+    <Option Name="Id" Val="551535b774f8438f97bdcd7fb6ace97c"/>
     <Option Name="Part" Val="xc7z020clg484-1"/>
     <Option Name="CompiledLibDir" Val="$PCACHEDIR/compile_simlib"/>
     <Option Name="CompiledLibDirXSim" Val=""/>
@@ -23,6 +23,7 @@
     <Option Name="ActiveSimSet" Val="sim_1"/>
     <Option Name="DefaultLib" Val="xil_defaultlib"/>
     <Option Name="ProjectType" Val="Default"/>
+    <Option Name="IPRepoPath" Val="$PPRDIR/../../../../sem_I/SDUP/ip_repo/elipse_processor/elipse_coprocessor_1.0"/>
     <Option Name="IPRepoPath" Val="$PPRDIR/../../../../sem_I/SDUP/ip_repo/elipse_processor/elipse_processor_1.0"/>
     <Option Name="IPOutputRepo" Val="$PCACHEDIR/ip"/>
     <Option Name="IPCachePermission" Val="read"/>
@@ -63,7 +64,7 @@
   <FileSets Version="1" Minor="31">
     <FileSet Name="sources_1" Type="DesignSrcs" RelSrcDir="$PSRCDIR/sources_1">
       <Filter Type="Srcs"/>
-      <File Path="$PPRDIR/../../../../sem_I/SDUP/ip_repo/elipse_processor/elipse_processor_1.0/hdl/elipse_processor_v1_0_S00_AXI.v">
+      <File Path="$PPRDIR/../../../../sem_I/SDUP/ip_repo/elipse_processor/elipse_coprocessor_1.0/hdl/elipse_coprocessor_v1_0_S00_AXI.v">
         <FileInfo>
           <Attr Name="Library" Val=""/>
           <Attr Name="UsedIn" Val="synthesis"/>
@@ -71,56 +72,56 @@
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PPRDIR/../../../../sem_I/SDUP/ip_repo/elipse_processor/elipse_processor_1.0/src/cordic_pipe.sv">
+      <File Path="$PPRDIR/../../../../sem_I/SDUP/ip_repo/elipse_processor/elipse_coprocessor_1.0/src/cordic_pipe.sv">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PPRDIR/../../../../sem_I/SDUP/ip_repo/elipse_processor/elipse_processor_1.0/src/cordic_step.sv">
+      <File Path="$PPRDIR/../../../../sem_I/SDUP/ip_repo/elipse_processor/elipse_coprocessor_1.0/src/cordic_step.sv">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PPRDIR/../../../../sem_I/SDUP/ip_repo/elipse_processor/elipse_processor_1.0/src/elipse_cordic_rtl.sv">
+      <File Path="$PPRDIR/../../../../sem_I/SDUP/ip_repo/elipse_processor/elipse_coprocessor_1.0/src/elipse_cordic_rtl.sv">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PPRDIR/../../../../sem_I/SDUP/ip_repo/elipse_processor/elipse_processor_1.0/src/mul_Kn.sv">
+      <File Path="$PPRDIR/../../../../sem_I/SDUP/ip_repo/elipse_processor/elipse_coprocessor_1.0/src/mul_Kn.sv">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PPRDIR/../../../../sem_I/SDUP/ip_repo/elipse_processor/elipse_processor_1.0/src/multiplier_rtl.sv">
+      <File Path="$PPRDIR/../../../../sem_I/SDUP/ip_repo/elipse_processor/elipse_coprocessor_1.0/src/multiplier_rtl.sv">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PPRDIR/../../../../sem_I/SDUP/ip_repo/elipse_processor/elipse_processor_1.0/hdl/elipse_processor_v1_0.v">
-        <FileInfo SFType="SVerilog">
+      <File Path="$PPRDIR/../../../../sem_I/SDUP/ip_repo/elipse_processor/elipse_coprocessor_1.0/hdl/elipse_coprocessor_v1_0.v">
+        <FileInfo>
           <Attr Name="Library" Val=""/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PPRDIR/../../../../sem_I/SDUP/ip_repo/elipse_processor/elipse_processor_1.0/component.xml">
+      <File Path="$PPRDIR/../../../../sem_I/SDUP/ip_repo/elipse_processor/elipse_coprocessor_1.0/component.xml">
         <FileInfo SFType="IPXACT"/>
       </File>
       <Config>
         <Option Name="DesignMode" Val="RTL"/>
-        <Option Name="TopModule" Val="elipse_processor_v1_0"/>
-        <Option Name="TopRTLFile" Val="$PPRDIR/../../../../sem_I/SDUP/ip_repo/elipse_processor/elipse_processor_1.0/hdl/elipse_processor_v1_0.v"/>
+        <Option Name="TopModule" Val="elipse_coprocessor_v1_0"/>
+        <Option Name="TopRTLFile" Val="$PPRDIR/../../../../sem_I/SDUP/ip_repo/elipse_processor/elipse_coprocessor_1.0/hdl/elipse_coprocessor_v1_0.v"/>
       </Config>
     </FileSet>
     <FileSet Name="constrs_1" Type="Constrs" RelSrcDir="$PSRCDIR/constrs_1">
@@ -132,7 +133,7 @@
     <FileSet Name="sim_1" Type="SimulationSrcs" RelSrcDir="$PSRCDIR/sim_1">
       <Config>
         <Option Name="DesignMode" Val="RTL"/>
-        <Option Name="TopModule" Val="elipse_processor_v1_0"/>
+        <Option Name="TopModule" Val="elipse_coprocessor_v1_0"/>
         <Option Name="TopAutoSet" Val="TRUE"/>
         <Option Name="TransportPathDelay" Val="0"/>
         <Option Name="TransportIntDelay" Val="0"/>

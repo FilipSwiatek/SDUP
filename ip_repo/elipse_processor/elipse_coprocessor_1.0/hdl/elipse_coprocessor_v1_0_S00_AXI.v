@@ -1,7 +1,7 @@
 
 `timescale 1 ns / 1 ps
 
-	module elipse_processor_v1_0_S00_AXI #
+	module elipse_coprocessor_v1_0_S00_AXI #
 	(
 		// Users to add parameters here
 
@@ -11,7 +11,7 @@
 		// Width of S_AXI data bus
 		parameter integer C_S_AXI_DATA_WIDTH	= 32,
 		// Width of S_AXI address bus
-		parameter integer C_S_AXI_ADDR_WIDTH	= 4
+		parameter integer C_S_AXI_ADDR_WIDTH	= 5
 	)
 	(
 		// Users to add ports here
@@ -99,15 +99,17 @@
 	// ADDR_LSB = 2 for 32 bits (n downto 2)
 	// ADDR_LSB = 3 for 64 bits (n downto 3)
 	localparam integer ADDR_LSB = (C_S_AXI_DATA_WIDTH/32) + 1;
-	localparam integer OPT_MEM_ADDR_BITS = 1;
+	localparam integer OPT_MEM_ADDR_BITS = 2;
 	//----------------------------------------------
 	//-- Signals for user logic register space example
 	//------------------------------------------------
-	//-- Number of Slave Registers 4
+	//-- Number of Slave Registers 6
 	reg [C_S_AXI_DATA_WIDTH-1:0]	slv_reg0;
 	reg [C_S_AXI_DATA_WIDTH-1:0]	slv_reg1;
 	reg [C_S_AXI_DATA_WIDTH-1:0]	slv_reg2;
 	reg [C_S_AXI_DATA_WIDTH-1:0]	slv_reg3;
+	reg [C_S_AXI_DATA_WIDTH-1:0]	slv_reg4;
+	reg [C_S_AXI_DATA_WIDTH-1:0]	slv_reg5;
 	wire	 slv_reg_rden;
 	wire	 slv_reg_wren;
 	reg [C_S_AXI_DATA_WIDTH-1:0]	 reg_data_out;
@@ -224,44 +226,62 @@
 	      slv_reg1 <= 0;
 	      slv_reg2 <= 0;
 	      slv_reg3 <= 0;
+	      slv_reg4 <= 0;
+	      slv_reg5 <= 0;
 	    end 
 	  else begin
 	    if (slv_reg_wren)
 	      begin
 	        case ( axi_awaddr[ADDR_LSB+OPT_MEM_ADDR_BITS:ADDR_LSB] )
-	          2'h0:
+	          3'h0:
 	            for ( byte_index = 0; byte_index <= (C_S_AXI_DATA_WIDTH/8)-1; byte_index = byte_index+1 )
 	              if ( S_AXI_WSTRB[byte_index] == 1 ) begin
 	                // Respective byte enables are asserted as per write strobes 
 	                // Slave register 0
 	                slv_reg0[(byte_index*8) +: 8] <= S_AXI_WDATA[(byte_index*8) +: 8];
 	              end  
-	          2'h1:
+	          3'h1:
 	            for ( byte_index = 0; byte_index <= (C_S_AXI_DATA_WIDTH/8)-1; byte_index = byte_index+1 )
 	              if ( S_AXI_WSTRB[byte_index] == 1 ) begin
 	                // Respective byte enables are asserted as per write strobes 
 	                // Slave register 1
 	                slv_reg1[(byte_index*8) +: 8] <= S_AXI_WDATA[(byte_index*8) +: 8];
 	              end  
-	          2'h2:
+	          3'h2:
 	            for ( byte_index = 0; byte_index <= (C_S_AXI_DATA_WIDTH/8)-1; byte_index = byte_index+1 )
 	              if ( S_AXI_WSTRB[byte_index] == 1 ) begin
 	                // Respective byte enables are asserted as per write strobes 
 	                // Slave register 2
 	                slv_reg2[(byte_index*8) +: 8] <= S_AXI_WDATA[(byte_index*8) +: 8];
 	              end  
-	          2'h3:
+	          3'h3:
 	            for ( byte_index = 0; byte_index <= (C_S_AXI_DATA_WIDTH/8)-1; byte_index = byte_index+1 )
 	              if ( S_AXI_WSTRB[byte_index] == 1 ) begin
 	                // Respective byte enables are asserted as per write strobes 
 	                // Slave register 3
 	                slv_reg3[(byte_index*8) +: 8] <= S_AXI_WDATA[(byte_index*8) +: 8];
 	              end  
+	          3'h4:
+	            for ( byte_index = 0; byte_index <= (C_S_AXI_DATA_WIDTH/8)-1; byte_index = byte_index+1 )
+	              if ( S_AXI_WSTRB[byte_index] == 1 ) begin
+	                // Respective byte enables are asserted as per write strobes 
+	                // Slave register 4
+	                slv_reg4[(byte_index*8) +: 8] <= S_AXI_WDATA[(byte_index*8) +: 8];
+	              end  
+	          3'h5:
+	            for ( byte_index = 0; byte_index <= (C_S_AXI_DATA_WIDTH/8)-1; byte_index = byte_index+1 )
+	              if ( S_AXI_WSTRB[byte_index] == 1 ) begin
+	                // Respective byte enables are asserted as per write strobes 
+	                // Slave register 5
+	                slv_reg5[(byte_index*8) +: 8] <= S_AXI_WDATA[(byte_index*8) +: 8];
+	              end  
 	          default : begin
 	                      slv_reg0 <= slv_reg0;
 	                      slv_reg1 <= slv_reg1;
 	                      slv_reg2 <= slv_reg2;
 	                      slv_reg3 <= slv_reg3;
+	                      slv_reg4 <= slv_reg4;
+	                      slv_reg5 <= slv_reg5;
 	                    end
 	        endcase
 	      end
@@ -370,10 +390,12 @@
 	begin
 	      // Address decoding for reading registers
 	      case ( axi_araddr[ADDR_LSB+OPT_MEM_ADDR_BITS:ADDR_LSB] )
-	        2'h0   : reg_data_out <= slv_reg0;
-	        2'h1   : reg_data_out <= slv_reg1;
-	        2'h2   : reg_data_out <= slv_reg2;
-	        2'h3   : reg_data_out <= slv_reg3;
+	        3'h0   : reg_data_out <= slv_reg0;
+	        3'h1   : reg_data_out <= slv_reg1;
+	        3'h2   : reg_data_out <= slv_reg2;
+	        3'h3   : reg_data_out <= slv_reg3;
+	        3'h4   : reg_data_out <= slv_reg4;
+	        3'h5   : reg_data_out <= slv_reg5;
 	        default : reg_data_out <= 0;
 	      endcase
 	end
@@ -397,38 +419,46 @@
 	    end
 	end    
 
+    //TODO
+    /*
+    angle_in
+    a
+    b
+    x
+    y
+    ce, valid_out - control register
+    */
 	// Add user logic here
 	
 	
-	// TODO KURWA
-		//Reset signal for cordic processor
-wire ARESET;
-assign ARESET = ~S_AXI_ARESETN;
-//Transfer output from cordic processor to output registers
-wire [C_S_AXI_DATA_WIDTH-1:0] slv_wire2;
-wire [C_S_AXI_DATA_WIDTH-1:0] slv_wire3;
-always @( posedge S_AXI_ACLK )
-begin
- slv_reg2 <= slv_wire2;
- slv_reg3 <= slv_wire3;
-end
-//Assign zeros to unused bits
-assign slv_wire2[31:1] = 31'b0;
- assign slv_wire3[15:12] = 4'b0;
- assign slv_wire3[31:28] = 4'b0;
-elipse_cordic_rtl cordic_rtl_inst( S_AXI_ACLK, //clock,
- ARESET, //reset,
-slv_reg0[0], //start
-slv_reg1, //angle_in
-slv_wire2[0], //ready_out,
-slv_wire3[11:0],//sin_out,
-slv_wire3[27:16]//cos_out
-);
-
-	// User logic ends
-	
-	
-
+    wire ARESET;
+    assign ARESET = ~S_AXI_ARESETN;
+    //Transfer output from cordic processor to output registers
+    wire [C_S_AXI_DATA_WIDTH-1:0] slv_wire2;
+    wire [C_S_AXI_DATA_WIDTH-1:0] slv_wire3;
+    always @( posedge S_AXI_ACLK )
+    begin
+     slv_reg2 <= slv_wire2;
+     slv_reg3 <= slv_wire3;
+    end
+    //Assign zeros to unused bits // TODO
+    assign slv_wire2[31:1] = 31'b0;
+    assign slv_wire3[15:12] = 4'b0;
+    assign slv_wire3[31:28] = 4'b0;
+    elipse_cordic_rtl elipse_processor1( //TODO - assign rejesters slv_reg0 - slv_reg5 (ce and valid out in same register)
+    .angle_in(), 
+    .a(), // 
+    .b(),
+    .x(),
+    .y(),
+    .ce(),
+    .valid_out(),
+    .clk(S_AXI_ACLK),
+    .rst(ARESET)
+     
+    //port connections
+    );
+    
 	// User logic ends
 
 	endmodule

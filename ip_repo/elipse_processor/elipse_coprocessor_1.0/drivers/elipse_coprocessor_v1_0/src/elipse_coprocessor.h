@@ -1,26 +1,28 @@
 
-#ifndef ELIPSE_PROCESSOR_H
-#define ELIPSE_PROCESSOR_H
+#ifndef ELIPSE_COPROCESSOR_H
+#define ELIPSE_COPROCESSOR_H
 
 
 /****************** Include Files ********************/
 #include "xil_types.h"
 #include "xstatus.h"
 
-#define ELIPSE_PROCESSOR_S00_AXI_SLV_REG0_OFFSET 0
-#define ELIPSE_PROCESSOR_S00_AXI_SLV_REG1_OFFSET 4
-#define ELIPSE_PROCESSOR_S00_AXI_SLV_REG2_OFFSET 8
-#define ELIPSE_PROCESSOR_S00_AXI_SLV_REG3_OFFSET 12
+#define ELIPSE_COPROCESSOR_S00_AXI_SLV_REG0_OFFSET 0
+#define ELIPSE_COPROCESSOR_S00_AXI_SLV_REG1_OFFSET 4
+#define ELIPSE_COPROCESSOR_S00_AXI_SLV_REG2_OFFSET 8
+#define ELIPSE_COPROCESSOR_S00_AXI_SLV_REG3_OFFSET 12
+#define ELIPSE_COPROCESSOR_S00_AXI_SLV_REG4_OFFSET 16
+#define ELIPSE_COPROCESSOR_S00_AXI_SLV_REG5_OFFSET 20
 
 
 /**************************** Type Definitions *****************************/
 /**
  *
- * Write a value to a ELIPSE_PROCESSOR register. A 32 bit write is performed.
+ * Write a value to a ELIPSE_COPROCESSOR register. A 32 bit write is performed.
  * If the component is implemented in a smaller width, only the least
  * significant data is written.
  *
- * @param   BaseAddress is the base address of the ELIPSE_PROCESSORdevice.
+ * @param   BaseAddress is the base address of the ELIPSE_COPROCESSORdevice.
  * @param   RegOffset is the register offset from the base to write to.
  * @param   Data is the data written to the register.
  *
@@ -28,30 +30,30 @@
  *
  * @note
  * C-style signature:
- * 	void ELIPSE_PROCESSOR_mWriteReg(u32 BaseAddress, unsigned RegOffset, u32 Data)
+ * 	void ELIPSE_COPROCESSOR_mWriteReg(u32 BaseAddress, unsigned RegOffset, u32 Data)
  *
  */
-#define ELIPSE_PROCESSOR_mWriteReg(BaseAddress, RegOffset, Data) \
+#define ELIPSE_COPROCESSOR_mWriteReg(BaseAddress, RegOffset, Data) \
   	Xil_Out32((BaseAddress) + (RegOffset), (u32)(Data))
 
 /**
  *
- * Read a value from a ELIPSE_PROCESSOR register. A 32 bit read is performed.
+ * Read a value from a ELIPSE_COPROCESSOR register. A 32 bit read is performed.
  * If the component is implemented in a smaller width, only the least
  * significant data is read from the register. The most significant data
  * will be read as 0.
  *
- * @param   BaseAddress is the base address of the ELIPSE_PROCESSOR device.
+ * @param   BaseAddress is the base address of the ELIPSE_COPROCESSOR device.
  * @param   RegOffset is the register offset from the base to write to.
  *
  * @return  Data is the data from the register.
  *
  * @note
  * C-style signature:
- * 	u32 ELIPSE_PROCESSOR_mReadReg(u32 BaseAddress, unsigned RegOffset)
+ * 	u32 ELIPSE_COPROCESSOR_mReadReg(u32 BaseAddress, unsigned RegOffset)
  *
  */
-#define ELIPSE_PROCESSOR_mReadReg(BaseAddress, RegOffset) \
+#define ELIPSE_COPROCESSOR_mReadReg(BaseAddress, RegOffset) \
     Xil_In32((BaseAddress) + (RegOffset))
 
 /************************** Function Prototypes ****************************/
@@ -63,7 +65,7 @@
  * If the hardware system is not built correctly, this function may never
  * return to the caller.
  *
- * @param   baseaddr_p is the base address of the ELIPSE_PROCESSOR instance to be worked on.
+ * @param   baseaddr_p is the base address of the ELIPSE_COPROCESSOR instance to be worked on.
  *
  * @return
  *
@@ -74,6 +76,6 @@
  * @note    Self test may fail if data memory and device are not on the same bus.
  *
  */
-XStatus ELIPSE_PROCESSOR_Reg_SelfTest(void * baseaddr_p);
+XStatus ELIPSE_COPROCESSOR_Reg_SelfTest(void * baseaddr_p);
 
-#endif // ELIPSE_PROCESSOR_H
+#endif // ELIPSE_COPROCESSOR_H
