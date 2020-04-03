@@ -31,7 +31,7 @@ module elipse_cordic_rtl(clock, reset, ce,a, b, angle_in, x, y, valid_out);
     reg unsigned [4:0] validity_counter;
     input clock, reset, ce;
     reg signed[W-1:0] sin, cos;
-    reg signed[2*(W-1):0]  x_internal, y_internal;
+    reg signed[2*W-1:0]  x_internal, y_internal;
          
     //cordic processor
     cordic_pipe_rtl cordic_pipe_processor( .clock(clock), .reset(reset), .ce(ce), .angle_in(angle_in[11:0]), .sin_out(sin[11:0]), .cos_out(cos[11:0]), .valid_out(valid_out_cordic));

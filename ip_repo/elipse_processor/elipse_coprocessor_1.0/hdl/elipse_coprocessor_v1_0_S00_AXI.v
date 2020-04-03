@@ -432,30 +432,43 @@
 	
 	
     wire ARESET;
+    wire [C_S_AXI_DATA_WIDTH-1:0] slv_wire0, slv_wire1, slv_wire2, slv_wire3, slv_wire4, slv_wire5;
     assign ARESET = ~S_AXI_ARESETN;
-    //Transfer output from cordic processor to output registers
-    wire [C_S_AXI_DATA_WIDTH-1:0] slv_wire2;
-    wire [C_S_AXI_DATA_WIDTH-1:0] slv_wire3;
-    always @( posedge S_AXI_ACLK )
-    begin
-     slv_reg2 <= slv_wire2;
-     slv_reg3 <= slv_wire3;
-    end
+    
     //Assign zeros to unused bits // TODO
-    assign slv_wire2[31:1] = 31'b0;
-    assign slv_wire3[15:12] = 4'b0;
-    assign slv_wire3[31:28] = 4'b0;
+    assign slv_wire0[31:2] = 30'h0; // only '0' bit used for ce  and '1' bit used for valid_out
+    assign slv_wire1[31:14] = 18'h0; // angle is input for other bits
+    assign slv_wire2[31:14] = 18'h0; // a is input for other bits
+    assign slv_wire3[31:14] = 18'h0; // b is input for other bits
+    assign slv_wire4[31:28] = 4'h0; // x is output for other bits
+    assign slv_wire5[31:28] = 4'h0; // y is output for other bits
+    
+    //Transfer output from cordic processor to output registers
+    
+    always @( posedge S_AXI_ACLK )
+    begin 
+        slv_reg0 = slv_wire0;
+        slv_reg1 <= slv_wire1;
+        slv_reg2 <= slv_wire2;
+        slv_reg3 <= slv_wire3;
+        slv_reg4 <= slv_wire4;
+        slv_reg5 <= slv_wire5;
+        
+    end
+    
     elipse_cordic_rtl elipse_processor1( //TODO - assign rejesters slv_reg0 - slv_reg5 (ce and valid out in same register)
-    .angle_in(), 
-    .a(), // 
-    .b(),
-    .x(),
-    .y(),
-    .ce(),
-    .valid_out(),
-    .clk(S_AXI_ACLK),
-    .rst(ARESET)
-     
+    
+    .clock(S_AXI_ACLK),
+    .reset(ARESET),
+    
+    .ce(slv_reg0[0]),
+    .valid_out(slv_wire0[1]),
+    .angle_in(slv_reg1[13:0]), 
+    .a(slv_reg2[13:0]), 
+    .b(slv_reg3[13:0]),
+    .x(slv_wire4[27:0]),
+    .y(slv_wire5[27:0])
+    
     //port connections
     );
     
