@@ -2,24 +2,16 @@
 # Vivado v2019.1 (64-bit)
 # SW Build 2552052 on Fri May 24 14:49:42 MDT 2019
 # IP Build 2548770 on Fri May 24 18:01:18 MDT 2019
-# Start of session at: Sun Mar 22 17:59:15 2020
-# Process ID: 11240
+# Start of session at: Sun Apr  5 05:25:14 2020
+# Process ID: 14744
 # Current directory: D:/sem_I/SDUP/cordic_acc
-# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent12404 D:\sem_I\SDUP\cordic_acc\cordic_acc.xpr
+# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent16616 D:\sem_I\SDUP\cordic_acc\cordic_acc.xpr
 # Log file: D:/sem_I/SDUP/cordic_acc/vivado.log
 # Journal file: D:/sem_I/SDUP/cordic_acc\vivado.jou
 #-----------------------------------------------------------
 start_gui
 open_project D:/sem_I/SDUP/cordic_acc/cordic_acc.xpr
 update_compile_order -fileset sources_1
-set_property SCOPED_TO_REF mb_design [get_files -all -of_objects [get_fileset sources_1] {D:/sem_I/SDUP/cordic_acc/cordic_acc.sdk/cordic_test/Debug/cordic_test.elf}]
-set_property SCOPED_TO_CELLS { microblaze_0 } [get_files -all -of_objects [get_fileset sources_1] {D:/sem_I/SDUP/cordic_acc/cordic_acc.sdk/cordic_test/Debug/cordic_test.elf}]
-set_property SCOPED_TO_REF "" [get_files -all -of_objects [get_fileset sources_1] {D:/sem_I/SDUP/cordic_acc/cordic_test.elf}]
-set_property SCOPED_TO_CELLS { } [get_files -all -of_objects [get_fileset sources_1] {D:/sem_I/SDUP/cordic_acc/cordic_test.elf}]
-set_property SCOPED_TO_REF mb_design [get_files -all -of_objects [get_fileset sim_1] {D:/sem_I/SDUP/cordic_acc/cordic_acc.sdk/cordic_test/Debug/cordic_test.elf}]
-set_property SCOPED_TO_CELLS { microblaze_0 } [get_files -all -of_objects [get_fileset sim_1] {D:/sem_I/SDUP/cordic_acc/cordic_acc.sdk/cordic_test/Debug/cordic_test.elf}]
-set_property SCOPED_TO_REF "" [get_files -all -of_objects [get_fileset sim_1] {D:/sem_I/SDUP/cordic_acc/cordic_test.elf}]
-set_property SCOPED_TO_CELLS { } [get_files -all -of_objects [get_fileset sim_1] {D:/sem_I/SDUP/cordic_acc/cordic_test.elf}]
 launch_simulation
 source mb_design_tb.tcl
 close_sim

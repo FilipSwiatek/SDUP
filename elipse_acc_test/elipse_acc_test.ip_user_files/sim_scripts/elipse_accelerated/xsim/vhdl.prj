@@ -1,0 +1,13 @@
+vhdl xil_defaultlib  \
+"../../../bd/elipse_accelerated/ip/elipse_accelerated_microblaze_0_0/sim/elipse_accelerated_microblaze_0_0.vhd" \
+"../../../bd/elipse_accelerated/ip/elipse_accelerated_axi_gpio_0_0/sim/elipse_accelerated_axi_gpio_0_0.vhd" \
+"../../../bd/elipse_accelerated/ip/elipse_accelerated_axi_gpio_0_1/sim/elipse_accelerated_axi_gpio_0_1.vhd" \
+"../../../bd/elipse_accelerated/ip/elipse_accelerated_axi_gpio_0_2/sim/elipse_accelerated_axi_gpio_0_2.vhd" \
+"../../../bd/elipse_accelerated/ip/elipse_accelerated_dlmb_v10_0/sim/elipse_accelerated_dlmb_v10_0.vhd" \
+"../../../bd/elipse_accelerated/ip/elipse_accelerated_ilmb_v10_0/sim/elipse_accelerated_ilmb_v10_0.vhd" \
+"../../../bd/elipse_accelerated/ip/elipse_accelerated_dlmb_bram_if_cntlr_0/sim/elipse_accelerated_dlmb_bram_if_cntlr_0.vhd" \
+"../../../bd/elipse_accelerated/ip/elipse_accelerated_ilmb_bram_if_cntlr_0/sim/elipse_accelerated_ilmb_bram_if_cntlr_0.vhd" \
+"../../../bd/elipse_accelerated/ip/elipse_accelerated_mdm_1_0/sim/elipse_accelerated_mdm_1_0.vhd" \
+"../../../bd/elipse_accelerated/ip/elipse_accelerated_rst_clk_wiz_1_100M_0/sim/elipse_accelerated_rst_clk_wiz_1_100M_0.vhd" \
+
+nosort

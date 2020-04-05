@@ -294,7 +294,7 @@ proc create_root_design { parentCell } {
  ] $clk_wiz_1
 
   # Create instance: elipse_coprocessor_0, and set properties
-  set elipse_coprocessor_0 [ create_bd_cell -type ip -vlnv xilinx.com:user:elipse_coprocessor:1.0 elipse_coprocessor_0 ]
+  set elipse_coprocessor_0 [ create_bd_cell -type ip -vlnv xilinx.com:user:elipse_coprocessor:1.1 elipse_coprocessor_0 ]
 
   # Create instance: mdm_1, and set properties
   set mdm_1 [ create_bd_cell -type ip -vlnv xilinx.com:ip:mdm:3.2 mdm_1 ]

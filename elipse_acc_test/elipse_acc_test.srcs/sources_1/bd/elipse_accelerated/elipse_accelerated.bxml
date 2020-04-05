@@ -2,22 +2,11 @@
 <Root MajorVersion="0" MinorVersion="37">
   <CompositeFile CompositeFileTopName="elipse_accelerated" CanBeSetAsTop="false" CanDisplayChildGraph="true">
     <Description>Composite Fileset</Description>
-    <Generation Name="SYNTHESIS" State="GENERATED" Timestamp="1585977855"/>
-    <Generation Name="IMPLEMENTATION" State="GENERATED" Timestamp="1585977855"/>
-    <Generation Name="SIMULATION" State="GENERATED" Timestamp="1585977855"/>
-    <Generation Name="HW_HANDOFF" State="GENERATED" Timestamp="1585977855"/>
+    <Generation Name="SYNTHESIS" State="GENERATED" Timestamp="1586062160"/>
+    <Generation Name="IMPLEMENTATION" State="GENERATED" Timestamp="1586062160"/>
+    <Generation Name="SIMULATION" State="GENERATED" Timestamp="1586062160"/>
+    <Generation Name="HW_HANDOFF" State="GENERATED" Timestamp="1586062160"/>
     <FileCollection Name="SOURCES" Type="SOURCES">
-      <File Name="synth\elipse_accelerated.v" Type="Verilog">
-        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="false" IsStatusTracked="false"/>
-        <Library Name="xil_defaultlib"/>
-        <UsedIn Val="SYNTHESIS"/>
-        <UsedIn Val="IMPLEMENTATION"/>
-      </File>
-      <File Name="sim\elipse_accelerated.v" Type="Verilog">
-        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="false" IsStatusTracked="false"/>
-        <Library Name="xil_defaultlib"/>
-        <UsedIn Val="SIMULATION"/>
-      </File>
       <File Name="ip\elipse_accelerated_microblaze_0_0\elipse_accelerated_microblaze_0_0.xci" Type="IP">
         <Instance HierarchyPath="microblaze_0"/>
         <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
@@ -136,6 +125,17 @@
         <Library Name="xil_defaultlib"/>
         <UsedIn Val="SYNTHESIS"/>
         <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="synth\elipse_accelerated.v" Type="Verilog">
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="false" IsStatusTracked="false"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+      </File>
+      <File Name="sim\elipse_accelerated.v" Type="Verilog">
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="false" IsStatusTracked="false"/>
+        <Library Name="xil_defaultlib"/>
         <UsedIn Val="SIMULATION"/>
       </File>
       <File Name="elipse_accelerated.bmm" Type="BMM">
