@@ -9,6 +9,6 @@ input logic[12:0] input1,
 output logic[24:0] output0
 );
 always_comb begin
-output0 = input0 * input1;
+output0 <= input0 * input1;
 end
 endmodule
