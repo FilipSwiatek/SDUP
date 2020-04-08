@@ -8,7 +8,7 @@
 module mul24_ins(
 input logic clk,
 input logic start,
-output logic ready,
+output logic ready = 0,
 input logic[23:0] input0,
 input logic[23:0] input1,
 output logic[47:0] output0
