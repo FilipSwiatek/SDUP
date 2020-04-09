@@ -5,7 +5,7 @@
 // File Name: tb_reciprocal.sv
 ////////////////////////////////////////////////////////////////////////////////
 //
-module tb_reciprocal( );
+module reciprocal_rtl_tb( );
 logic clk = 0;
 logic start;
 logic ready;
@@ -14,7 +14,7 @@ logic [4:-19] output0; // Fixed point [5:19] representarion
 int tmp_i, input_i;
 real input_r, check_r, output_r;
 logic ready_prev; // the state of ready in previous clock
-full_reciprocal UUT(.clk(clk), .start(start), .ready(ready), .input0(input0), .output0(output0));
+reciprocal_rtl UUT(.clk(clk), .start(start), .ready(ready), .input0(input0), .output0(output0));
 // Clock generator
 always begin
 #5 clk = 1; #5 clk = 0;

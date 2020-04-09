@@ -4,7 +4,7 @@
 // Module Name: reciprocal_beh
 // File Name: reciprocal_beh.sv
 ////////////////////////////////////////////////////////////////////////////////
-module en_reciprocal_beh(
+module reciprocal_beh(
 input logic [15:0] input0, // argument: integer [15:0]
 output logic [4:-19] output0 // result: fixed point [5:19] representation
 );
@@ -48,9 +48,9 @@ end
 approxVal = approxVal >> scaling;
 output0 = approxVal;
 // Print result
-$display("Binary result is = %b", approxVal);
+//$display("Binary result is = %b", approxVal);
 resultFP = approxVal;
 resultFP = resultFP / 2**19;
-$display("Real value is = %f", resultFP);
+//$display("Real value is = %f", resultFP);
 end
 endmodule

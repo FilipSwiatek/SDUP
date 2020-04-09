@@ -3,7 +3,7 @@
 // Module Name: reciprocal
 // File Name: reciprocal.sv
 ////////////////////////////////////////////////////////////////////////////////
-module full_reciprocal(
+module reciprocal_rtl(
     input logic clk,
     input logic start,
     output logic ready = 0,
@@ -104,7 +104,7 @@ module full_reciprocal(
                 state <= MUL_SCALED;
             end
             DONE: begin
-                output0 <= (approxVal >> scaling);
+                output0 <= (approxVal << 0);
                 ready <= 1'b1;
                 state <= IDLE;
             end
