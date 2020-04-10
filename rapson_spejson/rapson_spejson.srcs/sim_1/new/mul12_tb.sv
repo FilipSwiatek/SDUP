@@ -6,8 +6,8 @@
 
 module mul12_tb();
 logic clk; // Give simulation a tick. The module does not need this
-logic [12:0] input0, input1;
-logic [24:0] output0;
+logic [11:0] input0, input1;
+logic [23:0] output0;
 // Instantiate the module
 mul12 UUT ( .input0, .input1, .output0 );
 initial begin
