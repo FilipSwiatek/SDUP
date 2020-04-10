@@ -47,7 +47,7 @@ module mul24_inf(
         end
         P2: begin
             result[36:12] <= result[35:12] + tmp;
-            tmp <= a0 * b1;
+            tmp <= a1 * b1;
             state <= DONE;
             end
         DONE: begin

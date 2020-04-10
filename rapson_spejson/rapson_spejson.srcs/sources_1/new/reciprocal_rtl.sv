@@ -46,7 +46,7 @@ module reciprocal_rtl(
                 end else begin
                 //Load input value
                 scaledVal <= input0;
-                scaling = 5'd19;
+                scaling = 19;
                 state <= COMP_AND_SCALE;
                 end
             end
@@ -104,7 +104,7 @@ module reciprocal_rtl(
                 state <= MUL_SCALED;
             end
             DONE: begin
-                output0 <= (approxVal << 0);
+                output0 <= (approxVal >> scaling);
                 ready <= 1'b1;
                 state <= IDLE;
             end
