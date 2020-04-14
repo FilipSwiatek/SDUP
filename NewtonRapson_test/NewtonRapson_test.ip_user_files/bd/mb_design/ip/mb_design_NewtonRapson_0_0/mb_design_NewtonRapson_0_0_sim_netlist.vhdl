@@ -1,7 +1,7 @@
 -- Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2019.1 (win64) Build 2552052 Fri May 24 14:49:42 MDT 2019
--- Date        : Tue Apr 14 05:24:10 2020
+-- Date        : Tue Apr 14 22:18:21 2020
 -- Host        : Athena running 64-bit major release  (build 9200)
 -- Command     : write_vhdl -force -mode funcsim
 --               D:/sem_I/SDUP/NewtonRapson_test/NewtonRapson_test.srcs/sources_1/bd/mb_design/ip/mb_design_NewtonRapson_0_0/mb_design_NewtonRapson_0_0_sim_netlist.vhdl
@@ -1705,7 +1705,7 @@ entity mb_design_NewtonRapson_0_0_reciprocal_rtl is
     ready_reg_2 : in STD_LOGIC;
     s00_axi_aresetn : in STD_LOGIC;
     \scaledVal_reg[-4]_0\ : in STD_LOGIC_VECTOR ( 15 downto 0 );
-    \state_reg[0]_1\ : in STD_LOGIC_VECTOR ( 0 to 0 )
+    \scaling_reg[2]_0\ : in STD_LOGIC
   );
   attribute ORIG_REF_NAME : string;
   attribute ORIG_REF_NAME of mb_design_NewtonRapson_0_0_reciprocal_rtl : entity is "reciprocal_rtl";
@@ -3019,12 +3019,12 @@ begin
       INIT => X"9009000000009009"
     )
         port map (
-      I0 => p_0_in1_in(1),
-      I1 => approxVal(1),
+      I0 => p_0_in1_in(0),
+      I1 => approxVal(0),
       I2 => approxVal(2),
       I3 => p_0_in1_in(2),
-      I4 => approxVal(0),
-      I5 => p_0_in1_in(0),
+      I4 => approxVal(1),
+      I5 => p_0_in1_in(1),
       O => \i__carry_i_4_n_0\
     );
 mul24_0: entity work.mb_design_NewtonRapson_0_0_mul24_inf
@@ -6213,7 +6213,7 @@ ready_reg: unisim.vcomponents.FDRE
       INIT => X"00AA02AA"
     )
         port map (
-      I0 => \state_reg[0]_1\(0),
+      I0 => \scaling_reg[2]_0\,
       I1 => \^q\(2),
       I2 => \^q\(0),
       I3 => s00_axi_aresetn,
@@ -6623,7 +6623,7 @@ ready_reg: unisim.vcomponents.FDRE
     )
         port map (
       I0 => \state[0]_i_4_n_0\,
-      I1 => \state_reg[0]_1\(0),
+      I1 => \scaling_reg[2]_0\,
       I2 => \^q\(1),
       I3 => \scaledVal[-4]_i_5_n_0\,
       I4 => \scaledVal[-4]_i_4_n_0\,
@@ -6774,13 +6774,15 @@ entity mb_design_NewtonRapson_0_0_NewtonRapson_v1_0_S00_AXI is
     axi_wready_reg_0 : out STD_LOGIC;
     axi_awready_reg_0 : out STD_LOGIC;
     axi_arready_reg_0 : out STD_LOGIC;
-    ready_out : out STD_LOGIC;
     mul_ready : out STD_LOGIC;
+    ready_out : out STD_LOGIC;
     s00_axi_bvalid : out STD_LOGIC;
     aw_en_reg_0 : out STD_LOGIC;
     s00_axi_rvalid : out STD_LOGIC;
+    \slv_reg1_reg[0]_0\ : out STD_LOGIC;
     state : out STD_LOGIC_VECTOR ( 2 downto 0 );
     Q : out STD_LOGIC_VECTOR ( 3 downto 0 );
+    p_2_in : out STD_LOGIC_VECTOR ( 0 to 0 );
     s00_axi_rdata : out STD_LOGIC_VECTOR ( 31 downto 0 );
     s00_axi_aclk : in STD_LOGIC;
     ready_reg : in STD_LOGIC;
@@ -6788,14 +6790,15 @@ entity mb_design_NewtonRapson_0_0_NewtonRapson_v1_0_S00_AXI is
     axi_bvalid_reg_0 : in STD_LOGIC;
     aw_en_reg_1 : in STD_LOGIC;
     axi_rvalid_reg_0 : in STD_LOGIC;
+    \slv_reg1_reg[0]_1\ : in STD_LOGIC;
     s00_axi_aresetn : in STD_LOGIC;
     s00_axi_awaddr : in STD_LOGIC_VECTOR ( 1 downto 0 );
-    s00_axi_wvalid : in STD_LOGIC;
     s00_axi_awvalid : in STD_LOGIC;
+    s00_axi_wvalid : in STD_LOGIC;
     s00_axi_wdata : in STD_LOGIC_VECTOR ( 31 downto 0 );
+    s00_axi_wstrb : in STD_LOGIC_VECTOR ( 3 downto 0 );
     s00_axi_araddr : in STD_LOGIC_VECTOR ( 1 downto 0 );
-    s00_axi_arvalid : in STD_LOGIC;
-    s00_axi_wstrb : in STD_LOGIC_VECTOR ( 3 downto 0 )
+    s00_axi_arvalid : in STD_LOGIC
   );
   attribute ORIG_REF_NAME : string;
   attribute ORIG_REF_NAME of mb_design_NewtonRapson_0_0_NewtonRapson_v1_0_S00_AXI : entity is "NewtonRapson_v1_0_S00_AXI";
@@ -6817,34 +6820,65 @@ architecture STRUCTURE of mb_design_NewtonRapson_0_0_NewtonRapson_v1_0_S00_AXI i
   signal \^axi_wready_reg_0\ : STD_LOGIC;
   signal p_0_in : STD_LOGIC_VECTOR ( 1 downto 0 );
   signal p_1_in : STD_LOGIC_VECTOR ( 31 downto 7 );
-  signal \^ready_out\ : STD_LOGIC;
+  signal \^p_2_in\ : STD_LOGIC_VECTOR ( 0 to 0 );
   signal reciprocal_out : STD_LOGIC_VECTOR ( 23 downto 0 );
   signal reg_data_out : STD_LOGIC_VECTOR ( 31 downto 0 );
   signal \^s00_axi_rvalid\ : STD_LOGIC;
-  signal slv_reg0 : STD_LOGIC_VECTOR ( 0 to 0 );
+  signal \slv_reg0[0]_i_1_n_0\ : STD_LOGIC;
   signal \slv_reg0[15]_i_1_n_0\ : STD_LOGIC;
   signal \slv_reg0[23]_i_1_n_0\ : STD_LOGIC;
   signal \slv_reg0[31]_i_1_n_0\ : STD_LOGIC;
   signal \slv_reg0[7]_i_1_n_0\ : STD_LOGIC;
-  signal \slv_reg0__0\ : STD_LOGIC_VECTOR ( 31 downto 1 );
-  signal slv_reg1 : STD_LOGIC_VECTOR ( 0 to 0 );
+  signal \slv_reg0_reg_n_0_[10]\ : STD_LOGIC;
+  signal \slv_reg0_reg_n_0_[11]\ : STD_LOGIC;
+  signal \slv_reg0_reg_n_0_[12]\ : STD_LOGIC;
+  signal \slv_reg0_reg_n_0_[13]\ : STD_LOGIC;
+  signal \slv_reg0_reg_n_0_[14]\ : STD_LOGIC;
+  signal \slv_reg0_reg_n_0_[15]\ : STD_LOGIC;
+  signal \slv_reg0_reg_n_0_[16]\ : STD_LOGIC;
+  signal \slv_reg0_reg_n_0_[17]\ : STD_LOGIC;
+  signal \slv_reg0_reg_n_0_[18]\ : STD_LOGIC;
+  signal \slv_reg0_reg_n_0_[19]\ : STD_LOGIC;
+  signal \slv_reg0_reg_n_0_[1]\ : STD_LOGIC;
+  signal \slv_reg0_reg_n_0_[20]\ : STD_LOGIC;
+  signal \slv_reg0_reg_n_0_[21]\ : STD_LOGIC;
+  signal \slv_reg0_reg_n_0_[22]\ : STD_LOGIC;
+  signal \slv_reg0_reg_n_0_[23]\ : STD_LOGIC;
+  signal \slv_reg0_reg_n_0_[24]\ : STD_LOGIC;
+  signal \slv_reg0_reg_n_0_[25]\ : STD_LOGIC;
+  signal \slv_reg0_reg_n_0_[26]\ : STD_LOGIC;
+  signal \slv_reg0_reg_n_0_[27]\ : STD_LOGIC;
+  signal \slv_reg0_reg_n_0_[28]\ : STD_LOGIC;
+  signal \slv_reg0_reg_n_0_[29]\ : STD_LOGIC;
+  signal \slv_reg0_reg_n_0_[2]\ : STD_LOGIC;
+  signal \slv_reg0_reg_n_0_[30]\ : STD_LOGIC;
+  signal \slv_reg0_reg_n_0_[31]\ : STD_LOGIC;
+  signal \slv_reg0_reg_n_0_[3]\ : STD_LOGIC;
+  signal \slv_reg0_reg_n_0_[4]\ : STD_LOGIC;
+  signal \slv_reg0_reg_n_0_[5]\ : STD_LOGIC;
+  signal \slv_reg0_reg_n_0_[6]\ : STD_LOGIC;
+  signal \slv_reg0_reg_n_0_[7]\ : STD_LOGIC;
+  signal \slv_reg0_reg_n_0_[8]\ : STD_LOGIC;
+  signal \slv_reg0_reg_n_0_[9]\ : STD_LOGIC;
+  signal \^slv_reg1_reg[0]_0\ : STD_LOGIC;
   signal slv_reg2 : STD_LOGIC_VECTOR ( 15 downto 0 );
+  signal \slv_reg2[31]_i_2_n_0\ : STD_LOGIC;
   signal \slv_reg2__0\ : STD_LOGIC_VECTOR ( 31 downto 16 );
   signal slv_reg3 : STD_LOGIC_VECTOR ( 23 downto 0 );
   signal \slv_reg_rden__0\ : STD_LOGIC;
-  signal \slv_reg_wren__0\ : STD_LOGIC;
   attribute SOFT_HLUTNM : string;
   attribute SOFT_HLUTNM of \axi_araddr[2]_i_1\ : label is "soft_lutpair51";
   attribute SOFT_HLUTNM of axi_arready_i_1 : label is "soft_lutpair51";
+  attribute SOFT_HLUTNM of axi_awready_i_2 : label is "soft_lutpair52";
   attribute SOFT_HLUTNM of axi_wready_i_1 : label is "soft_lutpair52";
-  attribute SOFT_HLUTNM of \slv_reg2[31]_i_2\ : label is "soft_lutpair52";
 begin
   aw_en_reg_0 <= \^aw_en_reg_0\;
   axi_arready_reg_0 <= \^axi_arready_reg_0\;
   axi_awready_reg_0 <= \^axi_awready_reg_0\;
   axi_wready_reg_0 <= \^axi_wready_reg_0\;
-  ready_out <= \^ready_out\;
+  p_2_in(0) <= \^p_2_in\(0);
   s00_axi_rvalid <= \^s00_axi_rvalid\;
+  \slv_reg1_reg[0]_0\ <= \^slv_reg1_reg[0]_0\;
 aw_en_reg: unisim.vcomponents.FDSE
      port map (
       C => s00_axi_aclk,
@@ -6910,27 +6944,27 @@ axi_arready_reg: unisim.vcomponents.FDRE
     );
 \axi_awaddr[2]_i_1\: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"FBFFFFFF08000000"
+      INIT => X"EFFFFFFF20000000"
     )
         port map (
       I0 => s00_axi_awaddr(0),
-      I1 => s00_axi_wvalid,
-      I2 => \^axi_awready_reg_0\,
-      I3 => \^aw_en_reg_0\,
-      I4 => s00_axi_awvalid,
+      I1 => \^axi_awready_reg_0\,
+      I2 => \^aw_en_reg_0\,
+      I3 => s00_axi_awvalid,
+      I4 => s00_axi_wvalid,
       I5 => p_0_in(0),
       O => \axi_awaddr[2]_i_1_n_0\
     );
 \axi_awaddr[3]_i_1\: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"FBFFFFFF08000000"
+      INIT => X"EFFFFFFF20000000"
     )
         port map (
       I0 => s00_axi_awaddr(1),
-      I1 => s00_axi_wvalid,
-      I2 => \^axi_awready_reg_0\,
-      I3 => \^aw_en_reg_0\,
-      I4 => s00_axi_awvalid,
+      I1 => \^axi_awready_reg_0\,
+      I2 => \^aw_en_reg_0\,
+      I3 => s00_axi_awvalid,
+      I4 => s00_axi_wvalid,
       I5 => p_0_in(1),
       O => \axi_awaddr[3]_i_1_n_0\
     );
@@ -6960,13 +6994,13 @@ axi_awready_i_1: unisim.vcomponents.LUT1
     );
 axi_awready_i_2: unisim.vcomponents.LUT4
     generic map(
-      INIT => X"2000"
+      INIT => X"4000"
     )
         port map (
-      I0 => s00_axi_wvalid,
-      I1 => \^axi_awready_reg_0\,
-      I2 => \^aw_en_reg_0\,
-      I3 => s00_axi_awvalid,
+      I0 => \^axi_awready_reg_0\,
+      I1 => \^aw_en_reg_0\,
+      I2 => s00_axi_awvalid,
+      I3 => s00_axi_wvalid,
       O => axi_awready0
     );
 axi_awready_reg: unisim.vcomponents.FDRE
@@ -6990,8 +7024,8 @@ axi_bvalid_reg: unisim.vcomponents.FDRE
       INIT => X"F0FFAACCF000AACC"
     )
         port map (
-      I0 => slv_reg1(0),
-      I1 => slv_reg0(0),
+      I0 => \^slv_reg1_reg[0]_0\,
+      I1 => \^p_2_in\(0),
       I2 => slv_reg3(0),
       I3 => axi_araddr(2),
       I4 => axi_araddr(3),
@@ -7000,11 +7034,11 @@ axi_bvalid_reg: unisim.vcomponents.FDRE
     );
 \axi_rdata[10]_i_1\: unisim.vcomponents.LUT5
     generic map(
-      INIT => X"CF0AC00A"
+      INIT => X"AF0CA00C"
     )
         port map (
-      I0 => \slv_reg0__0\(10),
-      I1 => slv_reg3(10),
+      I0 => slv_reg3(10),
+      I1 => \slv_reg0_reg_n_0_[10]\,
       I2 => axi_araddr(2),
       I3 => axi_araddr(3),
       I4 => slv_reg2(10),
@@ -7012,26 +7046,26 @@ axi_bvalid_reg: unisim.vcomponents.FDRE
     );
 \axi_rdata[11]_i_1\: unisim.vcomponents.LUT5
     generic map(
-      INIT => X"A0CFA0C0"
+      INIT => X"AF0CA00C"
     )
         port map (
       I0 => slv_reg3(11),
-      I1 => slv_reg2(11),
-      I2 => axi_araddr(3),
-      I3 => axi_araddr(2),
-      I4 => \slv_reg0__0\(11),
+      I1 => \slv_reg0_reg_n_0_[11]\,
+      I2 => axi_araddr(2),
+      I3 => axi_araddr(3),
+      I4 => slv_reg2(11),
       O => reg_data_out(11)
     );
 \axi_rdata[12]_i_1\: unisim.vcomponents.LUT5
     generic map(
-      INIT => X"A0CFA0C0"
+      INIT => X"AF0CA00C"
     )
         port map (
       I0 => slv_reg3(12),
-      I1 => slv_reg2(12),
-      I2 => axi_araddr(3),
-      I3 => axi_araddr(2),
-      I4 => \slv_reg0__0\(12),
+      I1 => \slv_reg0_reg_n_0_[12]\,
+      I2 => axi_araddr(2),
+      I3 => axi_araddr(3),
+      I4 => slv_reg2(12),
       O => reg_data_out(12)
     );
 \axi_rdata[13]_i_1\: unisim.vcomponents.LUT5
@@ -7040,7 +7074,7 @@ axi_bvalid_reg: unisim.vcomponents.FDRE
     )
         port map (
       I0 => slv_reg3(13),
-      I1 => \slv_reg0__0\(13),
+      I1 => \slv_reg0_reg_n_0_[13]\,
       I2 => axi_araddr(2),
       I3 => axi_araddr(3),
       I4 => slv_reg2(13),
@@ -7052,7 +7086,7 @@ axi_bvalid_reg: unisim.vcomponents.FDRE
     )
         port map (
       I0 => slv_reg3(14),
-      I1 => \slv_reg0__0\(14),
+      I1 => \slv_reg0_reg_n_0_[14]\,
       I2 => axi_araddr(2),
       I3 => axi_araddr(3),
       I4 => slv_reg2(14),
@@ -7063,7 +7097,7 @@ axi_bvalid_reg: unisim.vcomponents.FDRE
       INIT => X"F0CA00CA"
     )
         port map (
-      I0 => \slv_reg0__0\(15),
+      I0 => \slv_reg0_reg_n_0_[15]\,
       I1 => slv_reg2(15),
       I2 => axi_araddr(3),
       I3 => axi_araddr(2),
@@ -7072,23 +7106,23 @@ axi_bvalid_reg: unisim.vcomponents.FDRE
     );
 \axi_rdata[16]_i_1\: unisim.vcomponents.LUT5
     generic map(
-      INIT => X"A0CFA0C0"
+      INIT => X"AF0CA00C"
     )
         port map (
       I0 => slv_reg3(16),
-      I1 => \slv_reg2__0\(16),
-      I2 => axi_araddr(3),
-      I3 => axi_araddr(2),
-      I4 => \slv_reg0__0\(16),
+      I1 => \slv_reg0_reg_n_0_[16]\,
+      I2 => axi_araddr(2),
+      I3 => axi_araddr(3),
+      I4 => \slv_reg2__0\(16),
       O => reg_data_out(16)
     );
 \axi_rdata[17]_i_1\: unisim.vcomponents.LUT5
     generic map(
-      INIT => X"AF0CA00C"
+      INIT => X"CF0AC00A"
     )
         port map (
-      I0 => slv_reg3(17),
-      I1 => \slv_reg0__0\(17),
+      I0 => \slv_reg0_reg_n_0_[17]\,
+      I1 => slv_reg3(17),
       I2 => axi_araddr(2),
       I3 => axi_araddr(3),
       I4 => \slv_reg2__0\(17),
@@ -7096,11 +7130,11 @@ axi_bvalid_reg: unisim.vcomponents.FDRE
     );
 \axi_rdata[18]_i_1\: unisim.vcomponents.LUT5
     generic map(
-      INIT => X"AF0CA00C"
+      INIT => X"CF0AC00A"
     )
         port map (
-      I0 => slv_reg3(18),
-      I1 => \slv_reg0__0\(18),
+      I0 => \slv_reg0_reg_n_0_[18]\,
+      I1 => slv_reg3(18),
       I2 => axi_araddr(2),
       I3 => axi_araddr(3),
       I4 => \slv_reg2__0\(18),
@@ -7108,11 +7142,11 @@ axi_bvalid_reg: unisim.vcomponents.FDRE
     );
 \axi_rdata[19]_i_1\: unisim.vcomponents.LUT5
     generic map(
-      INIT => X"CF0AC00A"
+      INIT => X"AF0CA00C"
     )
         port map (
-      I0 => \slv_reg0__0\(19),
-      I1 => slv_reg3(19),
+      I0 => slv_reg3(19),
+      I1 => \slv_reg0_reg_n_0_[19]\,
       I2 => axi_araddr(2),
       I3 => axi_araddr(3),
       I4 => \slv_reg2__0\(19),
@@ -7120,35 +7154,35 @@ axi_bvalid_reg: unisim.vcomponents.FDRE
     );
 \axi_rdata[1]_i_1\: unisim.vcomponents.LUT5
     generic map(
-      INIT => X"F0CA00CA"
+      INIT => X"AF0CA00C"
     )
         port map (
-      I0 => \slv_reg0__0\(1),
-      I1 => slv_reg2(1),
-      I2 => axi_araddr(3),
-      I3 => axi_araddr(2),
-      I4 => slv_reg3(1),
+      I0 => slv_reg3(1),
+      I1 => \slv_reg0_reg_n_0_[1]\,
+      I2 => axi_araddr(2),
+      I3 => axi_araddr(3),
+      I4 => slv_reg2(1),
       O => reg_data_out(1)
     );
 \axi_rdata[20]_i_1\: unisim.vcomponents.LUT5
     generic map(
-      INIT => X"CA0FCA00"
+      INIT => X"A0CFA0C0"
     )
         port map (
-      I0 => \slv_reg2__0\(20),
-      I1 => slv_reg3(20),
-      I2 => axi_araddr(2),
-      I3 => axi_araddr(3),
-      I4 => \slv_reg0__0\(20),
+      I0 => slv_reg3(20),
+      I1 => \slv_reg2__0\(20),
+      I2 => axi_araddr(3),
+      I3 => axi_araddr(2),
+      I4 => \slv_reg0_reg_n_0_[20]\,
       O => reg_data_out(20)
     );
 \axi_rdata[21]_i_1\: unisim.vcomponents.LUT5
     generic map(
-      INIT => X"CF0AC00A"
+      INIT => X"AF0CA00C"
     )
         port map (
-      I0 => \slv_reg0__0\(21),
-      I1 => slv_reg3(21),
+      I0 => slv_reg3(21),
+      I1 => \slv_reg0_reg_n_0_[21]\,
       I2 => axi_araddr(2),
       I3 => axi_araddr(3),
       I4 => \slv_reg2__0\(21),
@@ -7156,26 +7190,26 @@ axi_bvalid_reg: unisim.vcomponents.FDRE
     );
 \axi_rdata[22]_i_1\: unisim.vcomponents.LUT5
     generic map(
-      INIT => X"CF0AC00A"
+      INIT => X"CA0FCA00"
     )
         port map (
-      I0 => \slv_reg0__0\(22),
+      I0 => \slv_reg2__0\(22),
       I1 => slv_reg3(22),
       I2 => axi_araddr(2),
       I3 => axi_araddr(3),
-      I4 => \slv_reg2__0\(22),
+      I4 => \slv_reg0_reg_n_0_[22]\,
       O => reg_data_out(22)
     );
 \axi_rdata[23]_i_1\: unisim.vcomponents.LUT5
     generic map(
-      INIT => X"A0CFA0C0"
+      INIT => X"AF0CA00C"
     )
         port map (
       I0 => slv_reg3(23),
-      I1 => \slv_reg2__0\(23),
-      I2 => axi_araddr(3),
-      I3 => axi_araddr(2),
-      I4 => \slv_reg0__0\(23),
+      I1 => \slv_reg0_reg_n_0_[23]\,
+      I2 => axi_araddr(2),
+      I3 => axi_araddr(3),
+      I4 => \slv_reg2__0\(23),
       O => reg_data_out(23)
     );
 \axi_rdata[24]_i_1\: unisim.vcomponents.LUT4
@@ -7186,7 +7220,7 @@ axi_bvalid_reg: unisim.vcomponents.FDRE
       I0 => \slv_reg2__0\(24),
       I1 => axi_araddr(3),
       I2 => axi_araddr(2),
-      I3 => \slv_reg0__0\(24),
+      I3 => \slv_reg0_reg_n_0_[24]\,
       O => reg_data_out(24)
     );
 \axi_rdata[25]_i_1\: unisim.vcomponents.LUT4
@@ -7197,7 +7231,7 @@ axi_bvalid_reg: unisim.vcomponents.FDRE
       I0 => \slv_reg2__0\(25),
       I1 => axi_araddr(3),
       I2 => axi_araddr(2),
-      I3 => \slv_reg0__0\(25),
+      I3 => \slv_reg0_reg_n_0_[25]\,
       O => reg_data_out(25)
     );
 \axi_rdata[26]_i_1\: unisim.vcomponents.LUT4
@@ -7208,7 +7242,7 @@ axi_bvalid_reg: unisim.vcomponents.FDRE
       I0 => \slv_reg2__0\(26),
       I1 => axi_araddr(3),
       I2 => axi_araddr(2),
-      I3 => \slv_reg0__0\(26),
+      I3 => \slv_reg0_reg_n_0_[26]\,
       O => reg_data_out(26)
     );
 \axi_rdata[27]_i_1\: unisim.vcomponents.LUT4
@@ -7219,7 +7253,7 @@ axi_bvalid_reg: unisim.vcomponents.FDRE
       I0 => \slv_reg2__0\(27),
       I1 => axi_araddr(3),
       I2 => axi_araddr(2),
-      I3 => \slv_reg0__0\(27),
+      I3 => \slv_reg0_reg_n_0_[27]\,
       O => reg_data_out(27)
     );
 \axi_rdata[28]_i_1\: unisim.vcomponents.LUT4
@@ -7230,7 +7264,7 @@ axi_bvalid_reg: unisim.vcomponents.FDRE
       I0 => \slv_reg2__0\(28),
       I1 => axi_araddr(3),
       I2 => axi_araddr(2),
-      I3 => \slv_reg0__0\(28),
+      I3 => \slv_reg0_reg_n_0_[28]\,
       O => reg_data_out(28)
     );
 \axi_rdata[29]_i_1\: unisim.vcomponents.LUT4
@@ -7241,16 +7275,16 @@ axi_bvalid_reg: unisim.vcomponents.FDRE
       I0 => \slv_reg2__0\(29),
       I1 => axi_araddr(3),
       I2 => axi_araddr(2),
-      I3 => \slv_reg0__0\(29),
+      I3 => \slv_reg0_reg_n_0_[29]\,
       O => reg_data_out(29)
     );
 \axi_rdata[2]_i_1\: unisim.vcomponents.LUT5
     generic map(
-      INIT => X"AF0CA00C"
+      INIT => X"CF0AC00A"
     )
         port map (
-      I0 => slv_reg3(2),
-      I1 => \slv_reg0__0\(2),
+      I0 => \slv_reg0_reg_n_0_[2]\,
+      I1 => slv_reg3(2),
       I2 => axi_araddr(2),
       I3 => axi_araddr(3),
       I4 => slv_reg2(2),
@@ -7264,7 +7298,7 @@ axi_bvalid_reg: unisim.vcomponents.FDRE
       I0 => \slv_reg2__0\(30),
       I1 => axi_araddr(3),
       I2 => axi_araddr(2),
-      I3 => \slv_reg0__0\(30),
+      I3 => \slv_reg0_reg_n_0_[30]\,
       O => reg_data_out(30)
     );
 \axi_rdata[31]_i_1\: unisim.vcomponents.LUT4
@@ -7275,91 +7309,91 @@ axi_bvalid_reg: unisim.vcomponents.FDRE
       I0 => \slv_reg2__0\(31),
       I1 => axi_araddr(3),
       I2 => axi_araddr(2),
-      I3 => \slv_reg0__0\(31),
+      I3 => \slv_reg0_reg_n_0_[31]\,
       O => reg_data_out(31)
     );
 \axi_rdata[3]_i_1\: unisim.vcomponents.LUT5
     generic map(
-      INIT => X"CA0FCA00"
+      INIT => X"AF0CA00C"
     )
         port map (
-      I0 => slv_reg2(3),
-      I1 => slv_reg3(3),
+      I0 => slv_reg3(3),
+      I1 => \slv_reg0_reg_n_0_[3]\,
       I2 => axi_araddr(2),
       I3 => axi_araddr(3),
-      I4 => \slv_reg0__0\(3),
+      I4 => slv_reg2(3),
       O => reg_data_out(3)
     );
 \axi_rdata[4]_i_1\: unisim.vcomponents.LUT5
     generic map(
-      INIT => X"CF0AC00A"
+      INIT => X"A0CFA0C0"
     )
         port map (
-      I0 => \slv_reg0__0\(4),
-      I1 => slv_reg3(4),
-      I2 => axi_araddr(2),
-      I3 => axi_araddr(3),
-      I4 => slv_reg2(4),
+      I0 => slv_reg3(4),
+      I1 => slv_reg2(4),
+      I2 => axi_araddr(3),
+      I3 => axi_araddr(2),
+      I4 => \slv_reg0_reg_n_0_[4]\,
       O => reg_data_out(4)
     );
 \axi_rdata[5]_i_1\: unisim.vcomponents.LUT5
     generic map(
-      INIT => X"CF0AC00A"
+      INIT => X"F0CA00CA"
     )
         port map (
-      I0 => \slv_reg0__0\(5),
-      I1 => slv_reg3(5),
-      I2 => axi_araddr(2),
-      I3 => axi_araddr(3),
-      I4 => slv_reg2(5),
+      I0 => \slv_reg0_reg_n_0_[5]\,
+      I1 => slv_reg2(5),
+      I2 => axi_araddr(3),
+      I3 => axi_araddr(2),
+      I4 => slv_reg3(5),
       O => reg_data_out(5)
     );
 \axi_rdata[6]_i_1\: unisim.vcomponents.LUT5
     generic map(
-      INIT => X"A0CFA0C0"
+      INIT => X"CA0FCA00"
     )
         port map (
-      I0 => slv_reg3(6),
-      I1 => slv_reg2(6),
-      I2 => axi_araddr(3),
-      I3 => axi_araddr(2),
-      I4 => \slv_reg0__0\(6),
+      I0 => slv_reg2(6),
+      I1 => slv_reg3(6),
+      I2 => axi_araddr(2),
+      I3 => axi_araddr(3),
+      I4 => \slv_reg0_reg_n_0_[6]\,
       O => reg_data_out(6)
     );
 \axi_rdata[7]_i_1\: unisim.vcomponents.LUT5
     generic map(
-      INIT => X"CA0FCA00"
+      INIT => X"AF0CA00C"
     )
         port map (
-      I0 => slv_reg2(7),
-      I1 => slv_reg3(7),
+      I0 => slv_reg3(7),
+      I1 => \slv_reg0_reg_n_0_[7]\,
       I2 => axi_araddr(2),
       I3 => axi_araddr(3),
-      I4 => \slv_reg0__0\(7),
+      I4 => slv_reg2(7),
       O => reg_data_out(7)
     );
 \axi_rdata[8]_i_1\: unisim.vcomponents.LUT5
     generic map(
-      INIT => X"A0CFA0C0"
+      INIT => X"AF0CA00C"
     )
         port map (
       I0 => slv_reg3(8),
-      I1 => slv_reg2(8),
-      I2 => axi_araddr(3),
-      I3 => axi_araddr(2),
-      I4 => \slv_reg0__0\(8),
+      I1 => \slv_reg0_reg_n_0_[8]\,
+      I2 => axi_araddr(2),
+      I3 => axi_araddr(3),
+      I4 => slv_reg2(8),
       O => reg_data_out(8)
     );
 \axi_rdata[9]_i_1\: unisim.vcomponents.LUT5
     generic map(
-      INIT => X"AF0CA00C"
+      INIT => X"A0CFA0C0"
     )
         port map (
       I0 => slv_reg3(9),
-      I1 => \slv_reg0__0\(9),
-      I2 => axi_araddr(2),
-      I3 => axi_araddr(3),
-      I4 => slv_reg2(9),
+      I1 => slv_reg2(9),
+      I2 => axi_araddr(3),
+      I3 => axi_araddr(2),
+      I4 => \slv_reg0_reg_n_0_[9]\,
       O => reg_data_out(9)
     );
 \axi_rdata_reg[0]\: unisim.vcomponents.FDRE
@@ -7628,13 +7662,13 @@ axi_rvalid_reg: unisim.vcomponents.FDRE
     );
 axi_wready_i_1: unisim.vcomponents.LUT4
     generic map(
-      INIT => X"0800"
+      INIT => X"4000"
     )
         port map (
-      I0 => s00_axi_awvalid,
-      I1 => s00_axi_wvalid,
-      I2 => \^axi_wready_reg_0\,
-      I3 => \^aw_en_reg_0\,
+      I0 => \^axi_wready_reg_0\,
+      I1 => \^aw_en_reg_0\,
+      I2 => s00_axi_awvalid,
+      I3 => s00_axi_wvalid,
       O => axi_wready0
     );
 axi_wready_reg: unisim.vcomponents.FDRE
@@ -7649,49 +7683,62 @@ reciprocal_rtl_inst: entity work.mb_design_NewtonRapson_0_0_reciprocal_rtl
      port map (
       Q(3 downto 0) => Q(3 downto 0),
       \output0_reg[4]_0\(23 downto 0) => reciprocal_out(23 downto 0),
-      ready_out => \^ready_out\,
+      ready_out => ready_out,
       ready_reg_0 => mul_ready,
       ready_reg_1 => ready_reg,
       ready_reg_2 => ready_reg_0,
       s00_axi_aclk => s00_axi_aclk,
       s00_axi_aresetn => s00_axi_aresetn,
       \scaledVal_reg[-4]_0\(15 downto 0) => slv_reg2(15 downto 0),
+      \scaling_reg[2]_0\ => \^p_2_in\(0),
       \state_reg[0]_0\ => state(0),
-      \state_reg[0]_1\(0) => slv_reg0(0),
       \state_reg[1]_0\ => state(1),
       \state_reg[2]_0\ => state(2)
     );
-\slv_reg0[15]_i_1\: unisim.vcomponents.LUT4
+\slv_reg0[0]_i_1\: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"0200"
+      INIT => X"FFFB000000080000"
     )
         port map (
-      I0 => \slv_reg_wren__0\,
-      I1 => p_0_in(1),
+      I0 => s00_axi_wdata(0),
+      I1 => s00_axi_wstrb(0),
       I2 => p_0_in(0),
-      I3 => s00_axi_wstrb(1),
+      I3 => p_0_in(1),
+      I4 => \slv_reg2[31]_i_2_n_0\,
+      I5 => \^p_2_in\(0),
+      O => \slv_reg0[0]_i_1_n_0\
+    );
+\slv_reg0[15]_i_1\: unisim.vcomponents.LUT4
+    generic map(
+      INIT => X"0008"
+    )
+        port map (
+      I0 => \slv_reg2[31]_i_2_n_0\,
+      I1 => s00_axi_wstrb(1),
+      I2 => p_0_in(0),
+      I3 => p_0_in(1),
       O => \slv_reg0[15]_i_1_n_0\
     );
 \slv_reg0[23]_i_1\: unisim.vcomponents.LUT4
     generic map(
-      INIT => X"0200"
+      INIT => X"0008"
     )
         port map (
-      I0 => \slv_reg_wren__0\,
-      I1 => p_0_in(1),
+      I0 => \slv_reg2[31]_i_2_n_0\,
+      I1 => s00_axi_wstrb(2),
       I2 => p_0_in(0),
-      I3 => s00_axi_wstrb(2),
+      I3 => p_0_in(1),
       O => \slv_reg0[23]_i_1_n_0\
     );
 \slv_reg0[31]_i_1\: unisim.vcomponents.LUT4
     generic map(
-      INIT => X"0200"
+      INIT => X"0008"
     )
         port map (
-      I0 => \slv_reg_wren__0\,
-      I1 => p_0_in(1),
+      I0 => \slv_reg2[31]_i_2_n_0\,
+      I1 => s00_axi_wstrb(3),
       I2 => p_0_in(0),
-      I3 => s00_axi_wstrb(3),
+      I3 => p_0_in(1),
       O => \slv_reg0[31]_i_1_n_0\
     );
 \slv_reg0[7]_i_1\: unisim.vcomponents.LUT4
@@ -7699,7 +7746,7 @@ reciprocal_rtl_inst: entity work.mb_design_NewtonRapson_0_0_reciprocal_rtl
       INIT => X"0200"
     )
         port map (
-      I0 => \slv_reg_wren__0\,
+      I0 => \slv_reg2[31]_i_2_n_0\,
       I1 => p_0_in(1),
       I2 => p_0_in(0),
       I3 => s00_axi_wstrb(0),
@@ -7708,9 +7755,9 @@ reciprocal_rtl_inst: entity work.mb_design_NewtonRapson_0_0_reciprocal_rtl
 \slv_reg0_reg[0]\: unisim.vcomponents.FDRE
      port map (
       C => s00_axi_aclk,
-      CE => \slv_reg0[7]_i_1_n_0\,
-      D => s00_axi_wdata(0),
-      Q => slv_reg0(0),
+      CE => '1',
+      D => \slv_reg0[0]_i_1_n_0\,
+      Q => \^p_2_in\(0),
       R => axi_awready_i_1_n_0
     );
 \slv_reg0_reg[10]\: unisim.vcomponents.FDRE
@@ -7718,7 +7765,7 @@ reciprocal_rtl_inst: entity work.mb_design_NewtonRapson_0_0_reciprocal_rtl
       C => s00_axi_aclk,
       CE => \slv_reg0[15]_i_1_n_0\,
       D => s00_axi_wdata(10),
-      Q => \slv_reg0__0\(10),
+      Q => \slv_reg0_reg_n_0_[10]\,
       R => axi_awready_i_1_n_0
     );
 \slv_reg0_reg[11]\: unisim.vcomponents.FDRE
@@ -7726,7 +7773,7 @@ reciprocal_rtl_inst: entity work.mb_design_NewtonRapson_0_0_reciprocal_rtl
       C => s00_axi_aclk,
       CE => \slv_reg0[15]_i_1_n_0\,
       D => s00_axi_wdata(11),
-      Q => \slv_reg0__0\(11),
+      Q => \slv_reg0_reg_n_0_[11]\,
       R => axi_awready_i_1_n_0
     );
 \slv_reg0_reg[12]\: unisim.vcomponents.FDRE
@@ -7734,7 +7781,7 @@ reciprocal_rtl_inst: entity work.mb_design_NewtonRapson_0_0_reciprocal_rtl
       C => s00_axi_aclk,
       CE => \slv_reg0[15]_i_1_n_0\,
       D => s00_axi_wdata(12),
-      Q => \slv_reg0__0\(12),
+      Q => \slv_reg0_reg_n_0_[12]\,
       R => axi_awready_i_1_n_0
     );
 \slv_reg0_reg[13]\: unisim.vcomponents.FDRE
@@ -7742,7 +7789,7 @@ reciprocal_rtl_inst: entity work.mb_design_NewtonRapson_0_0_reciprocal_rtl
       C => s00_axi_aclk,
       CE => \slv_reg0[15]_i_1_n_0\,
       D => s00_axi_wdata(13),
-      Q => \slv_reg0__0\(13),
+      Q => \slv_reg0_reg_n_0_[13]\,
       R => axi_awready_i_1_n_0
     );
 \slv_reg0_reg[14]\: unisim.vcomponents.FDRE
@@ -7750,7 +7797,7 @@ reciprocal_rtl_inst: entity work.mb_design_NewtonRapson_0_0_reciprocal_rtl
       C => s00_axi_aclk,
       CE => \slv_reg0[15]_i_1_n_0\,
       D => s00_axi_wdata(14),
-      Q => \slv_reg0__0\(14),
+      Q => \slv_reg0_reg_n_0_[14]\,
       R => axi_awready_i_1_n_0
     );
 \slv_reg0_reg[15]\: unisim.vcomponents.FDRE
@@ -7758,7 +7805,7 @@ reciprocal_rtl_inst: entity work.mb_design_NewtonRapson_0_0_reciprocal_rtl
       C => s00_axi_aclk,
       CE => \slv_reg0[15]_i_1_n_0\,
       D => s00_axi_wdata(15),
-      Q => \slv_reg0__0\(15),
+      Q => \slv_reg0_reg_n_0_[15]\,
       R => axi_awready_i_1_n_0
     );
 \slv_reg0_reg[16]\: unisim.vcomponents.FDRE
@@ -7766,7 +7813,7 @@ reciprocal_rtl_inst: entity work.mb_design_NewtonRapson_0_0_reciprocal_rtl
       C => s00_axi_aclk,
       CE => \slv_reg0[23]_i_1_n_0\,
       D => s00_axi_wdata(16),
-      Q => \slv_reg0__0\(16),
+      Q => \slv_reg0_reg_n_0_[16]\,
       R => axi_awready_i_1_n_0
     );
 \slv_reg0_reg[17]\: unisim.vcomponents.FDRE
@@ -7774,7 +7821,7 @@ reciprocal_rtl_inst: entity work.mb_design_NewtonRapson_0_0_reciprocal_rtl
       C => s00_axi_aclk,
       CE => \slv_reg0[23]_i_1_n_0\,
       D => s00_axi_wdata(17),
-      Q => \slv_reg0__0\(17),
+      Q => \slv_reg0_reg_n_0_[17]\,
       R => axi_awready_i_1_n_0
     );
 \slv_reg0_reg[18]\: unisim.vcomponents.FDRE
@@ -7782,7 +7829,7 @@ reciprocal_rtl_inst: entity work.mb_design_NewtonRapson_0_0_reciprocal_rtl
       C => s00_axi_aclk,
       CE => \slv_reg0[23]_i_1_n_0\,
       D => s00_axi_wdata(18),
-      Q => \slv_reg0__0\(18),
+      Q => \slv_reg0_reg_n_0_[18]\,
       R => axi_awready_i_1_n_0
     );
 \slv_reg0_reg[19]\: unisim.vcomponents.FDRE
@@ -7790,7 +7837,7 @@ reciprocal_rtl_inst: entity work.mb_design_NewtonRapson_0_0_reciprocal_rtl
       C => s00_axi_aclk,
       CE => \slv_reg0[23]_i_1_n_0\,
       D => s00_axi_wdata(19),
-      Q => \slv_reg0__0\(19),
+      Q => \slv_reg0_reg_n_0_[19]\,
       R => axi_awready_i_1_n_0
     );
 \slv_reg0_reg[1]\: unisim.vcomponents.FDRE
@@ -7798,7 +7845,7 @@ reciprocal_rtl_inst: entity work.mb_design_NewtonRapson_0_0_reciprocal_rtl
       C => s00_axi_aclk,
       CE => \slv_reg0[7]_i_1_n_0\,
       D => s00_axi_wdata(1),
-      Q => \slv_reg0__0\(1),
+      Q => \slv_reg0_reg_n_0_[1]\,
       R => axi_awready_i_1_n_0
     );
 \slv_reg0_reg[20]\: unisim.vcomponents.FDRE
@@ -7806,7 +7853,7 @@ reciprocal_rtl_inst: entity work.mb_design_NewtonRapson_0_0_reciprocal_rtl
       C => s00_axi_aclk,
       CE => \slv_reg0[23]_i_1_n_0\,
       D => s00_axi_wdata(20),
-      Q => \slv_reg0__0\(20),
+      Q => \slv_reg0_reg_n_0_[20]\,
       R => axi_awready_i_1_n_0
     );
 \slv_reg0_reg[21]\: unisim.vcomponents.FDRE
@@ -7814,7 +7861,7 @@ reciprocal_rtl_inst: entity work.mb_design_NewtonRapson_0_0_reciprocal_rtl
       C => s00_axi_aclk,
       CE => \slv_reg0[23]_i_1_n_0\,
       D => s00_axi_wdata(21),
-      Q => \slv_reg0__0\(21),
+      Q => \slv_reg0_reg_n_0_[21]\,
       R => axi_awready_i_1_n_0
     );
 \slv_reg0_reg[22]\: unisim.vcomponents.FDRE
@@ -7822,7 +7869,7 @@ reciprocal_rtl_inst: entity work.mb_design_NewtonRapson_0_0_reciprocal_rtl
       C => s00_axi_aclk,
       CE => \slv_reg0[23]_i_1_n_0\,
       D => s00_axi_wdata(22),
-      Q => \slv_reg0__0\(22),
+      Q => \slv_reg0_reg_n_0_[22]\,
       R => axi_awready_i_1_n_0
     );
 \slv_reg0_reg[23]\: unisim.vcomponents.FDRE
@@ -7830,7 +7877,7 @@ reciprocal_rtl_inst: entity work.mb_design_NewtonRapson_0_0_reciprocal_rtl
       C => s00_axi_aclk,
       CE => \slv_reg0[23]_i_1_n_0\,
       D => s00_axi_wdata(23),
-      Q => \slv_reg0__0\(23),
+      Q => \slv_reg0_reg_n_0_[23]\,
       R => axi_awready_i_1_n_0
     );
 \slv_reg0_reg[24]\: unisim.vcomponents.FDRE
@@ -7838,7 +7885,7 @@ reciprocal_rtl_inst: entity work.mb_design_NewtonRapson_0_0_reciprocal_rtl
       C => s00_axi_aclk,
       CE => \slv_reg0[31]_i_1_n_0\,
       D => s00_axi_wdata(24),
-      Q => \slv_reg0__0\(24),
+      Q => \slv_reg0_reg_n_0_[24]\,
       R => axi_awready_i_1_n_0
     );
 \slv_reg0_reg[25]\: unisim.vcomponents.FDRE
@@ -7846,7 +7893,7 @@ reciprocal_rtl_inst: entity work.mb_design_NewtonRapson_0_0_reciprocal_rtl
       C => s00_axi_aclk,
       CE => \slv_reg0[31]_i_1_n_0\,
       D => s00_axi_wdata(25),
-      Q => \slv_reg0__0\(25),
+      Q => \slv_reg0_reg_n_0_[25]\,
       R => axi_awready_i_1_n_0
     );
 \slv_reg0_reg[26]\: unisim.vcomponents.FDRE
@@ -7854,7 +7901,7 @@ reciprocal_rtl_inst: entity work.mb_design_NewtonRapson_0_0_reciprocal_rtl
       C => s00_axi_aclk,
       CE => \slv_reg0[31]_i_1_n_0\,
       D => s00_axi_wdata(26),
-      Q => \slv_reg0__0\(26),
+      Q => \slv_reg0_reg_n_0_[26]\,
       R => axi_awready_i_1_n_0
     );
 \slv_reg0_reg[27]\: unisim.vcomponents.FDRE
@@ -7862,7 +7909,7 @@ reciprocal_rtl_inst: entity work.mb_design_NewtonRapson_0_0_reciprocal_rtl
       C => s00_axi_aclk,
       CE => \slv_reg0[31]_i_1_n_0\,
       D => s00_axi_wdata(27),
-      Q => \slv_reg0__0\(27),
+      Q => \slv_reg0_reg_n_0_[27]\,
       R => axi_awready_i_1_n_0
     );
 \slv_reg0_reg[28]\: unisim.vcomponents.FDRE
@@ -7870,7 +7917,7 @@ reciprocal_rtl_inst: entity work.mb_design_NewtonRapson_0_0_reciprocal_rtl
       C => s00_axi_aclk,
       CE => \slv_reg0[31]_i_1_n_0\,
       D => s00_axi_wdata(28),
-      Q => \slv_reg0__0\(28),
+      Q => \slv_reg0_reg_n_0_[28]\,
       R => axi_awready_i_1_n_0
     );
 \slv_reg0_reg[29]\: unisim.vcomponents.FDRE
@@ -7878,7 +7925,7 @@ reciprocal_rtl_inst: entity work.mb_design_NewtonRapson_0_0_reciprocal_rtl
       C => s00_axi_aclk,
       CE => \slv_reg0[31]_i_1_n_0\,
       D => s00_axi_wdata(29),
-      Q => \slv_reg0__0\(29),
+      Q => \slv_reg0_reg_n_0_[29]\,
       R => axi_awready_i_1_n_0
     );
 \slv_reg0_reg[2]\: unisim.vcomponents.FDRE
@@ -7886,7 +7933,7 @@ reciprocal_rtl_inst: entity work.mb_design_NewtonRapson_0_0_reciprocal_rtl
       C => s00_axi_aclk,
       CE => \slv_reg0[7]_i_1_n_0\,
       D => s00_axi_wdata(2),
-      Q => \slv_reg0__0\(2),
+      Q => \slv_reg0_reg_n_0_[2]\,
       R => axi_awready_i_1_n_0
     );
 \slv_reg0_reg[30]\: unisim.vcomponents.FDRE
@@ -7894,7 +7941,7 @@ reciprocal_rtl_inst: entity work.mb_design_NewtonRapson_0_0_reciprocal_rtl
       C => s00_axi_aclk,
       CE => \slv_reg0[31]_i_1_n_0\,
       D => s00_axi_wdata(30),
-      Q => \slv_reg0__0\(30),
+      Q => \slv_reg0_reg_n_0_[30]\,
       R => axi_awready_i_1_n_0
     );
 \slv_reg0_reg[31]\: unisim.vcomponents.FDRE
@@ -7902,7 +7949,7 @@ reciprocal_rtl_inst: entity work.mb_design_NewtonRapson_0_0_reciprocal_rtl
       C => s00_axi_aclk,
       CE => \slv_reg0[31]_i_1_n_0\,
       D => s00_axi_wdata(31),
-      Q => \slv_reg0__0\(31),
+      Q => \slv_reg0_reg_n_0_[31]\,
       R => axi_awready_i_1_n_0
     );
 \slv_reg0_reg[3]\: unisim.vcomponents.FDRE
@@ -7910,7 +7957,7 @@ reciprocal_rtl_inst: entity work.mb_design_NewtonRapson_0_0_reciprocal_rtl
       C => s00_axi_aclk,
       CE => \slv_reg0[7]_i_1_n_0\,
       D => s00_axi_wdata(3),
-      Q => \slv_reg0__0\(3),
+      Q => \slv_reg0_reg_n_0_[3]\,
       R => axi_awready_i_1_n_0
     );
 \slv_reg0_reg[4]\: unisim.vcomponents.FDRE
@@ -7918,7 +7965,7 @@ reciprocal_rtl_inst: entity work.mb_design_NewtonRapson_0_0_reciprocal_rtl
       C => s00_axi_aclk,
       CE => \slv_reg0[7]_i_1_n_0\,
       D => s00_axi_wdata(4),
-      Q => \slv_reg0__0\(4),
+      Q => \slv_reg0_reg_n_0_[4]\,
       R => axi_awready_i_1_n_0
     );
 \slv_reg0_reg[5]\: unisim.vcomponents.FDRE
@@ -7926,7 +7973,7 @@ reciprocal_rtl_inst: entity work.mb_design_NewtonRapson_0_0_reciprocal_rtl
       C => s00_axi_aclk,
       CE => \slv_reg0[7]_i_1_n_0\,
       D => s00_axi_wdata(5),
-      Q => \slv_reg0__0\(5),
+      Q => \slv_reg0_reg_n_0_[5]\,
       R => axi_awready_i_1_n_0
     );
 \slv_reg0_reg[6]\: unisim.vcomponents.FDRE
@@ -7934,7 +7981,7 @@ reciprocal_rtl_inst: entity work.mb_design_NewtonRapson_0_0_reciprocal_rtl
       C => s00_axi_aclk,
       CE => \slv_reg0[7]_i_1_n_0\,
       D => s00_axi_wdata(6),
-      Q => \slv_reg0__0\(6),
+      Q => \slv_reg0_reg_n_0_[6]\,
       R => axi_awready_i_1_n_0
     );
 \slv_reg0_reg[7]\: unisim.vcomponents.FDRE
@@ -7942,7 +7989,7 @@ reciprocal_rtl_inst: entity work.mb_design_NewtonRapson_0_0_reciprocal_rtl
       C => s00_axi_aclk,
       CE => \slv_reg0[7]_i_1_n_0\,
       D => s00_axi_wdata(7),
-      Q => \slv_reg0__0\(7),
+      Q => \slv_reg0_reg_n_0_[7]\,
       R => axi_awready_i_1_n_0
     );
 \slv_reg0_reg[8]\: unisim.vcomponents.FDRE
@@ -7950,7 +7997,7 @@ reciprocal_rtl_inst: entity work.mb_design_NewtonRapson_0_0_reciprocal_rtl
       C => s00_axi_aclk,
       CE => \slv_reg0[15]_i_1_n_0\,
       D => s00_axi_wdata(8),
-      Q => \slv_reg0__0\(8),
+      Q => \slv_reg0_reg_n_0_[8]\,
       R => axi_awready_i_1_n_0
     );
 \slv_reg0_reg[9]\: unisim.vcomponents.FDRE
@@ -7958,48 +8005,48 @@ reciprocal_rtl_inst: entity work.mb_design_NewtonRapson_0_0_reciprocal_rtl
       C => s00_axi_aclk,
       CE => \slv_reg0[15]_i_1_n_0\,
       D => s00_axi_wdata(9),
-      Q => \slv_reg0__0\(9),
+      Q => \slv_reg0_reg_n_0_[9]\,
       R => axi_awready_i_1_n_0
     );
 \slv_reg1_reg[0]\: unisim.vcomponents.FDRE
      port map (
       C => s00_axi_aclk,
       CE => '1',
-      D => \^ready_out\,
-      Q => slv_reg1(0),
+      D => \slv_reg1_reg[0]_1\,
+      Q => \^slv_reg1_reg[0]_0\,
       R => '0'
     );
 \slv_reg2[15]_i_1\: unisim.vcomponents.LUT4
     generic map(
-      INIT => X"0080"
+      INIT => X"4000"
     )
         port map (
-      I0 => \slv_reg_wren__0\,
+      I0 => p_0_in(0),
       I1 => p_0_in(1),
-      I2 => s00_axi_wstrb(1),
-      I3 => p_0_in(0),
+      I2 => \slv_reg2[31]_i_2_n_0\,
+      I3 => s00_axi_wstrb(1),
       O => p_1_in(15)
     );
 \slv_reg2[23]_i_1\: unisim.vcomponents.LUT4
     generic map(
-      INIT => X"0080"
+      INIT => X"4000"
     )
         port map (
-      I0 => \slv_reg_wren__0\,
+      I0 => p_0_in(0),
       I1 => p_0_in(1),
-      I2 => s00_axi_wstrb(2),
-      I3 => p_0_in(0),
+      I2 => \slv_reg2[31]_i_2_n_0\,
+      I3 => s00_axi_wstrb(2),
       O => p_1_in(23)
     );
 \slv_reg2[31]_i_1\: unisim.vcomponents.LUT4
     generic map(
-      INIT => X"0080"
+      INIT => X"4000"
     )
         port map (
-      I0 => \slv_reg_wren__0\,
+      I0 => p_0_in(0),
       I1 => p_0_in(1),
-      I2 => s00_axi_wstrb(3),
-      I3 => p_0_in(0),
+      I2 => \slv_reg2[31]_i_2_n_0\,
+      I3 => s00_axi_wstrb(3),
       O => p_1_in(31)
     );
 \slv_reg2[31]_i_2\: unisim.vcomponents.LUT4
@@ -8007,21 +8054,21 @@ reciprocal_rtl_inst: entity work.mb_design_NewtonRapson_0_0_reciprocal_rtl
       INIT => X"8000"
     )
         port map (
-      I0 => \^axi_wready_reg_0\,
-      I1 => \^axi_awready_reg_0\,
-      I2 => s00_axi_awvalid,
-      I3 => s00_axi_wvalid,
-      O => \slv_reg_wren__0\
+      I0 => \^axi_awready_reg_0\,
+      I1 => \^axi_wready_reg_0\,
+      I2 => s00_axi_wvalid,
+      I3 => s00_axi_awvalid,
+      O => \slv_reg2[31]_i_2_n_0\
     );
 \slv_reg2[7]_i_1\: unisim.vcomponents.LUT4
     generic map(
-      INIT => X"0080"
+      INIT => X"4000"
     )
         port map (
-      I0 => \slv_reg_wren__0\,
+      I0 => p_0_in(0),
       I1 => p_0_in(1),
-      I2 => s00_axi_wstrb(0),
-      I3 => p_0_in(0),
+      I2 => \slv_reg2[31]_i_2_n_0\,
+      I3 => s00_axi_wstrb(0),
       O => p_1_in(7)
     );
 \slv_reg2_reg[0]\: unisim.vcomponents.FDRE
@@ -8498,12 +8545,12 @@ entity mb_design_NewtonRapson_0_0_NewtonRapson_v1_0 is
     s00_axi_aresetn : in STD_LOGIC;
     s00_axi_aclk : in STD_LOGIC;
     s00_axi_awaddr : in STD_LOGIC_VECTOR ( 1 downto 0 );
-    s00_axi_wvalid : in STD_LOGIC;
     s00_axi_awvalid : in STD_LOGIC;
+    s00_axi_wvalid : in STD_LOGIC;
     s00_axi_wdata : in STD_LOGIC_VECTOR ( 31 downto 0 );
+    s00_axi_wstrb : in STD_LOGIC_VECTOR ( 3 downto 0 );
     s00_axi_araddr : in STD_LOGIC_VECTOR ( 1 downto 0 );
     s00_axi_arvalid : in STD_LOGIC;
-    s00_axi_wstrb : in STD_LOGIC_VECTOR ( 3 downto 0 );
     s00_axi_bready : in STD_LOGIC;
     s00_axi_rready : in STD_LOGIC
   );
@@ -8513,12 +8560,14 @@ end mb_design_NewtonRapson_0_0_NewtonRapson_v1_0;
 
 architecture STRUCTURE of mb_design_NewtonRapson_0_0_NewtonRapson_v1_0 is
   signal NewtonRapson_v1_0_S00_AXI_inst_n_6 : STD_LOGIC;
+  signal NewtonRapson_v1_0_S00_AXI_inst_n_8 : STD_LOGIC;
   signal \^s_axi_arready\ : STD_LOGIC;
   signal \^s_axi_awready\ : STD_LOGIC;
   signal \^s_axi_wready\ : STD_LOGIC;
   signal aw_en_i_1_n_0 : STD_LOGIC;
   signal axi_bvalid_i_1_n_0 : STD_LOGIC;
   signal axi_rvalid_i_1_n_0 : STD_LOGIC;
+  signal p_2_in : STD_LOGIC_VECTOR ( 0 to 0 );
   signal \ready_i_1__0_n_0\ : STD_LOGIC;
   signal ready_i_1_n_0 : STD_LOGIC;
   signal ready_out : STD_LOGIC;
@@ -8527,6 +8576,7 @@ architecture STRUCTURE of mb_design_NewtonRapson_0_0_NewtonRapson_v1_0 is
   signal \reciprocal_rtl_inst/state\ : STD_LOGIC_VECTOR ( 3 downto 0 );
   signal \^s00_axi_bvalid\ : STD_LOGIC;
   signal \^s00_axi_rvalid\ : STD_LOGIC;
+  signal \slv_reg1[0]_i_1_n_0\ : STD_LOGIC;
 begin
   S_AXI_ARREADY <= \^s_axi_arready\;
   S_AXI_AWREADY <= \^s_axi_awready\;
@@ -8544,6 +8594,7 @@ NewtonRapson_v1_0_S00_AXI_inst: entity work.mb_design_NewtonRapson_0_0_NewtonRap
       axi_rvalid_reg_0 => axi_rvalid_i_1_n_0,
       axi_wready_reg_0 => \^s_axi_wready\,
       mul_ready => \reciprocal_rtl_inst/mul_ready\,
+      p_2_in(0) => p_2_in(0),
       ready_out => ready_out,
       ready_reg => ready_i_1_n_0,
       ready_reg_0 => \ready_i_1__0_n_0\,
@@ -8559,32 +8610,34 @@ NewtonRapson_v1_0_S00_AXI_inst: entity work.mb_design_NewtonRapson_0_0_NewtonRap
       s00_axi_wdata(31 downto 0) => s00_axi_wdata(31 downto 0),
       s00_axi_wstrb(3 downto 0) => s00_axi_wstrb(3 downto 0),
       s00_axi_wvalid => s00_axi_wvalid,
+      \slv_reg1_reg[0]_0\ => NewtonRapson_v1_0_S00_AXI_inst_n_8,
+      \slv_reg1_reg[0]_1\ => \slv_reg1[0]_i_1_n_0\,
       state(2 downto 0) => \reciprocal_rtl_inst/mul24_0/state\(2 downto 0)
     );
 aw_en_i_1: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"F7FFC4CCC4CCC4CC"
+      INIT => X"FFFF88880FFF8888"
     )
         port map (
-      I0 => s00_axi_awvalid,
-      I1 => NewtonRapson_v1_0_S00_AXI_inst_n_6,
-      I2 => \^s_axi_awready\,
-      I3 => s00_axi_wvalid,
-      I4 => s00_axi_bready,
-      I5 => \^s00_axi_bvalid\,
+      I0 => \^s00_axi_bvalid\,
+      I1 => s00_axi_bready,
+      I2 => s00_axi_wvalid,
+      I3 => s00_axi_awvalid,
+      I4 => NewtonRapson_v1_0_S00_AXI_inst_n_6,
+      I5 => \^s_axi_awready\,
       O => aw_en_i_1_n_0
     );
 axi_bvalid_i_1: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"0000FFFF80008000"
+      INIT => X"7444444444444444"
     )
         port map (
-      I0 => s00_axi_awvalid,
-      I1 => s00_axi_wvalid,
+      I0 => s00_axi_bready,
+      I1 => \^s00_axi_bvalid\,
       I2 => \^s_axi_awready\,
       I3 => \^s_axi_wready\,
-      I4 => s00_axi_bready,
-      I5 => \^s00_axi_bvalid\,
+      I4 => s00_axi_wvalid,
+      I5 => s00_axi_awvalid,
       O => axi_bvalid_i_1_n_0
     );
 axi_rvalid_i_1: unisim.vcomponents.LUT4
@@ -8621,6 +8674,16 @@ ready_i_1: unisim.vcomponents.LUT4
       I4 => \reciprocal_rtl_inst/state\(2),
       I5 => ready_out,
       O => \ready_i_1__0_n_0\
+    );
+\slv_reg1[0]_i_1\: unisim.vcomponents.LUT3
+    generic map(
+      INIT => X"F4"
+    )
+        port map (
+      I0 => p_2_in(0),
+      I1 => NewtonRapson_v1_0_S00_AXI_inst_n_8,
+      I2 => ready_out,
+      O => \slv_reg1[0]_i_1_n_0\
     );
 end STRUCTURE;
 library IEEE;

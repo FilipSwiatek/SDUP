@@ -1,7 +1,7 @@
 -- Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2019.1 (win64) Build 2552052 Fri May 24 14:49:42 MDT 2019
--- Date        : Tue Apr 14 05:24:10 2020
+-- Date        : Tue Apr 14 22:18:21 2020
 -- Host        : Athena running 64-bit major release  (build 9200)
 -- Command     : write_vhdl -force -mode synth_stub
 --               D:/sem_I/SDUP/NewtonRapson_test/NewtonRapson_test.srcs/sources_1/bd/mb_design/ip/mb_design_NewtonRapson_0_0/mb_design_NewtonRapson_0_0_stub.vhdl

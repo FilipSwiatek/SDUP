@@ -3,8 +3,8 @@
 // Tool Version: Vivado v.2019.1 (win64) Build 2552052 Fri May 24 14:49:42 MDT 2019
 // Date        : Tue Apr 14 03:40:22 2020
 // Host        : Athena running 64-bit major release  (build 9200)
-// Command     : write_verilog -force -mode synth_stub
-//               d:/sem_I/SDUP/NewtonRapson_test/NewtonRapson_test.srcs/sources_1/bd/mb_design/ip/mb_design_clk_wiz_1_0/mb_design_clk_wiz_1_0_stub.v
+// Command     : write_verilog -force -mode synth_stub -rename_top mb_design_clk_wiz_1_0 -prefix
+//               mb_design_clk_wiz_1_0_ mb_design_clk_wiz_1_0_stub.v
 // Design      : mb_design_clk_wiz_1_0
 // Purpose     : Stub declaration of top-level module interface
 // Device      : xc7z020clg484-1

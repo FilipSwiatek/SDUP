@@ -48,7 +48,7 @@
 
 
 // IP VLNV: xilinx.com:user:NewtonRapson:1.0
-// IP Revision: 9
+// IP Revision: 12
 
 `timescale 1ns/1ps
 
