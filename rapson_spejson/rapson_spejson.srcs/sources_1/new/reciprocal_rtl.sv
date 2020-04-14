@@ -4,6 +4,7 @@
 // File Name: reciprocal.sv
 ////////////////////////////////////////////////////////////////////////////////
 module reciprocal_rtl(
+    input logic reset,
     input logic clk,
     input logic start,
     output logic ready = 0,
@@ -38,6 +39,10 @@ module reciprocal_rtl(
     CHECK_EQ, ASSIGN_NEW, MUL_SCALING, DONE} state;
     
     always_ff @(posedge clk) begin: fsm
+    if(reset) begin
+        state = IDLE;
+    end
+    
         case(state)
             IDLE: begin
                 ready <= 1'b0;

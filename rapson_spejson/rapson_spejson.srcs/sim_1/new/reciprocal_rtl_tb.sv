@@ -8,13 +8,14 @@
 module reciprocal_rtl_tb( );
 logic clk = 0;
 logic start;
+logic reset = 1;
 logic ready;
 logic [15:0] input0; // Integer [15:0]
 logic [4:-19] output0; // Fixed point [5:19] representarion
 int tmp_i, input_i;
 real input_r, check_r, output_r;
 logic ready_prev; // the state of ready in previous clock
-reciprocal_rtl UUT(.clk(clk), .start(start), .ready(ready), .input0(input0), .output0(output0));
+reciprocal_rtl UUT(.reset(reset), .clk(clk), .start(start), .ready(ready), .input0(input0), .output0(output0));
 // Clock generator
 always begin
 #5 clk = 1; #5 clk = 0;
@@ -25,6 +26,8 @@ input_r = input_i;
 check_r = 1 / input_r;
 input0 <= input_i;
 start <= 1'b1;
+# 100 reset <= 0;
+start <= 1;
 end
 always@( posedge clk ) begin
 start <= ready; //self handshaking
