@@ -15,7 +15,6 @@ port    (
 			RST: in std_logic; 
             CLK: in std_logic; -- global clock
             CE: in std_logic;  -- clock enable from prescaler (for sampler only - read clock is not prescaled)
-            MODE : in std_logic; -- if high, stream_mode is enabled and sampler works in infinite loop waiting on reset 
 			Q: out std_logic_vector(BUS_WIDTH - 1 downto 0); -- output made to connect with data in from memory
 			WREN: out std_logic;
 			TRIGGER: out std_logic
@@ -28,7 +27,6 @@ signal INPUT_prev: std_logic_vector(BUS_WIDTH - 1 downto 0);
 signal Q_int: std_logic_vector(BUS_WIDTH - 1 downto 0);
 
 signal TRIGGER_int: std_logic := '0';
-signal TRIGGER_int_prev: std_logic := '0';
 signal WREN_int: std_logic := '0';
 
 
@@ -36,8 +34,6 @@ begin
 
 
 triggering:process(CLK, CE,INPUT)
-
-variable INDIVIDUAL_CASE_TRIG: std_logic_vector(1 downto 0);
 
 begin
 if rising_edge(CLK) then
@@ -70,7 +66,6 @@ if rising_edge(CLK) then
 					end case;
 			end loop;
 			INPUT_prev <= INPUT;
-			TRIGGER_int_prev <= TRIGGER_int;
 		end if; -- CE = '1'
 	end if; -- RST = '1'
 end if; -- rising_edge(CLK)

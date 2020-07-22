@@ -19,7 +19,7 @@ module logic_analyzer
     output logic[31:0] sample_output, // sample output
     output logic isBufferFullyWritten, // true if buffer is fully writed
     output logic isBufferFullyRead, // true if buffer is fully read
-    output logic isAnalyzerTriggered // true if triggered, usable in buffered mode only
+    output logic isAnalyzerTriggered // true if triggered
 );
 
 logic [input_data_width - 1 :0] samples_buffer [memory_size -1 :0];
@@ -54,7 +54,6 @@ prescaler prescaler_inst1(
     sample_output <= 0;
     isBufferFullyWritten <= 0;
     isBufferFullyRead<= 1;
-    isAnalyzerTriggered <= 0;
     read_addr <= 0;
     write_addr <= 0;  
  endfunction;
@@ -70,18 +69,27 @@ prescaler prescaler_inst1(
     end
  endfunction
  
+ function void ReadBufferProc;
+    if(read_enable && read_addr < used_size_of_buffer - 1) begin
+      sample_output  <= samples_buffer[read_addr];
+      read_addr++;
+    end else begin
+        sample_output  <= sample_output;
+        isBufferFullyRead  <= 1;
+    end
+ endfunction
+ 
 
 initial begin
     resetAnalyzer();
 end
 
 always_ff @(posedge clk) begin 
-
     if (rst) begin 
-        resetVariables();
+        resetAnalyzer();
     end else begin
-        fillBuffer(); // feed buffer with new values if buffered mode enabled   
-        setOutput(); // set q to proper value depending on current runniong mode (buffered or stream)
+        WriteBufferProc();
+        ReadBufferProc();
     end
 end
 
