@@ -5,14 +5,16 @@ module sampler_tb  ;
   wire    trigger   ; 
   wire    wren   ; 
   reg    ce   ; 
-  reg  [15 : 0]  in   ; 
-  wire  [15 : 0]  q   ; 
+  reg  [31 : 0]  in   ; 
+  wire  [31 : 0]  q   ; 
   reg    rst   ; 
   reg    clk   ; 
-  reg  [31 : 0]  trig_kind   ; 
+  reg continuous_mode;
+  reg  [63 : 0]  trig_kind   ; 
   integer i;
   sampler  
    DUT  ( 
+    .CONTINUOUS_MODE(continuous_mode),
        .TRIGGER (trigger ) ,
       .WREN (wren ) ,
       .CE (ce ) ,
@@ -29,11 +31,10 @@ module sampler_tb  ;
   begin
 	repeat(2137)
 	  begin
-			for (i = 0; i < 16; i = i + 1)
+			for (i = 0; i < 32; i = i + 1)
 			begin
-					in  = 16'b0000000000000000;
-				#4 in  = 16'b0000000000000001 << i;
-				#4 in  = 16'b0000000000000000;
+				in  = 32'b0;
+				#4 in  = 32'b1 << i;
 			end
 	  end
 	end
@@ -41,6 +42,27 @@ module sampler_tb  ;
 
   initial
   begin
+        continuous_mode = 0;
+		rst  = 1'b0  ;
+		ce = 1'b1;		
+		trig_kind  = 32'd1 ;
+		# 98
+		rst  = 1'b1  ;
+		trig_kind  = 32'd2 ;
+		#2
+		rst  = 1'b0;
+		#40
+		rst  = 1'b1  ;
+		trig_kind  = 32'd4 ;
+		#4
+		rst  = 1'b0 ;
+		#200
+		rst  = 1'b1  ;
+		trig_kind  = 32'd1 << 4 ;
+		#4
+		rst  = 1'b0 ;
+		
+		continuous_mode = 1;
 		rst  = 1'b0  ;
 		ce = 1'b1;		
 		trig_kind  = 32'd1 ;

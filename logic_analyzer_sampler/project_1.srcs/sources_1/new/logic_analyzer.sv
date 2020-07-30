@@ -8,18 +8,18 @@ module logic_analyzer
 
 (   // Inputs
     input logic clk,
-    input logic rst,
     input logic [prescaling_factor_width - 1:0] prescaling_factor,
     input logic [input_data_width - 1:0] input_data_bus,
     input logic [1:0] trig_method [input_data_width - 1:0],
-    input logic [memory_address_width - 1:0] used_size_of_buffer, // number of elements to store in memory before buffer will be full
+    input logic [memory_address_width - 1:0] used_size_of_buffer, // number of elements to store in memory before buffer will be marked as full
     input logic read_enable, // must be set to refresh sample output
-    input logic enable, // enables sampler trigger etc
+    input logic start, // enables sampler trigger etc
+    input logic continuous_mode, // enables continoous_mode (no triggering pattern)
     // Outputs
     output logic[31:0] sample_output, // sample output
     output logic isBufferFullyWritten, // true if buffer is fully writed
     output logic isBufferFullyRead, // true if buffer is fully read
-    output logic isAnalyzerTriggered // true if triggered
+    output logic isAnalyzerTriggered // true if triggered (always high when continuous_mode enabled)
 );
 
 logic [input_data_width - 1 :0] samples_buffer [memory_size -1 :0];
@@ -32,18 +32,19 @@ logic ce;
 sampler #(
 .BUS_WIDTH(32)
 ) sampler_inst ( 
+       .CONTINUOUS_MODE(continuous_mode),
        .TRIGGER (isAnalyzerTriggered ) ,
       .WREN (wren ) ,
       .CE (ce ) ,
       .INPUT (input_data_bus ) ,
       .Q (current_sample_from_sampler ) ,
-      .RST (rst ) ,
+      .RST (!start ) ,
       .CLK (clk ) ,
       .TRIG_KIND ( 64'(trig_method) ));
       
       
 prescaler prescaler_inst1(
-.rst(rst),
+.rst(!start),
 .clk(clk),
 .FACTOR(prescaling_factor),
 .ce(ce)); 
@@ -85,7 +86,7 @@ initial begin
 end
 
 always_ff @(posedge clk) begin 
-    if (rst) begin 
+    if (!start) begin 
         resetAnalyzer();
     end else begin
         WriteBufferProc();
