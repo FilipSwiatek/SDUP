@@ -11,19 +11,19 @@ module sampler_tb  ;
   reg    clk   ; 
   reg continuous_mode;
   reg  [63 : 0]  trig_kind   ; 
-  integer i;
+  
   sampler  
    DUT  ( 
-    .CONTINUOUS_MODE(continuous_mode),
-       .TRIGGER (trigger ) ,
-      .WREN (wren ) ,
-      .CE (ce ) ,
-      .INPUT (in ) ,
-      .Q (q ) ,
-      .RST (rst ) ,
-      .CLK (clk ) ,
-      .TRIG_KIND (trig_kind ) ); 
-
+    .continuous_mode(continuous_mode),
+       .trigger (trigger ) ,
+      .wren (wren ) ,
+      .ce (ce ) ,
+      .in_bus (in ) ,
+      .out_bus (q ) ,
+      .rst (rst ) ,
+      .clk (clk ) ,
+      .trig_kind ({>>{trig_kind}}) ); 
+    
 
 // "Counter Pattern"(Binary-Up) : step = 1
 // Start Time = 0 ns, End Time = 1 ms, Period = 50 ns
@@ -31,10 +31,11 @@ module sampler_tb  ;
   begin
 	repeat(2137)
 	  begin
-			for (i = 0; i < 32; i = i + 1)
+			for (int i = 0; i < 32; i = i + 1)
 			begin
 				in  = 32'b0;
 				#4 in  = 32'b1 << i;
+				#4 in  = 32'b0;
 			end
 	  end
 	end
@@ -43,45 +44,23 @@ module sampler_tb  ;
   initial
   begin
         continuous_mode = 0;
-		rst  = 1'b0  ;
-		ce = 1'b1;		
-		trig_kind  = 32'd1 ;
-		# 98
-		rst  = 1'b1  ;
-		trig_kind  = 32'd2 ;
-		#2
-		rst  = 1'b0;
-		#40
-		rst  = 1'b1  ;
-		trig_kind  = 32'd4 ;
-		#4
-		rst  = 1'b0 ;
-		#200
-		rst  = 1'b1  ;
-		trig_kind  = 32'd1 << 4 ;
-		#4
-		rst  = 1'b0 ;
+        trig_kind  = 32'd1 ;
+        rst = 1'b1;
+		#4 rst  = 1'b0  ;
+		ce = 1'b1;	
 		
-		continuous_mode = 1;
-		rst  = 1'b0  ;
-		ce = 1'b1;		
-		trig_kind  = 32'd1 ;
-		# 98
-		rst  = 1'b1  ;
+		
+	    #128 rst  = 1'b1  ;
 		trig_kind  = 32'd2 ;
-		#2
-		rst  = 1'b0;
-		#40
-		rst  = 1'b1  ;
+		#4 rst  = 1'b0;
+		
+		#128 rst  = 1'b1  ;
+		trig_kind  = 32'd3 ;
+		#4 rst  = 1'b0 ;
+		
+		#128 rst  = 1'b1  ;
 		trig_kind  = 32'd4 ;
-		#4
-		rst  = 1'b0 ;
-		#200
-		rst  = 1'b1  ;
-		trig_kind  = 32'd1 << 4 ;
-		#4
-		rst  = 1'b0 ;
-
+		#4 rst  = 1'b0 ;
   end
 
 
@@ -99,7 +78,7 @@ module sampler_tb  ;
   
   always
   begin
-  #8 ce <= ~ce;
+  #30 ce <= ~ce;
   end
 
   initial

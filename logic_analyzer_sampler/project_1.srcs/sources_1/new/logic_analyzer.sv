@@ -13,7 +13,7 @@ module logic_analyzer
     input logic [1:0] trig_method [input_data_width - 1:0],
     input logic [memory_address_width - 1:0] used_size_of_buffer, // number of elements to store in memory before buffer will be marked as full
     input logic read_enable, // must be set to refresh sample output
-    input logic start, // enables sampler trigger etc
+    input logic enable, // enables sampler trigger etc
     input logic continuous_mode, // enables continoous_mode (no triggering pattern)
     // Outputs
     output logic[31:0] sample_output, // sample output
@@ -29,6 +29,9 @@ logic [input_data_width - 1 :0] current_sample_from_sampler; // output generated
 logic wren;
 logic ce;
 
+wire trig_method2 [2 * input_data_width - 1 :0]; // Frankenstein's monster to avoid Vivado's [XSIM 43-3294] Signal EXCEPTION_ACCESS_VIOLATION signal from simulator 
+assign trig_method2 = {>>{trig_method}}; // assignment to Frankenstein's monster
+
 sampler #(
 .BUS_WIDTH(32)
 ) sampler_inst ( 
@@ -38,13 +41,14 @@ sampler #(
       .CE (ce ) ,
       .INPUT (input_data_bus ) ,
       .Q (current_sample_from_sampler ) ,
-      .RST (!start ) ,
+      .RST (!enable ) ,
       .CLK (clk ) ,
-      .TRIG_KIND ( 64'(trig_method) ));
+      .TRIG_KIND (trig_method2) // trig_method2 instead of {>>{trig_method}} because fuck logic, Xilinx
+      );
       
       
 prescaler prescaler_inst1(
-.rst(!start),
+.rst(!enable),
 .clk(clk),
 .FACTOR(prescaling_factor),
 .ce(ce)); 
@@ -86,13 +90,17 @@ initial begin
 end
 
 always_ff @(posedge clk) begin 
-    if (!start) begin 
+    if (!enable) begin 
         resetAnalyzer();
     end else begin
         WriteBufferProc();
         ReadBufferProc();
     end
 end
+
+
+
+
 
 
 
