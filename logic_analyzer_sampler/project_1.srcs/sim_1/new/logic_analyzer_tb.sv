@@ -57,7 +57,7 @@ begin
     enable = 0; // enables sampler trigger etc
     continuous_mode = 0; // enables continoous_mode (no triggering pattern)
     
-    $stop;
+    #1000 $stop;
 end
 
 //clk process

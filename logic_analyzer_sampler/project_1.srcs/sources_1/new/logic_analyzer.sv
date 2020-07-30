@@ -33,19 +33,18 @@ wire trig_method2 [2 * input_data_width - 1 :0]; // Frankenstein's monster to av
 assign trig_method2 = {>>{trig_method}}; // assignment to Frankenstein's monster
 
 sampler #(
-.BUS_WIDTH(32)
+.input_data_width(32)
 ) sampler_inst ( 
-       .CONTINUOUS_MODE(continuous_mode),
-       .TRIGGER (isAnalyzerTriggered ) ,
-      .WREN (wren ) ,
-      .CE (ce ) ,
-      .INPUT (input_data_bus ) ,
-      .Q (current_sample_from_sampler ) ,
-      .RST (!enable ) ,
-      .CLK (clk ) ,
-      .TRIG_KIND (trig_method2) // trig_method2 instead of {>>{trig_method}} because fuck logic, Xilinx
+       .continuous_mode(continuous_mode),
+       .trigger (isAnalyzerTriggered ) ,
+      .wren (wren ) ,
+      .ce (ce ) ,
+      .in_bus (input_data_bus ) ,
+      .out_bus (current_sample_from_sampler ) ,
+      .rst (!enable ) ,
+      .clk (clk ) ,
+      .trig_kind (trig_method) // trig_method2 instead of {>>{trig_method}} because fuck logic, Xilinx
       );
-      
       
 prescaler prescaler_inst1(
 .rst(!enable),
