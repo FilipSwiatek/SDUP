@@ -2,7 +2,7 @@
 
 module logic_alalyzer_tb
 #(
-    parameter unsigned memory_address_width = 10,
+    parameter unsigned memory_address_width = 6,
     parameter unsigned prescaling_factor_width = 29,
     parameter unsigned input_data_width = 32,
     localparam unsigned memory_size  = 2**memory_address_width //(32-bit depth);
@@ -24,9 +24,9 @@ logic isAnalyzerTriggered; // true if triggered (always high when continuous_mod
 
 logic_analyzer 
 #(
-    .memory_address_width(10),
-    .prescaling_factor_width(29),
-    .input_data_width(32)
+    .memory_address_width(memory_address_width),
+    .prescaling_factor_width(prescaling_factor_width),
+    .input_data_width(input_data_width)
 ) 
 DUT 
 (
@@ -49,13 +49,22 @@ DUT
 //main process
 initial
 begin
-    prescaling_factor = 29'd1;
+    prescaling_factor = 4'd1;
     input_data_bus = 32'd0;
     {>>{trig_method}} = 64'd0;
-    used_size_of_buffer = memory_size; // number of elements to store in memory before buffer will be marked as full
-    read_enable = 0; // must be set to refresh sample output
+    trig_method[0] = 1; // rising edge on first channel
+    used_size_of_buffer = 2**memory_address_width; // number of elements to store in memory before buffer will be marked as full
+    read_enable = 0; // must be set high to refresh sample output
     enable = 0; // enables sampler trigger etc
     continuous_mode = 0; // enables continoous_mode (no triggering pattern)
+    #4 
+    enable = 1;
+    #10
+    input_data_bus = 32'd1;
+    #10
+    input_data_bus = 32'd1 << 4;
+    #10
+    input_data_bus = 32'd1 << 5;
     
     #1000 $stop;
 end

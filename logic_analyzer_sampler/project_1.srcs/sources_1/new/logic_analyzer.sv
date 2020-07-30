@@ -29,13 +29,17 @@ logic [input_data_width - 1 :0] current_sample_from_sampler; // output generated
 logic wren;
 logic ce;
 
-wire trig_method2 [2 * input_data_width - 1 :0]; // Frankenstein's monster to avoid Vivado's [XSIM 43-3294] Signal EXCEPTION_ACCESS_VIOLATION signal from simulator 
-assign trig_method2 = {>>{trig_method}}; // assignment to Frankenstein's monster
+// internal signals reloaded on reset
+logic [prescaling_factor_width - 1:0] prescaling_factor_int;
+logic [1:0] trig_method_int [input_data_width - 1:0];
+logic continuous_mode_int;
+logic [memory_address_width - 1:0] used_size_of_buffer_int; 
+
 
 sampler #(
 .input_data_width(32)
 ) sampler_inst ( 
-       .continuous_mode(continuous_mode),
+       .continuous_mode(continuous_mode_int),
        .trigger (isAnalyzerTriggered ) ,
       .wren (wren ) ,
       .ce (ce ) ,
@@ -43,13 +47,13 @@ sampler #(
       .out_bus (current_sample_from_sampler ) ,
       .rst (!enable ) ,
       .clk (clk ) ,
-      .trig_kind (trig_method) // trig_method2 instead of {>>{trig_method}} because fuck logic, Xilinx
+      .trig_kind (trig_method_int) 
       );
       
 prescaler prescaler_inst1(
 .rst(!enable),
 .clk(clk),
-.FACTOR(prescaling_factor),
+.FACTOR(prescaling_factor_int),
 .ce(ce)); 
 
 
@@ -57,15 +61,25 @@ prescaler prescaler_inst1(
  function void resetAnalyzer;
     sample_output <= 0;
     isBufferFullyWritten <= 0;
-    isBufferFullyRead<= 1;
+    isBufferFullyRead <= 0;
     read_addr <= 0;
-    write_addr <= 0;  
+    write_addr <= 0; 
+    
+    prescaling_factor_int <= prescaling_factor;
+     trig_method_int <= trig_method;
+    continuous_mode_int <= continuous_mode;
+    used_size_of_buffer_int <= used_size_of_buffer; 
+    
+    
+    
+     
  endfunction;
  
  
  function void WriteBufferProc;
-    if(wren == 1 && write_addr < used_size_of_buffer - 1) begin
+    if(wren == 1 && write_addr < used_size_of_buffer_int - 1) begin
       samples_buffer[write_addr]  <= current_sample_from_sampler;
+      isBufferFullyWritten  <= 0;
       write_addr++;
     end else begin
         samples_buffer[write_addr] <= samples_buffer[write_addr];
@@ -74,8 +88,9 @@ prescaler prescaler_inst1(
  endfunction
  
  function void ReadBufferProc;
-    if(read_enable && read_addr < used_size_of_buffer - 1) begin
+    if(read_enable && read_addr < used_size_of_buffer_int - 1) begin
       sample_output  <= samples_buffer[read_addr];
+      isBufferFullyRead  <= 0;
       read_addr++;
     end else begin
         sample_output  <= sample_output;
