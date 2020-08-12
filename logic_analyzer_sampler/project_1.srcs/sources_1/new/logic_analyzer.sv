@@ -11,7 +11,7 @@ module logic_analyzer
     input logic [prescaling_factor_width - 1:0] prescaling_factor,
     input logic [input_data_width - 1:0] input_data_bus,
     input logic [1:0] trig_method [input_data_width - 1:0],
-    input logic [memory_address_width - 1:0] used_size_of_buffer, // number of elements to store in memory before buffer will be marked as full
+    input logic [memory_address_width - 1:0] highest_memory_addr, // number of elements to store in memory  -1 before buffer will be marked as full
     input logic read_enable, // must be set to refresh sample output
     input logic enable, // enables sampler trigger etc
     input logic continuous_mode, // enables continoous_mode (no triggering pattern)
@@ -33,7 +33,7 @@ logic ce;
 logic [prescaling_factor_width - 1:0] prescaling_factor_int;
 logic [1:0] trig_method_int [input_data_width - 1:0];
 logic continuous_mode_int;
-logic [memory_address_width - 1:0] used_size_of_buffer_int; 
+logic [memory_address_width - 1:0] highest_memory_addr_int; 
 
 
 sampler #(
@@ -68,7 +68,7 @@ prescaler prescaler_inst1(
     prescaling_factor_int <= prescaling_factor;
      trig_method_int <= trig_method;
     continuous_mode_int <= continuous_mode;
-    used_size_of_buffer_int <= used_size_of_buffer; 
+    highest_memory_addr_int <= highest_memory_addr; 
     
     
     
@@ -77,10 +77,12 @@ prescaler prescaler_inst1(
  
  
  function void WriteBufferProc;
-    if(wren == 1 && write_addr < used_size_of_buffer_int - 1) begin
-      samples_buffer[write_addr]  <= current_sample_from_sampler;
-      isBufferFullyWritten  <= 0;
-      write_addr++;
+    if(write_addr < highest_memory_addr_int) begin
+        if(wren) begin
+            samples_buffer[write_addr]  <= current_sample_from_sampler;
+            isBufferFullyWritten  <= 0;
+            write_addr++;
+        end
     end else begin
         samples_buffer[write_addr] <= samples_buffer[write_addr];
         isBufferFullyWritten  <= 1;
@@ -88,10 +90,12 @@ prescaler prescaler_inst1(
  endfunction
  
  function void ReadBufferProc;
-    if(read_enable && read_addr < used_size_of_buffer_int - 1) begin
-      sample_output  <= samples_buffer[read_addr];
-      isBufferFullyRead  <= 0;
-      read_addr++;
+    if(read_addr < highest_memory_addr_int - 1) begin
+        if(read_enable) begin
+            sample_output  <= samples_buffer[read_addr];
+            isBufferFullyRead  <= 0;
+            read_addr++;
+        end
     end else begin
         sample_output  <= sample_output;
         isBufferFullyRead  <= 1;

@@ -12,13 +12,13 @@ logic clk;
 logic [prescaling_factor_width - 1:0] prescaling_factor;
 logic [input_data_width - 1:0] input_data_bus;
 logic [1:0] trig_method [input_data_width - 1:0];
-logic [memory_address_width - 1:0] used_size_of_buffer; // number of elements to store in memory before buffer will be marked as full
+logic [memory_address_width - 1:0] highest_memory_addr; // number of elements to store in memory before buffer will be marked as full
 logic read_enable; // must be set to refresh sample output
 logic enable; // enables sampler trigger etc
 logic continuous_mode; // enables continoous_mode (no triggering pattern)
 
 logic [31:0] sample_output; // sample output
-logic isBufferFullyWritten; // true if buffer is fully writed
+logic isBufferFullyWritten; // true if buffer is fully written
 logic isBufferFullyRead; // true if buffer is fully read
 logic isAnalyzerTriggered; // true if triggered (always high when continuous_mode enabled)
 
@@ -35,7 +35,7 @@ DUT
     .prescaling_factor(prescaling_factor),
     .input_data_bus(input_data_bus),
     .trig_method(trig_method),
-    .used_size_of_buffer(used_size_of_buffer), // number of elements to store in memory before buffer will be marked as full
+    .highest_memory_addr(highest_memory_addr), // number of elements to store in memory before buffer will be marked as full
     .read_enable(read_enable), // must be set to refresh sample output
     .enable(enable), // enables sampler trigger etc
     .continuous_mode(continuous_mode), // enables continoous_mode (no triggering pattern)
@@ -53,19 +53,19 @@ begin
     input_data_bus = 32'd0;
     {>>{trig_method}} = 64'd0;
     trig_method[0] = 1; // rising edge on first channel
-    used_size_of_buffer = 2**memory_address_width; // number of elements to store in memory before buffer will be marked as full
+    highest_memory_addr = 2**memory_address_width - 1; // number of elements to store - 1 in memory before buffer will be marked as full
     read_enable = 0; // must be set high to refresh sample output
     enable = 0; // enables sampler trigger etc
     continuous_mode = 0; // enables continoous_mode (no triggering pattern)
     #4 
     enable = 1;
-    #10
-    input_data_bus = 32'd1;
-    #10
-    input_data_bus = 32'd1 << 4;
-    #10
-    input_data_bus = 32'd1 << 5;
     
+    # 100
+    
+    for (int i = 0; i<100; i++) begin
+        # 10 input_data_bus++;
+    end
+         
     #1000 $stop;
 end
 
@@ -75,9 +75,9 @@ end
 	  clk = 1'b0;
  end
 
+
  always
  begin
-    input_data_bus++;
     #2 clk <= ~clk;
   
     if(clk)
