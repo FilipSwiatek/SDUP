@@ -22,7 +22,8 @@ module logic_analyzer
     output logic isAnalyzerTriggered // true if triggered (always high when continuous_mode enabled)
 );
 
-logic [input_data_width - 1 :0] samples_buffer [memory_size -1 :0];
+
+(* ram_style = "block" *)  logic [input_data_width - 1 :0] samples_buffer [memory_size -1 :0];
 logic [memory_address_width - 1:0] read_addr;
 logic [memory_address_width - 1:0] write_addr; // address in buffer of sample to write
 logic [input_data_width - 1 :0] current_sample_from_sampler; // output generated from subblock; sampler
@@ -36,12 +37,11 @@ logic continuous_mode_int;
 logic [memory_address_width - 1:0] highest_memory_addr_int; 
 
 
-sampler #(
+sample_and_hold #(
 .input_data_width(32)
 ) sampler_inst ( 
        .continuous_mode(continuous_mode_int),
        .trigger (isAnalyzerTriggered ) ,
-      .wren (wren ) ,
       .ce (ce ) ,
       .in_bus (input_data_bus ) ,
       .out_bus (current_sample_from_sampler ) ,
@@ -56,15 +56,23 @@ prescaler prescaler_inst1(
 .FACTOR(prescaling_factor_int),
 .ce(ce)); 
 
+xilinx_simple_dual_port_1_clock_ram #(
+    .RAM_WIDTH(input_data_width),           // Specify RAM data width
+    .RAM_DEPTH(memory_size),    // Specify RAM depth (number of entries)
+    .RAM_PERFORMANCE("HIGH_PERFORMANCE"),   // Select "HIGH_PERFORMANCE" or "LOW_LATENCY" 
+    .INIT_FILE("")                          // Specify name/location of RAM initialization file if using one (leave blank if not)
+  ) RAM (
+    .addra(write_addr),                 // Write address bus, width determined from RAM_DEPTH
+    .addrb(read_addr),                  // Read address bus, width determined from RAM_DEPTH
+    .dina(current_sample_from_sampler), // RAM input data, width determined from RAM_WIDTH
+    .clka(clk),                         // Clock
+    .wea(wren),                         // Write enable
+    .doutb(sample_output)               // RAM output data, width determined from RAM_WIDTH
+  );
+
 
  
- function void resetAnalyzer;
-    sample_output <= 0;
-    isBufferFullyWritten <= 0;
-    isBufferFullyRead <= 0;
-    read_addr <= 0;
-    write_addr <= 0; 
-    
+ function void resetAnalyzer;   
     prescaling_factor_int <= prescaling_factor;
      trig_method_int <= trig_method;
     continuous_mode_int <= continuous_mode;
@@ -75,46 +83,64 @@ prescaler prescaler_inst1(
      
  endfunction;
  
- 
- function void WriteBufferProc;
-    if(write_addr < highest_memory_addr_int) begin
-        if(wren) begin
-            samples_buffer[write_addr]  <= current_sample_from_sampler;
-            isBufferFullyWritten  <= 0;
-            write_addr++;
-        end
+ // TODO wren management 
+ function void writeControlProc;
+    if(!enable) begin
+        isBufferFullyWritten <= 0;
+        write_addr <= 0;
+        wren <= 1;
     end else begin
-        samples_buffer[write_addr] <= samples_buffer[write_addr];
-        isBufferFullyWritten  <= 1;
+        if( isBufferFullyWritten == 0 && isAnalyzerTriggered) begin
+            if(write_addr == highest_memory_addr_int) begin
+                isBufferFullyWritten <= 1;
+                wren <= 0;
+            end else begin
+                write_addr++;
+            end
+        end
     end
+    
+    
  endfunction
  
- function void ReadBufferProc;
-    if(read_addr < highest_memory_addr_int - 1) begin
-        if(read_enable) begin
-            sample_output  <= samples_buffer[read_addr];
-            isBufferFullyRead  <= 0;
-            read_addr++;
-        end
+ 
+ function void rdenProc;
+    if(!enable) begin
+        isBufferFullyRead <= 0;
+        read_addr <= 0;
     end else begin
-        sample_output  <= sample_output;
-        isBufferFullyRead  <= 1;
+        if( isBufferFullyRead == 0) begin
+            if(read_enable) begin
+                if(read_addr == highest_memory_addr_int) begin
+                   isBufferFullyRead  <= 1;
+                end else begin
+                    read_addr++;
+                end
+            end 
+        end
     end
  endfunction
  
 
 initial begin
-    resetAnalyzer();
+    sample_output <= 0;
+    isBufferFullyWritten <= 0;
+    isBufferFullyRead <= 0;
+    read_addr <= 0;
+    write_addr <= 0;
+    wren <= 1;
 end
 
 always_ff @(posedge clk) begin 
     if (!enable) begin 
         resetAnalyzer();
     end else begin
-        WriteBufferProc();
-        ReadBufferProc();
+        writeControlProc();
+        rdenProc();
     end
 end
+
+
 
 
 

@@ -62,11 +62,18 @@ begin
     
     # 100
     
-    for (int i = 0; i<100; i++) begin
+    for (int i = 0; i < highest_memory_addr + 2; i++) begin
         # 10 input_data_bus++;
     end
-         
-    #1000 $stop;
+   
+    read_enable <= 1;
+    
+    for (int i = 0; i < highest_memory_addr + 2; i++) begin
+        # 10 input_data_bus++;
+    end
+    
+    
+    $stop;
 end
 
 //clk process

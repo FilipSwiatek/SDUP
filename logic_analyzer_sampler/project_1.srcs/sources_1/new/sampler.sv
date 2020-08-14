@@ -1,6 +1,6 @@
 `timescale 1ns / 1ns
 
-module sampler#(
+module sample_and_hold#(
     parameter integer input_data_width = 32
     )
     (
@@ -13,7 +13,6 @@ module sampler#(
     input logic ce,
     //Outputs
     output logic [31:0] out_bus,
-    output logic wren,
     output logic trigger
     );
     
@@ -29,17 +28,14 @@ module sampler#(
             end    
         end else begin
             triggerProc();
-            output_and_wrenProc();
-            output_and_wrenProc(); 
+            outputProc(); 
         end 
     end
     
-    function void output_and_wrenProc();
+    function void outputProc();
         if(trigger && ce) begin
-            wren <= 1;
             out_bus <= in_bus_prev;
-        end else
-            wren <= 0;
+        end
     endfunction
     
     function void triggerProc();    
