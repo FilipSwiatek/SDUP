@@ -20,6 +20,7 @@
     <Option Name="SimulatorLanguage" Val="Verilog"/>
     <Option Name="BoardPart" Val="digilentinc.com:zybo:part0:1.0"/>
     <Option Name="BoardPartRepoPaths" Val="C:/Users/Snickers/AppData/Roaming/Xilinx/Vivado/2019.1/xhub/board_store"/>
+    <Option Name="SourceMgmtMode" Val="DisplayOnly"/>
     <Option Name="ActiveSimSet" Val="sim_1"/>
     <Option Name="DefaultLib" Val="xil_defaultlib"/>
     <Option Name="ProjectType" Val="Default"/>
@@ -34,7 +35,7 @@
     <Option Name="DSAVendor" Val="xilinx"/>
     <Option Name="DSABoardId" Val="zedboard"/>
     <Option Name="DSANumComputeUnits" Val="60"/>
-    <Option Name="WTXSimLaunchSim" Val="72"/>
+    <Option Name="WTXSimLaunchSim" Val="101"/>
     <Option Name="WTModelSimLaunchSim" Val="0"/>
     <Option Name="WTQuestaLaunchSim" Val="0"/>
     <Option Name="WTIesLaunchSim" Val="0"/>
@@ -105,8 +106,10 @@
     </FileSet>
     <FileSet Name="sim_1" Type="SimulationSrcs" RelSrcDir="$PSRCDIR/sim_1">
       <Filter Type="Srcs"/>
-      <File Path="$PSRCDIR/sim_1/new/logic_analyzer_tb.sv">
+      <File Path="$PSRCDIR/sim_1/imports/logic_analyzer_sampler/prescaler_tb.sv">
         <FileInfo>
+          <Attr Name="ImportPath" Val="$PPRDIR/prescaler_tb.sv"/>
+          <Attr Name="ImportTime" Val="1587179456"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
@@ -114,7 +117,6 @@
       </File>
       <File Path="$PSRCDIR/sim_1/imports/logic_analyzer_sampler/sampler_tb.v">
         <FileInfo SFType="SVerilog">
-          <Attr Name="AutoDisabled" Val="1"/>
           <Attr Name="ImportPath" Val="$PPRDIR/sampler_tb.v"/>
           <Attr Name="ImportTime" Val="1595423132"/>
           <Attr Name="UsedIn" Val="synthesis"/>
@@ -122,11 +124,8 @@
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PSRCDIR/sim_1/imports/logic_analyzer_sampler/prescaler_tb.sv">
+      <File Path="$PSRCDIR/sim_1/new/logic_analyzer_tb.sv">
         <FileInfo>
-          <Attr Name="AutoDisabled" Val="1"/>
-          <Attr Name="ImportPath" Val="$PPRDIR/prescaler_tb.sv"/>
-          <Attr Name="ImportTime" Val="1587179456"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>

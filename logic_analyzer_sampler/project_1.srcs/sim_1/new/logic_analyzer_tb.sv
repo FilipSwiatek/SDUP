@@ -2,7 +2,7 @@
 
 module logic_alalyzer_tb
 #(
-    parameter unsigned memory_address_width = 6,
+    parameter unsigned memory_address_width = 4,
     parameter unsigned prescaling_factor_width = 29,
     parameter unsigned input_data_width = 32,
     localparam unsigned memory_size  = 2**memory_address_width //(32-bit depth);
@@ -21,6 +21,8 @@ logic [31:0] sample_output; // sample output
 logic isBufferFullyWritten; // true if buffer is fully written
 logic isBufferFullyRead; // true if buffer is fully read
 logic isAnalyzerTriggered; // true if triggered (always high when continuous_mode enabled)
+logic [input_data_width - 1 :0] test_samples [memory_size -1 :0];
+
 
 logic_analyzer 
 #(
@@ -57,21 +59,25 @@ begin
     read_enable = 0; // must be set high to refresh sample output
     enable = 0; // enables sampler trigger etc
     continuous_mode = 0; // enables continoous_mode (no triggering pattern)
-    #4 
-    enable = 1;
+    #4 enable = 1;
     
-    # 100
-    
-    for (int i = 0; i < highest_memory_addr + 2; i++) begin
-        # 10 input_data_bus++;
+    //fullfil test sequence
+    for (int i = 0; i <=  highest_memory_addr; i++) begin
+        test_samples[i] <= i;
     end
-   
+    
+    // 
+    for (int i = 0; i <=  highest_memory_addr; i++) begin
+        #2 input_data_bus <= test_samples[i];
+    end
+    
+     # 100
+    
     read_enable <= 1;
     
     for (int i = 0; i < highest_memory_addr + 2; i++) begin
         # 10 input_data_bus++;
     end
-    
     
     $stop;
 end
@@ -85,12 +91,12 @@ end
 
  always
  begin
-    #2 clk <= ~clk;
-  
-    if(clk)
-    begin
-        //print useful stuff
-    end
+    #1 clk <= ~clk;
+ end
+ 
+ // essential to make report
+ always @(posedge clk) begin
+    
  end
 	
 endmodule

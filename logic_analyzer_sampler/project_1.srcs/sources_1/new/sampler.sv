@@ -28,15 +28,13 @@ module sample_and_hold#(
             end    
         end else begin
             triggerProc();
-            outputProc(); 
         end 
     end
     
-    function void outputProc();
-        if(trigger && ce) begin
-            out_bus <= in_bus_prev;
-        end
-    endfunction
+    function void setTriggerAndUpdateOutputImmediately();
+        trigger <=1; 
+	    out_bus <= in_bus_prev; // update output immediately
+    endfunction;
     
     function void triggerProc();    
         if(ce) begin
@@ -46,22 +44,24 @@ module sample_and_hold#(
 	               end
 	               2'b01: begin // rising_edge
 	                   if(in_bus[i] == 1 && in_bus_prev[i] == 0)begin
-	                       trigger <=1;
+	                       setTriggerAndUpdateOutputImmediately();   
 	                   end
 	               end
 	               2'b10: begin // falling_edge
 	                   if(in_bus[i] == 0 && in_bus_prev[i] == 1)begin
-	                       trigger <=1;
+	                       setTriggerAndUpdateOutputImmediately();
 	                   end
 	               end
 	               2'b11: begin // rising_or_falling_edge
 	                   if(in_bus[i] != in_bus_prev[i] == 0)begin
-	                       trigger <=1;
+	                       setTriggerAndUpdateOutputImmediately();
 	                   end
 	               end
 	               default: begin end
 	           endcase
             end
+            if(trigger)
+                out_bus <= in_bus_prev; // contiue updating output while triggered
             in_bus_prev <= in_bus;
         end
     endfunction

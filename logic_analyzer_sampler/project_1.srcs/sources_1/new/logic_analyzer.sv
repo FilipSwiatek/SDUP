@@ -23,10 +23,9 @@ module logic_analyzer
 );
 
 
-(* ram_style = "block" *)  logic [input_data_width - 1 :0] samples_buffer [memory_size -1 :0];
 logic [memory_address_width - 1:0] read_addr;
 logic [memory_address_width - 1:0] write_addr; // address in buffer of sample to write
-logic [input_data_width - 1 :0] current_sample_from_sampler; // output generated from subblock; sampler
+logic [input_data_width - 1 :0] current_sample_from_sampler; // current sample vector and previus samples vector from sample&hold block
 logic wren;
 logic ce;
 
@@ -38,7 +37,7 @@ logic [memory_address_width - 1:0] highest_memory_addr_int;
 
 
 sample_and_hold #(
-.input_data_width(32)
+.input_data_width(input_data_width)
 ) sampler_inst ( 
        .continuous_mode(continuous_mode_int),
        .trigger (isAnalyzerTriggered ) ,
@@ -59,7 +58,7 @@ prescaler prescaler_inst1(
 xilinx_simple_dual_port_1_clock_ram #(
     .RAM_WIDTH(input_data_width),           // Specify RAM data width
     .RAM_DEPTH(memory_size),    // Specify RAM depth (number of entries)
-    .RAM_PERFORMANCE("HIGH_PERFORMANCE"),   // Select "HIGH_PERFORMANCE" or "LOW_LATENCY" 
+    .RAM_PERFORMANCE("LOW_LATENCY"),   // Select "HIGH_PERFORMANCE" or "LOW_LATENCY" 
     .INIT_FILE("")                          // Specify name/location of RAM initialization file if using one (leave blank if not)
   ) RAM (
     .addra(write_addr),                 // Write address bus, width determined from RAM_DEPTH
@@ -72,18 +71,14 @@ xilinx_simple_dual_port_1_clock_ram #(
 
 
  
- function void resetAnalyzer;   
+ function void resetAnalyzer;
     prescaling_factor_int <= prescaling_factor;
-     trig_method_int <= trig_method;
+    trig_method_int <= trig_method;
     continuous_mode_int <= continuous_mode;
     highest_memory_addr_int <= highest_memory_addr; 
-    
-    
-    
-     
+
  endfunction;
  
- // TODO wren management 
  function void writeControlProc;
     if(!enable) begin
         isBufferFullyWritten <= 0;
@@ -123,7 +118,6 @@ xilinx_simple_dual_port_1_clock_ram #(
  
 
 initial begin
-    sample_output <= 0;
     isBufferFullyWritten <= 0;
     isBufferFullyRead <= 0;
     read_addr <= 0;
