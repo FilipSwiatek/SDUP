@@ -17,7 +17,7 @@ module logic_analyzer
     input logic enable, // enables sampler trigger etc
     input logic continuous_mode, // enables continoous_mode (no triggering pattern)
     // Outputs
-    output logic valid,            // data readiness indicator (necessarybecause of bram delay)
+    output logic valid,                 // data readiness indicator (necessarybecause of bram delay)
     output logic[31:0] sample_output,   // sample output
     output logic isBufferFullyWritten,  // true if buffer is fully written
     output logic isAnalyzerTriggered    // true if triggered (always high when continuous_mode enabled)
@@ -102,34 +102,15 @@ xilinx_simple_dual_port_1_clock_ram #(
  
  
  function static void readingProc;
-    int notReadyCyclecCounter = 0;
-    logic busy = 0;
     read_addr_int_prev <= read_addr_int;
     read_addr_int <= read_addr;
-    isAnalyzerTriggered_int_reg_prev <= isAnalyzerTriggered_int_reg;
-    isAnalyzerTriggered_int_reg <= isAnalyzerTriggered_int;
-    
-    if(isAnalyzerTriggered_int_reg != isAnalyzerTriggered_int_reg_prev) begin
-        valid <= 0;
-        busy = 1;
-    end else if(((read_addr_int_prev != read_addr_int || busy) && isAnalyzerTriggered_int)) begin
-        valid <= 0;
-        notReadyCyclecCounter++;
-        busy = 1;
-    end
-    
-    if(notReadyCyclecCounter == 2) begin
-        notReadyCyclecCounter <=0;
-        busy <= 0;
-        valid <= 1;
-    end
+   
  endfunction
  
 
 initial begin
     write_addr <= 0;
     wren <= 1;
-    valid <=0;
     isBufferFullyWritten <= 0;
 end
 
@@ -139,6 +120,13 @@ always_ff @(posedge clk) begin
     end else begin
         readingProc();
     end
+end
+
+always_comb begin
+if(read_addr_int == read_addr_int_prev && read_addr == read_addr_int)
+    assign valid = 1;
+else
+    assign valid = 0;
 end
 
 
