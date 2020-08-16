@@ -7,7 +7,7 @@ module sample_and_hold#(
     //Inputs
     input logic [input_data_width - 1 : 0]in_bus,
     input logic continuous_mode,
-    input logic [1:0] trig_kind [input_data_width - 1 : 0],
+    input logic [input_data_width - 1 : 0][1:0] trig_kind ,
     input logic rst,
     input logic clk,
     input logic ce,

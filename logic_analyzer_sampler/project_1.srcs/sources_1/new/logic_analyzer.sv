@@ -11,7 +11,7 @@ module logic_analyzer
     input logic clk,
     input logic [prescaling_factor_width - 1:0] prescaling_factor,
     input logic [input_data_width - 1:0] input_data_bus,
-    input logic [1:0] trig_method [input_data_width - 1:0],
+    input logic [input_data_width - 1:0][1:0] trig_method ,
     input logic [memory_address_width - 1:0] highest_memory_addr,   // number of elements to store in memory  -1 before buffer will be marked as full
     input logic [memory_address_width - 1:0] read_addr,             // address of sample to read
     input logic enable, // enables sampler trigger etc
@@ -30,7 +30,7 @@ logic [input_data_width - 1 :0] current_sample_from_sampler; // current sample v
 logic wren;
 logic ce;
 logic [prescaling_factor_width - 1:0] prescaling_factor_int;
-logic [1:0] trig_method_int [input_data_width - 1:0];
+logic [input_data_width - 1:0][1:0] trig_method_int;
 logic continuous_mode_int;
 logic [memory_address_width - 1:0] highest_memory_addr_int; 
 logic isAnalyzerTriggered_int, isAnalyzerTriggered_int_reg_prev, isAnalyzerTriggered_int_reg;
@@ -124,9 +124,9 @@ end
 
 always_comb begin
 if(read_addr_int == read_addr_int_prev && read_addr == read_addr_int)
-    assign valid = 1;
+    valid = 1;
 else
-    assign valid = 0;
+    valid = 0;
 end
 
 

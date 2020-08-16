@@ -1,8 +1,8 @@
 `timescale 1ns / 1ns
 
-module logic_alalyzer_tb
+module logic_alalyzer_postsynth_tb
 #(
-    parameter unsigned memory_address_width = 4,
+    parameter unsigned memory_address_width = 10,
     parameter unsigned prescaling_factor_width = 29,
     parameter unsigned input_data_width = 32,
     localparam unsigned memory_size  = 2**memory_address_width //(32-bit depth);
@@ -11,7 +11,7 @@ module logic_alalyzer_tb
 logic clk;
 logic [prescaling_factor_width - 1:0] prescaling_factor;
 logic [input_data_width - 1:0] input_data_bus;
-logic [1:0] trig_method [input_data_width - 1:0];
+logic [input_data_width - 1:0][1:0] trig_method ;
 logic [memory_address_width - 1:0] highest_memory_addr; // number of elements to store in memory before buffer will be marked as full
 logic valid; //indicates that data value from output is valid
 logic enable; // enables sampler trigger etc
@@ -28,11 +28,6 @@ int errorsNo;
 
 
 logic_analyzer 
-#(
-    .memory_address_width(memory_address_width),
-    .prescaling_factor_width(prescaling_factor_width),
-    .input_data_width(input_data_width)
-) 
 DUT 
 (
     //Inputs
