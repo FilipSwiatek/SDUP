@@ -48,7 +48,7 @@ sample_and_hold #(
       .out_bus (current_sample_from_sampler ) ,
       .rst (!enable ) ,
       .clk (clk ) ,
-      .trig_kind (trig_method_int) 
+      .trig_method (trig_method_int) 
       );
       
 prescaler prescaler_inst1(

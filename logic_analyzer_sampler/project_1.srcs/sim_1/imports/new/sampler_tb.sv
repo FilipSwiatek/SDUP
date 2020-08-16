@@ -9,7 +9,7 @@ module sample_and_hold_tb  ;
   reg    rst   ; 
   reg    clk   ; 
   reg continuous_mode;
-  reg  [63 : 0]  trig_kind   ; 
+  reg  [63 : 0]  trig_method   ; 
   
   sample_and_hold  
    DUT  ( 
@@ -20,7 +20,7 @@ module sample_and_hold_tb  ;
       .out_bus (q ) ,
       .rst (rst ) ,
       .clk (clk ) ,
-      .trig_kind ({>>{trig_kind}}) ); 
+      .trig_method ({>>{trig_method}}) ); 
     
 
 // "Counter Pattern"(Binary-Up) : step = 1
@@ -42,22 +42,22 @@ module sample_and_hold_tb  ;
   initial
   begin
         continuous_mode = 0;
-        trig_kind  = 32'd1 ;
+        trig_method  = 32'd1 ;
         rst = 1'b1;
 		#4 rst  = 1'b0  ;
 		ce = 1'b1;	
 		
 		
 	    #128 rst  = 1'b1  ;
-		trig_kind  = 32'd2 ;
+		trig_method  = 32'd2 ;
 		#4 rst  = 1'b0;
 		
 		#128 rst  = 1'b1  ;
-		trig_kind  = 32'd3 ;
+		trig_method  = 32'd3 ;
 		#4 rst  = 1'b0 ;
 		
 		#128 rst  = 1'b1  ;
-		trig_kind  = 32'd4 ;
+		trig_method  = 32'd4 ;
 		#4 rst  = 1'b0 ;
   end
 

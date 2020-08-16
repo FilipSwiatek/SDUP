@@ -7,7 +7,7 @@ module sample_and_hold#(
     //Inputs
     input logic [input_data_width - 1 : 0]in_bus,
     input logic continuous_mode,
-    input logic [input_data_width - 1 : 0][1:0] trig_kind ,
+    input logic [input_data_width - 1 : 0][1:0] trig_method ,
     input logic rst,
     input logic clk,
     input logic ce,
@@ -39,7 +39,7 @@ module sample_and_hold#(
     function void triggerProc();    
         if(ce) begin
             for ( int i =0 ; i < input_data_width ; i++) begin
-	           case (trig_kind[i])
+	           case (trig_method[i])
 	               2'b00: begin // none trigger
 	               end
 	               2'b01: begin // rising_edge
