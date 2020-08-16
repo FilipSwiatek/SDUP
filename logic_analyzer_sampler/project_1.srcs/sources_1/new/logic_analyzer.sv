@@ -3,7 +3,8 @@ module logic_analyzer
     parameter unsigned memory_address_width = 10,
     parameter unsigned prescaling_factor_width = 29,
     parameter unsigned input_data_width = 32,
-    localparam unsigned memory_size  = 2**memory_address_width //(32-bit depth)
+    localparam unsigned memory_size  = 2**memory_address_width, //(32-bit depth)
+    parameter unsigned memory_delay = 2 // delay of read operation from analyzer
 )
 
 (   // Inputs
@@ -11,36 +12,37 @@ module logic_analyzer
     input logic [prescaling_factor_width - 1:0] prescaling_factor,
     input logic [input_data_width - 1:0] input_data_bus,
     input logic [1:0] trig_method [input_data_width - 1:0],
-    input logic [memory_address_width - 1:0] highest_memory_addr, // number of elements to store in memory  -1 before buffer will be marked as full
-    input logic read_enable, // must be set to refresh sample output
+    input logic [memory_address_width - 1:0] highest_memory_addr,   // number of elements to store in memory  -1 before buffer will be marked as full
+    input logic [memory_address_width - 1:0] read_addr,             // address of sample to read
     input logic enable, // enables sampler trigger etc
     input logic continuous_mode, // enables continoous_mode (no triggering pattern)
     // Outputs
-    output logic[31:0] sample_output, // sample output
-    output logic isBufferFullyWritten, // true if buffer is fully writed
-    output logic isBufferFullyRead, // true if buffer is fully read
-    output logic isAnalyzerTriggered // true if triggered (always high when continuous_mode enabled)
+    output logic valid,            // data readiness indicator (necessarybecause of bram delay)
+    output logic[31:0] sample_output,   // sample output
+    output logic isBufferFullyWritten,  // true if buffer is fully written
+    output logic isAnalyzerTriggered    // true if triggered (always high when continuous_mode enabled)
 );
 
 
-logic [memory_address_width - 1:0] read_addr;
+logic [memory_address_width - 1:0] read_addr_int_prev, read_addr_int ;
 logic [memory_address_width - 1:0] write_addr; // address in buffer of sample to write
 logic [input_data_width - 1 :0] current_sample_from_sampler; // current sample vector and previus samples vector from sample&hold block
 logic wren;
 logic ce;
-
-// internal signals reloaded on reset
 logic [prescaling_factor_width - 1:0] prescaling_factor_int;
 logic [1:0] trig_method_int [input_data_width - 1:0];
 logic continuous_mode_int;
 logic [memory_address_width - 1:0] highest_memory_addr_int; 
+logic isAnalyzerTriggered_int, isAnalyzerTriggered_int_reg_prev, isAnalyzerTriggered_int_reg;
+
+assign isAnalyzerTriggered = isAnalyzerTriggered_int;
 
 
 sample_and_hold #(
 .input_data_width(input_data_width)
 ) sampler_inst ( 
        .continuous_mode(continuous_mode_int),
-       .trigger (isAnalyzerTriggered ) ,
+       .trigger (isAnalyzerTriggered_int ) ,
       .ce (ce ) ,
       .in_bus (input_data_bus ) ,
       .out_bus (current_sample_from_sampler ) ,
@@ -58,7 +60,7 @@ prescaler prescaler_inst1(
 xilinx_simple_dual_port_1_clock_ram #(
     .RAM_WIDTH(input_data_width),           // Specify RAM data width
     .RAM_DEPTH(memory_size),    // Specify RAM depth (number of entries)
-    .RAM_PERFORMANCE("LOW_LATENCY"),   // Select "HIGH_PERFORMANCE" or "LOW_LATENCY" 
+    .RAM_PERFORMANCE("HIGH_PERFORMANCE"),   // Select "HIGH_PERFORMANCE" or "LOW_LATENCY" 
     .INIT_FILE("")                          // Specify name/location of RAM initialization file if using one (leave blank if not)
   ) RAM (
     .addra(write_addr),                 // Write address bus, width determined from RAM_DEPTH
@@ -99,52 +101,52 @@ xilinx_simple_dual_port_1_clock_ram #(
  endfunction
  
  
- function void rdenProc;
-    if(!enable) begin
-        isBufferFullyRead <= 0;
-        read_addr <= 0;
-    end else begin
-        if( isBufferFullyRead == 0) begin
-            if(read_enable) begin
-                if(read_addr == highest_memory_addr_int) begin
-                   isBufferFullyRead  <= 1;
-                end else begin
-                    read_addr++;
-                end
-            end 
-        end
+ function static void readingProc;
+    int notReadyCyclecCounter = 0;
+    logic busy = 0;
+    read_addr_int_prev <= read_addr_int;
+    read_addr_int <= read_addr;
+    isAnalyzerTriggered_int_reg_prev <= isAnalyzerTriggered_int_reg;
+    isAnalyzerTriggered_int_reg <= isAnalyzerTriggered_int;
+    
+    if(isAnalyzerTriggered_int_reg != isAnalyzerTriggered_int_reg_prev) begin
+        valid <= 0;
+        busy = 1;
+    end else if(((read_addr_int_prev != read_addr_int || busy) && isAnalyzerTriggered_int)) begin
+        valid <= 0;
+        notReadyCyclecCounter++;
+        busy = 1;
+    end
+    
+    if(notReadyCyclecCounter == 2) begin
+        notReadyCyclecCounter <=0;
+        busy <= 0;
+        valid <= 1;
     end
  endfunction
  
 
 initial begin
-    isBufferFullyWritten <= 0;
-    isBufferFullyRead <= 0;
-    read_addr <= 0;
     write_addr <= 0;
     wren <= 1;
+    valid <=0;
+    isBufferFullyWritten <= 0;
 end
 
 always_ff @(posedge clk) begin 
     if (!enable) begin 
         resetAnalyzer();
     end else begin
-        writeControlProc();
-        rdenProc();
+        readingProc();
     end
 end
 
 
 
-
-
-
-
-
-
-
-
-
-
+always_ff @(negedge clk) begin 
+    if (enable) begin 
+        writeControlProc();
+    end
+end
 
 endmodule

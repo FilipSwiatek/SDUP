@@ -1,9 +1,8 @@
 
 `timescale 1ns / 1ns
-module sampler_tb  ; 
+module sample_and_hold_tb  ; 
  
   wire    trigger   ; 
-  wire    wren   ; 
   reg    ce   ; 
   reg  [31 : 0]  in   ; 
   wire  [31 : 0]  q   ; 
@@ -12,11 +11,10 @@ module sampler_tb  ;
   reg continuous_mode;
   reg  [63 : 0]  trig_kind   ; 
   
-  sampler  
+  sample_and_hold  
    DUT  ( 
     .continuous_mode(continuous_mode),
        .trigger (trigger ) ,
-      .wren (wren ) ,
       .ce (ce ) ,
       .in_bus (in ) ,
       .out_bus (q ) ,
@@ -76,10 +74,10 @@ module sampler_tb  ;
   #2 clk <= ~clk;
   end
   
-  always
-  begin
-  #30 ce <= ~ce;
-  end
+ // always
+ // begin
+  //#30 ce <= ~ce;
+ // end
 
   initial
 	#1000 $stop;
