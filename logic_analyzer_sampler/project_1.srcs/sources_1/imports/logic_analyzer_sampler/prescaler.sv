@@ -44,7 +44,7 @@ module prescaler
 			counter <= 0;
 		end
 		else begin
-			if(counter < final_factor-1) begin
+			if(counter < final_factor) begin
 				counter++;
 				ce <= 0;
 			end

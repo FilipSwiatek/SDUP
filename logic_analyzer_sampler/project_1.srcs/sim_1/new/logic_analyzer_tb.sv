@@ -22,6 +22,8 @@ logic isBufferFullyWritten; // true if buffer is fully written
 logic isAnalyzerTriggered; // true if triggered (always high when continuous_mode enabled)
 logic [input_data_width - 1 :0] test_samples [memory_size -1 :0];
 logic [memory_address_width - 1:0] read_addr;
+logic preload_new_sample;
+logic isBufferFullyReaad;
 logic started_reading;
 logic [memory_address_width - 1:0] previous_address;
 int errorsNo;
@@ -41,24 +43,25 @@ DUT
     .input_data_bus(input_data_bus),
     .trig_method(trig_method),
     .highest_memory_addr(highest_memory_addr), // number of elements to store in memory before buffer will be marked as full
-    
     .enable(enable), // enables sampler trigger etc
     .continuous_mode(continuous_mode), // enables continoous_mode (no triggering pattern)
-    .read_addr(read_addr),
+    .preload_new_sample(preload_new_sample),
     // Outputs
     .sample_output(sample_output), // sample output
     .isBufferFullyWritten(isBufferFullyWritten), // true if buffer is fully written
     .isAnalyzerTriggered(isAnalyzerTriggered), // true if triggered (always high when continuous_mode enabled)
-    .valid(valid)
+    .valid(valid),
+    .isBufferFullyReaad(isBufferFullyReaad)
 );
 
 //main process
 initial
 begin
+    preload_new_sample = 0;
     errorsNo = 0;
     started_reading <= 0;
     read_addr <=0;
-    prescaling_factor = 4'd1;
+    prescaling_factor = 4'd0;
     input_data_bus = 32'd0;
     {>>{trig_method}} = 64'd0;
     trig_method[0] = 1; // rising edge on first channel
@@ -84,16 +87,18 @@ begin
      # 100
     
     //read sequence
-    for (int i = 0; i < highest_memory_addr + 2; i++) begin
+    for (int i = 0; i <= highest_memory_addr; i++) begin
         #8 started_reading <=1;
-        #2 read_addr++;
+        #2 preload_new_sample = 1;
+        #2 preload_new_sample = 0;
+        read_addr++;
     end
     
     
     
     started_reading <= 0;
     read_addr <=0;
-    prescaling_factor = 4;
+    prescaling_factor = 3;
     input_data_bus = 32'd0;
     {>>{trig_method}} = 64'd0;
     trig_method[0] = 1; // rising edge on first channel
@@ -103,7 +108,6 @@ begin
     
     $display("start test with prescaling factor = 4");
     #2 enable = 1;
-    #8
     //  write sequence
     for (int i = 0; i <=  highest_memory_addr; i++) begin
         #8 input_data_bus <= test_samples[i];
@@ -112,10 +116,12 @@ begin
      # 100
     
     //read sequence
-    for (int i = 0; i < highest_memory_addr + 2; i++) begin
+    for (int i = 0; i <= highest_memory_addr; i++) begin
         #8 started_reading <=1;
-        #2 read_addr++;
-    end
+        #2 preload_new_sample = 1;
+        #2 preload_new_sample = 0;
+        read_addr++;
+        end
     
     
     $display("test finished with %d errors", errorsNo);

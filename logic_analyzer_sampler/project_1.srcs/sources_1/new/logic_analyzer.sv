@@ -13,18 +13,18 @@ module logic_analyzer
     input logic [input_data_width - 1:0] input_data_bus,
     input logic [input_data_width - 1:0][1:0] trig_method ,
     input logic [memory_address_width - 1:0] highest_memory_addr,   // number of elements to store in memory  -1 before buffer will be marked as full
-    input logic [memory_address_width - 1:0] read_addr,             // address of sample to read
-    input logic enable, // enables sampler trigger etc
+    input logic preload_new_sample,             // signal that causes increasing read address by 1 on posedge(clk)
+    input logic enable, // enables whole device
     input logic continuous_mode, // enables continoous_mode (no triggering pattern)
     // Outputs
     output logic valid,                 // data readiness indicator (necessarybecause of bram delay)
     output logic[31:0] sample_output,   // sample output
     output logic isBufferFullyWritten,  // true if buffer is fully written
-    output logic isAnalyzerTriggered    // true if triggered (always high when continuous_mode enabled)
+    output logic isAnalyzerTriggered,    // true if triggered (always high when continuous_mode enabled)
+    output logic isBufferFullyReaad     // true if read addr == highest_memory_addr
 );
 
-
-logic [memory_address_width - 1:0] read_addr_int_prev, read_addr_int ;
+logic [memory_delay :0][memory_address_width - 1:0] read_addr;
 logic [memory_address_width - 1:0] write_addr; // address in buffer of sample to write
 logic [input_data_width - 1 :0] current_sample_from_sampler; // current sample vector and previus samples vector from sample&hold block
 logic wren;
@@ -64,7 +64,7 @@ xilinx_simple_dual_port_1_clock_ram #(
     .INIT_FILE("")                          // Specify name/location of RAM initialization file if using one (leave blank if not)
   ) RAM (
     .addra(write_addr),                 // Write address bus, width determined from RAM_DEPTH
-    .addrb(read_addr),                  // Read address bus, width determined from RAM_DEPTH
+    .addrb(read_addr[0]),                  // Read address bus, width determined from RAM_DEPTH
     .dina(current_sample_from_sampler), // RAM input data, width determined from RAM_WIDTH
     .clka(clk),                         // Clock
     .wea(wren),                         // Write enable
@@ -78,6 +78,8 @@ xilinx_simple_dual_port_1_clock_ram #(
     trig_method_int <= trig_method;
     continuous_mode_int <= continuous_mode;
     highest_memory_addr_int <= highest_memory_addr; 
+    read_addr[0] <= 0;
+    isBufferFullyReaad <= 0;
 
  endfunction;
  
@@ -102,16 +104,28 @@ xilinx_simple_dual_port_1_clock_ram #(
  
  
  function static void readingProc;
-    read_addr_int_prev <= read_addr_int;
-    read_addr_int <= read_addr;
+    for (int i = memory_delay; i >= 0; i--) begin
+        read_addr[i+1] <= read_addr[i];
+    end
+    if(preload_new_sample) begin
+        if(read_addr[0] == highest_memory_addr_int) begin
+            isBufferFullyReaad <=1;
+        end else begin
+            read_addr[0] <= read_addr[0]+1;
+            isBufferFullyReaad <=0;
+        end
+        
+    end
    
  endfunction
  
 
 initial begin
+    read_addr[0] <= 0;
     write_addr <= 0;
     wren <= 1;
     isBufferFullyWritten <= 0;
+    isBufferFullyReaad <= 0;
 end
 
 always_ff @(posedge clk) begin 
@@ -123,11 +137,23 @@ always_ff @(posedge clk) begin
 end
 
 always_comb begin
-if(read_addr_int == read_addr_int_prev && read_addr == read_addr_int)
-    valid = 1;
-else
-    valid = 0;
+    valid = IsOutputValid();
 end
+
+function logic IsOutputValid;
+    logic mismatchOccured;
+    mismatchOccured = 0;
+    for(int i =0; i <= memory_delay; i++) begin
+        if(read_addr[i] != read_addr[i+1])
+            mismatchOccured = 1;
+    end
+    if(mismatchOccured)
+        IsOutputValid = 0;
+    else
+        IsOutputValid = 1;
+
+
+endfunction
 
 
 
