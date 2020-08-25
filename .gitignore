@@ -10,3 +10,6 @@
 /elipse_acc_test/elipse_acc_test.sdk/.metadata/.plugins/org.eclipse.core.resources/.history/
 
 /logic_analyzer_sampler/project_1.hw/*.lpr
+/logic_analyzer__test_MB/logic_analyzer__test_MB.sdk/.metadata/
+/logic_analyzer__test_MB/logic_analyzer__test_MB.sdk/webtalk
+/logic_analyzer__test_MB/logic_analyzer__test_MB.sdk/mb_AXI_periph_test/Debug/src/*.o
