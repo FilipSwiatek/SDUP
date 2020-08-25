@@ -1,0 +1,15 @@
+
+
+int main(){
+
+uint32_t value;
+GPIO_Init();
+if(){
+	value = Sampler_Read();
+}
+
+
+
+
+error: while(1)
+}

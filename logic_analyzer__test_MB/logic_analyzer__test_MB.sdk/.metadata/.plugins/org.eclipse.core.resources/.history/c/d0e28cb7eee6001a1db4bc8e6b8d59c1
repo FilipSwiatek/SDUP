@@ -1,0 +1,15 @@
+#include "hi_speed_sampler.h"
+
+int main(){
+
+uint32_t value;
+GPIO_Init();
+if(Sampler_IsFullyWritten()){
+	value = Sampler_Read();
+}
+
+
+
+
+error: while(1);
+}

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Move &apos;main.c&apos; to &apos;src&apos;" description="Move &apos;main.c&apos; to &apos;src&apos;" destination="src" element1="/mb_AXI_periph_test_bsp/microblaze_0/libsrc/hi_speed_sampler_v1_0/src/main.c" flags="7" id="org.eclipse.ltk.core.refactoring.move.resources" resources="1" stamp="1598372180275" updateReferences="true"/>
+</session>
