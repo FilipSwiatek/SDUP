@@ -4,7 +4,7 @@
 	module hi_speed_sampler_v1_0 #
 	(
 		// Users to add parameters here
-
+        parameter integer input_data_width = 32,
 		// User parameters ends
 		// Do not modify the parameters beyond this line
 
@@ -12,6 +12,7 @@
 		// Parameters of Axi Slave Bus Interface hi_speed_sampler
 		parameter integer C_hi_speed_sampler_DATA_WIDTH	= 32,
 		parameter integer C_hi_speed_sampler_ADDR_WIDTH	= 5
+		
 	)
 	(
 		// Users to add ports here
@@ -41,6 +42,7 @@
 		output wire [C_hi_speed_sampler_DATA_WIDTH-1 : 0] hi_speed_sampler_rdata,
 		output wire [1 : 0] hi_speed_sampler_rresp,
 		output wire  hi_speed_sampler_rvalid,
+		input wire [input_data_width - 1 : 0] input_external_data_bus,
 		input wire  hi_speed_sampler_rready
 	);
 // Instantiation of Axi Bus Interface hi_speed_sampler
@@ -68,7 +70,8 @@
 		.S_AXI_RDATA(hi_speed_sampler_rdata),
 		.S_AXI_RRESP(hi_speed_sampler_rresp),
 		.S_AXI_RVALID(hi_speed_sampler_rvalid),
-		.S_AXI_RREADY(hi_speed_sampler_rready)
+		.S_AXI_RREADY(hi_speed_sampler_rready),
+		.input_external_data_bus(input_external_data_bus)
 	);
 
 	// Add user logic here
