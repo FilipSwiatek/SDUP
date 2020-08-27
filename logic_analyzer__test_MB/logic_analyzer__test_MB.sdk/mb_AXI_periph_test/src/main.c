@@ -41,12 +41,17 @@ int main(){
 	XGpio_SetDataDirection(&gpio_handle,0,0x000); // set as output
 	XGpio_DiscreteWrite(&gpio_handle,0,value);
 
-if(Sampler_IsFullyWritten()){
-	if(Sampler_Read(&value)){
+
+
+
+
+Sampler_Enable();
+
+while(!Sampler_IsFullyWritten()); // stick to while loop until write buffer is full;
+
+if(Sampler_Read(&value)){
 		XGpio_DiscreteWrite(&gpio_handle,0,value);
 	}
-}
-
 
 
 
@@ -79,9 +84,13 @@ bool Sampler_Read(uint32_t* data){
 }
 
 void Sampler_Enable(){
+	uint32_t tmp = HI_SPEED_SAMPLER_mReadReg(XPAR_HI_SPEED_SAMPLER_0_HI_SPEED_SAMPLER_BASEADDR, CTL_STAT_REG_OFFSET);
+	HI_SPEED_SAMPLER_mWriteReg(XPAR_HI_SPEED_SAMPLER_0_HI_SPEED_SAMPLER_BASEADDR, CTL_STAT_REG_OFFSET, tmp | 1 );
 
 }
 void SamplerDisable(){
+	uint32_t tmp = HI_SPEED_SAMPLER_mReadReg(XPAR_HI_SPEED_SAMPLER_0_HI_SPEED_SAMPLER_BASEADDR, CTL_STAT_REG_OFFSET);
+		HI_SPEED_SAMPLER_mWriteReg(XPAR_HI_SPEED_SAMPLER_0_HI_SPEED_SAMPLER_BASEADDR, CTL_STAT_REG_OFFSET, tmp & (~1) );
 
 }
 
