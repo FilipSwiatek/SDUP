@@ -267,7 +267,7 @@ proc create_root_design { parentCell } {
  ] $clk_wiz_1
 
   # Create instance: hi_speed_sampler_0, and set properties
-  set hi_speed_sampler_0 [ create_bd_cell -type ip -vlnv fswiatek:user:hi_speed_sampler:1.0 hi_speed_sampler_0 ]
+  set hi_speed_sampler_0 [ create_bd_cell -type ip -vlnv fswiatek:user:hi_speed_sampler:1.0.1 hi_speed_sampler_0 ]
 
   # Create instance: mdm_1, and set properties
   set mdm_1 [ create_bd_cell -type ip -vlnv xilinx.com:ip:mdm:3.2 mdm_1 ]

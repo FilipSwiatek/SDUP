@@ -2,23 +2,24 @@ module prescaler
 
 #(
 	// Parameter Declarations
+	parameter int prescaling_factor_width = 29,
 	parameter settable = 1, // determines if prescaler is settable by program or has fixed factor
-	parameter unsigned [28:0] PRESCALING_FACTOR = 1 // used if above is 0
+	parameter unsigned [prescaling_factor_width - 1:0] PRESCALING_FACTOR = 0 // used if above is 0
 )
 
 (
 	// Input Ports
 	input rst,
 	input clk,
-	input unsigned [28:0] FACTOR,
+	input unsigned [prescaling_factor_width - 1:0] FACTOR,
 
 
 	// Output Ports
 	output reg ce
 );
 
-	reg unsigned[28:0] counter;
-	reg unsigned [28:0] final_factor; 
+	reg unsigned[prescaling_factor_width - 1:0] counter;
+	reg unsigned [prescaling_factor_width - 1:0] final_factor; 
 
 	initial 
 	begin

@@ -51,7 +51,11 @@ sample_and_hold #(
       .trig_method (trig_method_int) 
       );
       
-prescaler prescaler_inst1(
+prescaler 
+#(
+.settable(1),
+.prescaling_factor_width(prescaling_factor_width)
+) prescaler_inst1 (
 .rst(!enable),
 .clk(clk),
 .FACTOR(prescaling_factor_int),

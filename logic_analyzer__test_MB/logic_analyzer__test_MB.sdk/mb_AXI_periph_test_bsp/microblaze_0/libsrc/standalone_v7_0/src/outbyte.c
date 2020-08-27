@@ -9,5 +9,4 @@ void outbyte(char c);
 #endif 
 
 void outbyte(char c) {
-	(void)c;
 }

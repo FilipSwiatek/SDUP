@@ -32,8 +32,8 @@ XStatus HI_SPEED_SAMPLER_Reg_SelfTest(void * baseaddr_p)
 {
 	u32 baseaddr;
 	int write_loop_index;
-	uint32_t read_loop_index;
-
+	int read_loop_index;
+	int Index;
 
 	baseaddr = (u32) baseaddr_p;
 

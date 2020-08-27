@@ -8,5 +8,4 @@ char inbyte(void);
 #endif 
 
 char inbyte(void) {
-	return 0;
 }

@@ -4,14 +4,13 @@
       "boundary_crc": "0xF219203A7A7E6578",
       "device": "xc7z010clg400-1",
       "name": "mb_test",
-      "synth_flow_mode": "Hierarchical",
+      "synth_flow_mode": "None",
       "tool_version": "2019.1",
       "validated": "true"
     },
     "design_tree": {
       "microblaze_0": "",
       "output_GPIO": "",
-      "hi_speed_sampler_0": "",
       "microblaze_0_local_memory": {
         "dlmb_v10": "",
         "ilmb_v10": "",
@@ -27,7 +26,8 @@
         "s00_couplers": {},
         "m00_couplers": {},
         "m01_couplers": {}
-      }
+      },
+      "hi_speed_sampler_0": ""
     },
     "interface_ports": {
       "sample_out_from_MB": {
@@ -135,10 +135,6 @@
           }
         }
       },
-      "hi_speed_sampler_0": {
-        "vlnv": "fswiatek:user:hi_speed_sampler:1.0",
-        "xci_name": "mb_test_hi_speed_sampler_0_0"
-      },
       "microblaze_0_local_memory": {
         "interface_ports": {
           "DLMB": {
@@ -211,6 +207,24 @@
           }
         },
         "interface_nets": {
+          "microblaze_0_ilmb_cntlr": {
+            "interface_ports": [
+              "ilmb_bram_if_cntlr/BRAM_PORT",
+              "lmb_bram/BRAM_PORTB"
+            ]
+          },
+          "microblaze_0_dlmb": {
+            "interface_ports": [
+              "DLMB",
+              "dlmb_v10/LMB_M"
+            ]
+          },
+          "microblaze_0_dlmb_cntlr": {
+            "interface_ports": [
+              "dlmb_bram_if_cntlr/BRAM_PORT",
+              "lmb_bram/BRAM_PORTA"
+            ]
+          },
           "microblaze_0_ilmb": {
             "interface_ports": [
               "ILMB",
@@ -223,28 +237,10 @@
               "dlmb_bram_if_cntlr/SLMB"
             ]
           },
-          "microblaze_0_ilmb_cntlr": {
-            "interface_ports": [
-              "ilmb_bram_if_cntlr/BRAM_PORT",
-              "lmb_bram/BRAM_PORTB"
-            ]
-          },
           "microblaze_0_ilmb_bus": {
             "interface_ports": [
               "ilmb_v10/LMB_Sl_0",
               "ilmb_bram_if_cntlr/SLMB"
-            ]
-          },
-          "microblaze_0_dlmb_cntlr": {
-            "interface_ports": [
-              "dlmb_bram_if_cntlr/BRAM_PORT",
-              "lmb_bram/BRAM_PORTA"
-            ]
-          },
-          "microblaze_0_dlmb": {
-            "interface_ports": [
-              "DLMB",
-              "dlmb_v10/LMB_M"
             ]
           }
         },
@@ -551,16 +547,16 @@
           }
         },
         "interface_nets": {
-          "microblaze_0_axi_periph_to_s00_couplers": {
-            "interface_ports": [
-              "S00_AXI",
-              "s00_couplers/S_AXI"
-            ]
-          },
           "s00_couplers_to_xbar": {
             "interface_ports": [
               "s00_couplers/M_AXI",
               "xbar/S00_AXI"
+            ]
+          },
+          "microblaze_0_axi_periph_to_s00_couplers": {
+            "interface_ports": [
+              "S00_AXI",
+              "s00_couplers/S_AXI"
             ]
           },
           "m00_couplers_to_microblaze_0_axi_periph": {
@@ -614,9 +610,43 @@
             ]
           }
         }
+      },
+      "hi_speed_sampler_0": {
+        "vlnv": "fswiatek:user:hi_speed_sampler:1.0.1",
+        "xci_name": "mb_test_hi_speed_sampler_0_0"
       }
     },
     "interface_nets": {
+      "microblaze_0_M_AXI_DP": {
+        "interface_ports": [
+          "microblaze_0/M_AXI_DP",
+          "microblaze_0_axi_periph/S00_AXI"
+        ]
+      },
+      "microblaze_0_axi_periph_M00_AXI": {
+        "interface_ports": [
+          "microblaze_0_axi_periph/M00_AXI",
+          "output_GPIO/S_AXI"
+        ]
+      },
+      "diff_clock_rtl_1": {
+        "interface_ports": [
+          "clock",
+          "clk_wiz_1/CLK_IN1_D"
+        ]
+      },
+      "microblaze_0_axi_periph_M01_AXI": {
+        "interface_ports": [
+          "microblaze_0_axi_periph/M01_AXI",
+          "hi_speed_sampler_0/hi_speed_sampler"
+        ]
+      },
+      "axi_gpio_0_GPIO": {
+        "interface_ports": [
+          "sample_out_from_MB",
+          "output_GPIO/GPIO"
+        ]
+      },
       "microblaze_0_debug": {
         "interface_ports": [
           "mdm_1/MBDEBUG_0",
@@ -629,40 +659,10 @@
           "microblaze_0_local_memory/ILMB"
         ]
       },
-      "microblaze_0_axi_periph_M01_AXI": {
-        "interface_ports": [
-          "microblaze_0_axi_periph/M01_AXI",
-          "hi_speed_sampler_0/hi_speed_sampler"
-        ]
-      },
-      "diff_clock_rtl_1": {
-        "interface_ports": [
-          "clock",
-          "clk_wiz_1/CLK_IN1_D"
-        ]
-      },
       "microblaze_0_dlmb_1": {
         "interface_ports": [
           "microblaze_0/DLMB",
           "microblaze_0_local_memory/DLMB"
-        ]
-      },
-      "microblaze_0_M_AXI_DP": {
-        "interface_ports": [
-          "microblaze_0/M_AXI_DP",
-          "microblaze_0_axi_periph/S00_AXI"
-        ]
-      },
-      "axi_gpio_0_GPIO": {
-        "interface_ports": [
-          "sample_out_from_MB",
-          "output_GPIO/GPIO"
-        ]
-      },
-      "microblaze_0_axi_periph_M00_AXI": {
-        "interface_ports": [
-          "microblaze_0_axi_periph/M00_AXI",
-          "output_GPIO/S_AXI"
         ]
       }
     },
@@ -677,8 +677,8 @@
           "output_GPIO/s_axi_aclk",
           "microblaze_0_axi_periph/M00_ACLK",
           "microblaze_0_axi_periph/ACLK",
-          "hi_speed_sampler_0/hi_speed_sampler_aclk",
-          "microblaze_0_axi_periph/M01_ACLK"
+          "microblaze_0_axi_periph/M01_ACLK",
+          "hi_speed_sampler_0/hi_speed_sampler_aclk"
         ]
       },
       "clk_wiz_1_locked": {
@@ -700,8 +700,8 @@
           "output_GPIO/s_axi_aresetn",
           "microblaze_0_axi_periph/M00_ARESETN",
           "microblaze_0_axi_periph/ARESETN",
-          "hi_speed_sampler_0/hi_speed_sampler_aresetn",
-          "microblaze_0_axi_periph/M01_ARESETN"
+          "microblaze_0_axi_periph/M01_ARESETN",
+          "hi_speed_sampler_0/hi_speed_sampler_aresetn"
         ]
       },
       "reset_rtl0_1": {

@@ -47,8 +47,8 @@
 // DO NOT MODIFY THIS FILE.
 
 
-// IP VLNV: fswiatek:user:hi_speed_sampler:1.0
-// IP Revision: 5
+// IP VLNV: fswiatek:user:hi_speed_sampler:1.0.1
+// IP Revision: 9
 
 (* X_CORE_INFO = "hi_speed_sampler_v1_0,Vivado 2019.1" *)
 (* CHECK_LICENSE_TYPE = "mb_test_hi_speed_sampler_0_0,hi_speed_sampler_v1_0,{}" *)
@@ -119,7 +119,7 @@ input wire [31 : 0] input_external_data_bus;
 1_0_clk_out1, NUM_READ_THREADS 1, NUM_WRITE_THREADS 1, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0, INSERT_VIP 0" *)
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 hi_speed_sampler RREADY" *)
 input wire hi_speed_sampler_rready;
-(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME hi_speed_sampler_CLK, ASSOCIATED_BUSIF hi_speed_sampler, ASSOCIATED_RESET hi_speed_sampler_aresetn, FREQ_HZ 100000000, PHASE 0.0, CLK_DOMAIN mb_test_clk_wiz_1_0_clk_out1, INSERT_VIP 0" *)
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME hi_speed_sampler_CLK, ASSOCIATED_BUSIF hi_speed_sampler, ASSOCIATED_RESET hi_speed_sampler_aresetn:hi_speed_sampler_RST, FREQ_HZ 100000000, PHASE 0.0, CLK_DOMAIN mb_test_clk_wiz_1_0_clk_out1, INSERT_VIP 0" *)
 (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 hi_speed_sampler_CLK CLK" *)
 input wire hi_speed_sampler_aclk;
 (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME hi_speed_sampler_RST, POLARITY ACTIVE_LOW, INSERT_VIP 0" *)

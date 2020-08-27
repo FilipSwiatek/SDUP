@@ -3,6 +3,13 @@
 #include "xgpio.h"
 #include <stdbool.h>
 
+#define CTL_STAT_REG_OFFSET 			0
+#define PRESCALING_FACTOR_REG_OFFSET	1
+#define MEM_DEPTH_REG_OFFSET 			2
+#define SAMPLE_REG_OFFSET				5
+#define TRIG_METHOD_L_OFFSET			4
+#define TRIG_METHOD_H_OFFSET			3
+
 typedef enum {
 	TRIG_METHOD_NONE,
 	TRIG_METHOD_RISING,

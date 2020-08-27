@@ -15,14 +15,6 @@
 #define HI_SPEED_SAMPLER_hi_speed_sampler_SLV_REG5_OFFSET 20
 
 
-#define CTL_STAT_REG_OFFSET				HI_SPEED_SAMPLER_hi_speed_sampler_SLV_REG0_OFFSET
-#define PRESCALING_FACTOR_REG_OFFSET	HI_SPEED_SAMPLER_hi_speed_sampler_SLV_REG1_OFFSET
-#define MEM_DEPTH_REG_OFFSET			HI_SPEED_SAMPLER_hi_speed_sampler_SLV_REG2_OFFSET
-#define TRIG_METHOD_H_OFFSET			HI_SPEED_SAMPLER_hi_speed_sampler_SLV_REG3_OFFSET
-#define TRIG_METHOD_L_OFFSET			HI_SPEED_SAMPLER_hi_speed_sampler_SLV_REG4_OFFSET
-#define SAMPLE_REG_OFFSET				HI_SPEED_SAMPLER_hi_speed_sampler_SLV_REG5_OFFSET
-
-
 /**************************** Type Definitions *****************************/
 /**
  *
