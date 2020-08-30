@@ -3,8 +3,8 @@
 // Tool Version: Vivado v.2019.1 (win64) Build 2552052 Fri May 24 14:49:42 MDT 2019
 // Date        : Fri Aug 28 15:00:52 2020
 // Host        : Lestaro running 64-bit major release  (build 9200)
-// Command     : write_verilog -force -mode funcsim
-//               d:/sem_I/SDUP/logic_analyzer__test_MB/logic_analyzer__test_MB.srcs/sources_1/bd/mb_design/ip/mb_design_clk_wiz_1_0/mb_design_clk_wiz_1_0_sim_netlist.v
+// Command     : write_verilog -force -mode funcsim -rename_top mb_design_clk_wiz_1_0 -prefix
+//               mb_design_clk_wiz_1_0_ mb_design_clk_wiz_1_0_sim_netlist.v
 // Design      : mb_design_clk_wiz_1_0
 // Purpose     : This verilog netlist is a functional simulation representation of the design and should not be modified
 //               or synthesized. This netlist cannot be used for SDF annotated simulation.
@@ -39,7 +39,6 @@ module mb_design_clk_wiz_1_0
         .reset(reset));
 endmodule
 
-(* ORIG_REF_NAME = "mb_design_clk_wiz_1_0_clk_wiz" *) 
 module mb_design_clk_wiz_1_0_mb_design_clk_wiz_1_0_clk_wiz
    (clk_out1,
     reset,

@@ -7,12 +7,12 @@
 #include "xil_types.h"
 #include "xstatus.h"
 
-#define HI_SPEED_SAMPLER_hi_speed_sampler_SLV_REG0_OFFSET 0
-#define HI_SPEED_SAMPLER_hi_speed_sampler_SLV_REG1_OFFSET 4
-#define HI_SPEED_SAMPLER_hi_speed_sampler_SLV_REG2_OFFSET 8
-#define HI_SPEED_SAMPLER_hi_speed_sampler_SLV_REG3_OFFSET 12
-#define HI_SPEED_SAMPLER_hi_speed_sampler_SLV_REG4_OFFSET 16
-#define HI_SPEED_SAMPLER_hi_speed_sampler_SLV_REG5_OFFSET 20
+#define HI_SPEED_SAMPLER_S00_AXI_SLV_REG0_OFFSET 0
+#define HI_SPEED_SAMPLER_S00_AXI_SLV_REG1_OFFSET 4
+#define HI_SPEED_SAMPLER_S00_AXI_SLV_REG2_OFFSET 8
+#define HI_SPEED_SAMPLER_S00_AXI_SLV_REG3_OFFSET 12
+#define HI_SPEED_SAMPLER_S00_AXI_SLV_REG4_OFFSET 16
+#define HI_SPEED_SAMPLER_S00_AXI_SLV_REG5_OFFSET 20
 
 
 /**************************** Type Definitions *****************************/

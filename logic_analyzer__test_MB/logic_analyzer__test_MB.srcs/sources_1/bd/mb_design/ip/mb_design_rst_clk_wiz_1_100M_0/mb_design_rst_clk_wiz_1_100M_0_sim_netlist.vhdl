@@ -1,11 +1,11 @@
 -- Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2019.1 (win64) Build 2552052 Fri May 24 14:49:42 MDT 2019
--- Date        : Fri Aug 28 15:00:52 2020
+-- Date        : Tue Aug 25 17:42:10 2020
 -- Host        : Lestaro running 64-bit major release  (build 9200)
--- Command     : write_vhdl -force -mode funcsim
---               d:/sem_I/SDUP/logic_analyzer__test_MB/logic_analyzer__test_MB.srcs/sources_1/bd/mb_design/ip/mb_design_rst_clk_wiz_1_100M_0/mb_design_rst_clk_wiz_1_100M_0_sim_netlist.vhdl
--- Design      : mb_design_rst_clk_wiz_1_100M_0
+-- Command     : write_vhdl -force -mode funcsim -rename_top mb_design_rst_clk_wiz_1_100M_0 -prefix
+--               mb_design_rst_clk_wiz_1_100M_0_ mb_test_rst_clk_wiz_1_100M_0_sim_netlist.vhdl
+-- Design      : mb_test_rst_clk_wiz_1_100M_0
 -- Purpose     : This VHDL netlist is a functional simulation representation of the design and should not be modified or
 --               synthesized. This netlist cannot be used for SDF annotated simulation.
 -- Device      : xc7z010clg400-1
@@ -16,13 +16,14 @@ library UNISIM;
 use UNISIM.VCOMPONENTS.ALL;
 entity mb_design_rst_clk_wiz_1_100M_0_cdc_sync is
   port (
+    lpf_exr_reg : out STD_LOGIC;
     scndry_out : out STD_LOGIC;
+    lpf_exr : in STD_LOGIC;
+    p_3_out : in STD_LOGIC_VECTOR ( 2 downto 0 );
     ext_reset_in : in STD_LOGIC;
     mb_debug_sys_rst : in STD_LOGIC;
     slowest_sync_clk : in STD_LOGIC
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of mb_design_rst_clk_wiz_1_100M_0_cdc_sync : entity is "cdc_sync";
 end mb_design_rst_clk_wiz_1_100M_0_cdc_sync;
 
 architecture STRUCTURE of mb_design_rst_clk_wiz_1_100M_0_cdc_sync is
@@ -30,6 +31,7 @@ architecture STRUCTURE of mb_design_rst_clk_wiz_1_100M_0_cdc_sync is
   signal s_level_out_d1_cdc_to : STD_LOGIC;
   signal s_level_out_d2 : STD_LOGIC;
   signal s_level_out_d3 : STD_LOGIC;
+  signal \^scndry_out\ : STD_LOGIC;
   attribute ASYNC_REG : boolean;
   attribute ASYNC_REG of \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_IN_cdc_to\ : label is std.standard.true;
   attribute XILINX_LEGACY_PRIM : string;
@@ -46,6 +48,7 @@ architecture STRUCTURE of mb_design_rst_clk_wiz_1_100M_0_cdc_sync is
   attribute XILINX_LEGACY_PRIM of \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d4\ : label is "FDR";
   attribute box_type of \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d4\ : label is "PRIMITIVE";
 begin
+  scndry_out <= \^scndry_out\;
 \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_IN_cdc_to\: unisim.vcomponents.FDRE
     generic map(
       INIT => '0'
@@ -96,8 +99,20 @@ begin
       C => slowest_sync_clk,
       CE => '1',
       D => s_level_out_d3,
-      Q => scndry_out,
+      Q => \^scndry_out\,
       R => '0'
+    );
+lpf_exr_i_1: unisim.vcomponents.LUT5
+    generic map(
+      INIT => X"EAAAAAA8"
+    )
+        port map (
+      I0 => lpf_exr,
+      I1 => p_3_out(1),
+      I2 => p_3_out(2),
+      I3 => \^scndry_out\,
+      I4 => p_3_out(0),
+      O => lpf_exr_reg
     );
 end STRUCTURE;
 library IEEE;
@@ -109,7 +124,9 @@ entity mb_design_rst_clk_wiz_1_100M_0_cdc_sync_0 is
     lpf_asr_reg : out STD_LOGIC;
     scndry_out : out STD_LOGIC;
     lpf_asr : in STD_LOGIC;
-    p_3_out : in STD_LOGIC_VECTOR ( 2 downto 0 );
+    p_1_in : in STD_LOGIC;
+    p_2_in : in STD_LOGIC;
+    asr_lpf : in STD_LOGIC_VECTOR ( 0 to 0 );
     aux_reset_in : in STD_LOGIC;
     slowest_sync_clk : in STD_LOGIC
   );
@@ -198,10 +215,10 @@ lpf_asr_i_1: unisim.vcomponents.LUT5
     )
         port map (
       I0 => lpf_asr,
-      I1 => p_3_out(1),
-      I2 => p_3_out(2),
+      I1 => p_1_in,
+      I2 => p_2_in,
       I3 => \^scndry_out\,
-      I4 => p_3_out(0),
+      I4 => asr_lpf(0),
       O => lpf_asr_reg
     );
 end STRUCTURE;
@@ -216,8 +233,6 @@ entity mb_design_rst_clk_wiz_1_100M_0_upcnt_n is
     seq_cnt_en : in STD_LOGIC;
     slowest_sync_clk : in STD_LOGIC
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of mb_design_rst_clk_wiz_1_100M_0_upcnt_n : entity is "upcnt_n";
 end mb_design_rst_clk_wiz_1_100M_0_upcnt_n;
 
 architecture STRUCTURE of mb_design_rst_clk_wiz_1_100M_0_upcnt_n is
@@ -382,17 +397,19 @@ entity mb_design_rst_clk_wiz_1_100M_0_lpf is
     mb_debug_sys_rst : in STD_LOGIC;
     aux_reset_in : in STD_LOGIC
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of mb_design_rst_clk_wiz_1_100M_0_lpf : entity is "lpf";
 end mb_design_rst_clk_wiz_1_100M_0_lpf;
 
 architecture STRUCTURE of mb_design_rst_clk_wiz_1_100M_0_lpf is
+  signal \ACTIVE_HIGH_EXT.ACT_HI_EXT_n_0\ : STD_LOGIC;
   signal \ACTIVE_LOW_AUX.ACT_LO_AUX_n_0\ : STD_LOGIC;
   signal Q : STD_LOGIC;
+  signal asr_lpf : STD_LOGIC_VECTOR ( 0 to 0 );
   signal lpf_asr : STD_LOGIC;
   signal lpf_exr : STD_LOGIC;
   signal \lpf_int0__0\ : STD_LOGIC;
-  signal p_0_out : STD_LOGIC;
+  signal p_1_in : STD_LOGIC;
+  signal p_2_in : STD_LOGIC;
+  signal p_3_in1_in : STD_LOGIC;
   signal p_3_out : STD_LOGIC_VECTOR ( 3 downto 0 );
   attribute XILINX_LEGACY_PRIM : string;
   attribute XILINX_LEGACY_PRIM of POR_SRL_I : label is "SRL16";
@@ -404,20 +421,58 @@ begin
 \ACTIVE_HIGH_EXT.ACT_HI_EXT\: entity work.mb_design_rst_clk_wiz_1_100M_0_cdc_sync
      port map (
       ext_reset_in => ext_reset_in,
+      lpf_exr => lpf_exr,
+      lpf_exr_reg => \ACTIVE_HIGH_EXT.ACT_HI_EXT_n_0\,
       mb_debug_sys_rst => mb_debug_sys_rst,
-      scndry_out => p_0_out,
-      slowest_sync_clk => slowest_sync_clk
-    );
-\ACTIVE_LOW_AUX.ACT_LO_AUX\: entity work.mb_design_rst_clk_wiz_1_100M_0_cdc_sync_0
-     port map (
-      aux_reset_in => aux_reset_in,
-      lpf_asr => lpf_asr,
-      lpf_asr_reg => \ACTIVE_LOW_AUX.ACT_LO_AUX_n_0\,
       p_3_out(2 downto 0) => p_3_out(2 downto 0),
       scndry_out => p_3_out(3),
       slowest_sync_clk => slowest_sync_clk
     );
+\ACTIVE_LOW_AUX.ACT_LO_AUX\: entity work.mb_design_rst_clk_wiz_1_100M_0_cdc_sync_0
+     port map (
+      asr_lpf(0) => asr_lpf(0),
+      aux_reset_in => aux_reset_in,
+      lpf_asr => lpf_asr,
+      lpf_asr_reg => \ACTIVE_LOW_AUX.ACT_LO_AUX_n_0\,
+      p_1_in => p_1_in,
+      p_2_in => p_2_in,
+      scndry_out => p_3_in1_in,
+      slowest_sync_clk => slowest_sync_clk
+    );
 \AUX_LPF[1].asr_lpf_reg[1]\: unisim.vcomponents.FDRE
+    generic map(
+      INIT => '0'
+    )
+        port map (
+      C => slowest_sync_clk,
+      CE => '1',
+      D => p_3_in1_in,
+      Q => p_2_in,
+      R => '0'
+    );
+\AUX_LPF[2].asr_lpf_reg[2]\: unisim.vcomponents.FDRE
+    generic map(
+      INIT => '0'
+    )
+        port map (
+      C => slowest_sync_clk,
+      CE => '1',
+      D => p_2_in,
+      Q => p_1_in,
+      R => '0'
+    );
+\AUX_LPF[3].asr_lpf_reg[3]\: unisim.vcomponents.FDRE
+    generic map(
+      INIT => '0'
+    )
+        port map (
+      C => slowest_sync_clk,
+      CE => '1',
+      D => p_1_in,
+      Q => asr_lpf(0),
+      R => '0'
+    );
+\EXT_LPF[1].exr_lpf_reg[1]\: unisim.vcomponents.FDRE
     generic map(
       INIT => '0'
     )
@@ -428,7 +483,7 @@ begin
       Q => p_3_out(2),
       R => '0'
     );
-\AUX_LPF[2].asr_lpf_reg[2]\: unisim.vcomponents.FDRE
+\EXT_LPF[2].exr_lpf_reg[2]\: unisim.vcomponents.FDRE
     generic map(
       INIT => '0'
     )
@@ -439,7 +494,7 @@ begin
       Q => p_3_out(1),
       R => '0'
     );
-\AUX_LPF[3].asr_lpf_reg[3]\: unisim.vcomponents.FDRE
+\EXT_LPF[3].exr_lpf_reg[3]\: unisim.vcomponents.FDRE
     generic map(
       INIT => '0'
     )
@@ -482,7 +537,7 @@ lpf_exr_reg: unisim.vcomponents.FDRE
         port map (
       C => slowest_sync_clk,
       CE => '1',
-      D => p_0_out,
+      D => \ACTIVE_HIGH_EXT.ACT_HI_EXT_n_0\,
       Q => lpf_exr,
       R => '0'
     );
@@ -523,8 +578,6 @@ entity mb_design_rst_clk_wiz_1_100M_0_sequence_psr is
     lpf_int : in STD_LOGIC;
     slowest_sync_clk : in STD_LOGIC
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of mb_design_rst_clk_wiz_1_100M_0_sequence_psr : entity is "sequence_psr";
 end mb_design_rst_clk_wiz_1_100M_0_sequence_psr;
 
 architecture STRUCTURE of mb_design_rst_clk_wiz_1_100M_0_sequence_psr is
@@ -852,7 +905,7 @@ entity mb_design_rst_clk_wiz_1_100M_0_proc_sys_reset is
   attribute C_EXT_RESET_HIGH : string;
   attribute C_EXT_RESET_HIGH of mb_design_rst_clk_wiz_1_100M_0_proc_sys_reset : entity is "1'b1";
   attribute C_EXT_RST_WIDTH : integer;
-  attribute C_EXT_RST_WIDTH of mb_design_rst_clk_wiz_1_100M_0_proc_sys_reset : entity is 1;
+  attribute C_EXT_RST_WIDTH of mb_design_rst_clk_wiz_1_100M_0_proc_sys_reset : entity is 4;
   attribute C_FAMILY : string;
   attribute C_FAMILY of mb_design_rst_clk_wiz_1_100M_0_proc_sys_reset : entity is "zynq";
   attribute C_NUM_BUS_RST : integer;
@@ -863,8 +916,6 @@ entity mb_design_rst_clk_wiz_1_100M_0_proc_sys_reset is
   attribute C_NUM_PERP_ARESETN of mb_design_rst_clk_wiz_1_100M_0_proc_sys_reset : entity is 1;
   attribute C_NUM_PERP_RST : integer;
   attribute C_NUM_PERP_RST of mb_design_rst_clk_wiz_1_100M_0_proc_sys_reset : entity is 1;
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of mb_design_rst_clk_wiz_1_100M_0_proc_sys_reset : entity is "proc_sys_reset";
 end mb_design_rst_clk_wiz_1_100M_0_proc_sys_reset;
 
 architecture STRUCTURE of mb_design_rst_clk_wiz_1_100M_0_proc_sys_reset is
@@ -991,7 +1042,7 @@ entity mb_design_rst_clk_wiz_1_100M_0 is
   attribute NotValidForBitStream : boolean;
   attribute NotValidForBitStream of mb_design_rst_clk_wiz_1_100M_0 : entity is true;
   attribute CHECK_LICENSE_TYPE : string;
-  attribute CHECK_LICENSE_TYPE of mb_design_rst_clk_wiz_1_100M_0 : entity is "mb_design_rst_clk_wiz_1_100M_0,proc_sys_reset,{}";
+  attribute CHECK_LICENSE_TYPE of mb_design_rst_clk_wiz_1_100M_0 : entity is "mb_test_rst_clk_wiz_1_100M_0,proc_sys_reset,{}";
   attribute downgradeipidentifiedwarnings : string;
   attribute downgradeipidentifiedwarnings of mb_design_rst_clk_wiz_1_100M_0 : entity is "yes";
   attribute x_core_info : string;
@@ -1006,7 +1057,7 @@ architecture STRUCTURE of mb_design_rst_clk_wiz_1_100M_0 is
   attribute C_EXT_RESET_HIGH : string;
   attribute C_EXT_RESET_HIGH of U0 : label is "1'b1";
   attribute C_EXT_RST_WIDTH : integer;
-  attribute C_EXT_RST_WIDTH of U0 : label is 1;
+  attribute C_EXT_RST_WIDTH of U0 : label is 4;
   attribute C_FAMILY : string;
   attribute C_FAMILY of U0 : label is "zynq";
   attribute C_NUM_BUS_RST : integer;
@@ -1028,7 +1079,7 @@ architecture STRUCTURE of mb_design_rst_clk_wiz_1_100M_0 is
   attribute x_interface_info of mb_reset : signal is "xilinx.com:signal:reset:1.0 mb_rst RST";
   attribute x_interface_parameter of mb_reset : signal is "XIL_INTERFACENAME mb_rst, POLARITY ACTIVE_HIGH, TYPE PROCESSOR, INSERT_VIP 0";
   attribute x_interface_info of slowest_sync_clk : signal is "xilinx.com:signal:clock:1.0 clock CLK";
-  attribute x_interface_parameter of slowest_sync_clk : signal is "XIL_INTERFACENAME clock, ASSOCIATED_RESET mb_reset:bus_struct_reset:interconnect_aresetn:peripheral_aresetn:peripheral_reset, FREQ_HZ 100000000, PHASE 0.0, CLK_DOMAIN mb_design_clk_wiz_1_0_clk_out1, INSERT_VIP 0";
+  attribute x_interface_parameter of slowest_sync_clk : signal is "XIL_INTERFACENAME clock, ASSOCIATED_RESET mb_reset:bus_struct_reset:interconnect_aresetn:peripheral_aresetn:peripheral_reset, FREQ_HZ 100000000, PHASE 0.0, CLK_DOMAIN mb_test_clk_wiz_1_0_clk_out1, INSERT_VIP 0";
   attribute x_interface_info of bus_struct_reset : signal is "xilinx.com:signal:reset:1.0 bus_struct_reset RST";
   attribute x_interface_parameter of bus_struct_reset : signal is "XIL_INTERFACENAME bus_struct_reset, POLARITY ACTIVE_HIGH, TYPE INTERCONNECT, INSERT_VIP 0";
   attribute x_interface_info of interconnect_aresetn : signal is "xilinx.com:signal:reset:1.0 interconnect_low_rst RST";

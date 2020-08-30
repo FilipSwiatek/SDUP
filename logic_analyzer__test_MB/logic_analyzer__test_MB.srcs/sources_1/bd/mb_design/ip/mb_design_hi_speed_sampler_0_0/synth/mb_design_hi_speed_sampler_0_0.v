@@ -47,111 +47,112 @@
 // DO NOT MODIFY THIS FILE.
 
 
-// IP VLNV: fswiatek:user:hi_speed_sampler:1.0.1
-// IP Revision: 9
+// IP VLNV: xilinx.com:user:hi_speed_sampler:21.37
+// IP Revision: 4
 
-(* X_CORE_INFO = "hi_speed_sampler_v1_0,Vivado 2019.1" *)
-(* CHECK_LICENSE_TYPE = "mb_design_hi_speed_sampler_0_0,hi_speed_sampler_v1_0,{}" *)
+(* X_CORE_INFO = "hi_speed_sampler_v21_37,Vivado 2019.1" *)
+(* CHECK_LICENSE_TYPE = "mb_design_hi_speed_sampler_0_0,hi_speed_sampler_v21_37,{}" *)
+(* CORE_GENERATION_INFO = "mb_design_hi_speed_sampler_0_0,hi_speed_sampler_v21_37,{x_ipProduct=Vivado 2019.1,x_ipVendor=xilinx.com,x_ipLibrary=user,x_ipName=hi_speed_sampler,x_ipVersion=21.37,x_ipCoreRevision=4,x_ipLanguage=VERILOG,x_ipSimLanguage=VERILOG,C_S00_AXI_DATA_WIDTH=32,C_S00_AXI_ADDR_WIDTH=5,input_data_width=32}" *)
 (* DowngradeIPIdentifiedWarnings = "yes" *)
 module mb_design_hi_speed_sampler_0_0 (
-  hi_speed_sampler_awaddr,
-  hi_speed_sampler_awprot,
-  hi_speed_sampler_awvalid,
-  hi_speed_sampler_awready,
-  hi_speed_sampler_wdata,
-  hi_speed_sampler_wstrb,
-  hi_speed_sampler_wvalid,
-  hi_speed_sampler_wready,
-  hi_speed_sampler_bresp,
-  hi_speed_sampler_bvalid,
-  hi_speed_sampler_bready,
-  hi_speed_sampler_araddr,
-  hi_speed_sampler_arprot,
-  hi_speed_sampler_arvalid,
-  hi_speed_sampler_arready,
-  hi_speed_sampler_rdata,
-  hi_speed_sampler_rresp,
-  hi_speed_sampler_rvalid,
   input_external_data_bus,
-  hi_speed_sampler_rready,
-  hi_speed_sampler_aclk,
-  hi_speed_sampler_aresetn
+  s00_axi_awaddr,
+  s00_axi_awprot,
+  s00_axi_awvalid,
+  s00_axi_awready,
+  s00_axi_wdata,
+  s00_axi_wstrb,
+  s00_axi_wvalid,
+  s00_axi_wready,
+  s00_axi_bresp,
+  s00_axi_bvalid,
+  s00_axi_bready,
+  s00_axi_araddr,
+  s00_axi_arprot,
+  s00_axi_arvalid,
+  s00_axi_arready,
+  s00_axi_rdata,
+  s00_axi_rresp,
+  s00_axi_rvalid,
+  s00_axi_rready,
+  s00_axi_aclk,
+  s00_axi_aresetn
 );
 
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 hi_speed_sampler AWADDR" *)
-input wire [4 : 0] hi_speed_sampler_awaddr;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 hi_speed_sampler AWPROT" *)
-input wire [2 : 0] hi_speed_sampler_awprot;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 hi_speed_sampler AWVALID" *)
-input wire hi_speed_sampler_awvalid;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 hi_speed_sampler AWREADY" *)
-output wire hi_speed_sampler_awready;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 hi_speed_sampler WDATA" *)
-input wire [31 : 0] hi_speed_sampler_wdata;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 hi_speed_sampler WSTRB" *)
-input wire [3 : 0] hi_speed_sampler_wstrb;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 hi_speed_sampler WVALID" *)
-input wire hi_speed_sampler_wvalid;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 hi_speed_sampler WREADY" *)
-output wire hi_speed_sampler_wready;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 hi_speed_sampler BRESP" *)
-output wire [1 : 0] hi_speed_sampler_bresp;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 hi_speed_sampler BVALID" *)
-output wire hi_speed_sampler_bvalid;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 hi_speed_sampler BREADY" *)
-input wire hi_speed_sampler_bready;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 hi_speed_sampler ARADDR" *)
-input wire [4 : 0] hi_speed_sampler_araddr;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 hi_speed_sampler ARPROT" *)
-input wire [2 : 0] hi_speed_sampler_arprot;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 hi_speed_sampler ARVALID" *)
-input wire hi_speed_sampler_arvalid;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 hi_speed_sampler ARREADY" *)
-output wire hi_speed_sampler_arready;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 hi_speed_sampler RDATA" *)
-output wire [31 : 0] hi_speed_sampler_rdata;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 hi_speed_sampler RRESP" *)
-output wire [1 : 0] hi_speed_sampler_rresp;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 hi_speed_sampler RVALID" *)
-output wire hi_speed_sampler_rvalid;
 input wire [31 : 0] input_external_data_bus;
-(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME hi_speed_sampler, WIZ_DATA_WIDTH 32, WIZ_NUM_REG 6, SUPPORTS_NARROW_BURST 0, DATA_WIDTH 32, PROTOCOL AXI4LITE, FREQ_HZ 100000000, ID_WIDTH 0, ADDR_WIDTH 5, AWUSER_WIDTH 0, ARUSER_WIDTH 0, WUSER_WIDTH 0, RUSER_WIDTH 0, BUSER_WIDTH 0, READ_WRITE_MODE READ_WRITE, HAS_BURST 0, HAS_LOCK 0, HAS_PROT 1, HAS_CACHE 0, HAS_QOS 0, HAS_REGION 0, HAS_WSTRB 1, HAS_BRESP 1, HAS_RRESP 1, NUM_READ_OUTSTANDING 2, NUM_WRITE_OUTSTANDING 2, MAX_BURST_LENGTH 1, PHASE 0.0, CLK_DOMAIN mb_design_clk_wi\
-z_1_0_clk_out1, NUM_READ_THREADS 1, NUM_WRITE_THREADS 1, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0, INSERT_VIP 0" *)
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 hi_speed_sampler RREADY" *)
-input wire hi_speed_sampler_rready;
-(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME hi_speed_sampler_CLK, ASSOCIATED_BUSIF hi_speed_sampler, ASSOCIATED_RESET hi_speed_sampler_aresetn:hi_speed_sampler_RST, FREQ_HZ 100000000, PHASE 0.0, CLK_DOMAIN mb_design_clk_wiz_1_0_clk_out1, INSERT_VIP 0" *)
-(* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 hi_speed_sampler_CLK CLK" *)
-input wire hi_speed_sampler_aclk;
-(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME hi_speed_sampler_RST, POLARITY ACTIVE_LOW, INSERT_VIP 0" *)
-(* X_INTERFACE_INFO = "xilinx.com:signal:reset:1.0 hi_speed_sampler_RST RST" *)
-input wire hi_speed_sampler_aresetn;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 S00_AXI AWADDR" *)
+input wire [4 : 0] s00_axi_awaddr;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 S00_AXI AWPROT" *)
+input wire [2 : 0] s00_axi_awprot;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 S00_AXI AWVALID" *)
+input wire s00_axi_awvalid;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 S00_AXI AWREADY" *)
+output wire s00_axi_awready;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 S00_AXI WDATA" *)
+input wire [31 : 0] s00_axi_wdata;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 S00_AXI WSTRB" *)
+input wire [3 : 0] s00_axi_wstrb;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 S00_AXI WVALID" *)
+input wire s00_axi_wvalid;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 S00_AXI WREADY" *)
+output wire s00_axi_wready;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 S00_AXI BRESP" *)
+output wire [1 : 0] s00_axi_bresp;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 S00_AXI BVALID" *)
+output wire s00_axi_bvalid;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 S00_AXI BREADY" *)
+input wire s00_axi_bready;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 S00_AXI ARADDR" *)
+input wire [4 : 0] s00_axi_araddr;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 S00_AXI ARPROT" *)
+input wire [2 : 0] s00_axi_arprot;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 S00_AXI ARVALID" *)
+input wire s00_axi_arvalid;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 S00_AXI ARREADY" *)
+output wire s00_axi_arready;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 S00_AXI RDATA" *)
+output wire [31 : 0] s00_axi_rdata;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 S00_AXI RRESP" *)
+output wire [1 : 0] s00_axi_rresp;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 S00_AXI RVALID" *)
+output wire s00_axi_rvalid;
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME S00_AXI, WIZ_DATA_WIDTH 32, WIZ_NUM_REG 6, SUPPORTS_NARROW_BURST 0, DATA_WIDTH 32, PROTOCOL AXI4LITE, FREQ_HZ 100000000, ID_WIDTH 0, ADDR_WIDTH 5, AWUSER_WIDTH 0, ARUSER_WIDTH 0, WUSER_WIDTH 0, RUSER_WIDTH 0, BUSER_WIDTH 0, READ_WRITE_MODE READ_WRITE, HAS_BURST 0, HAS_LOCK 0, HAS_PROT 1, HAS_CACHE 0, HAS_QOS 0, HAS_REGION 0, HAS_WSTRB 1, HAS_BRESP 1, HAS_RRESP 1, NUM_READ_OUTSTANDING 2, NUM_WRITE_OUTSTANDING 2, MAX_BURST_LENGTH 1, PHASE 0.0, CLK_DOMAIN mb_design_clk_wiz_1_0_clk\
+_out1, NUM_READ_THREADS 1, NUM_WRITE_THREADS 1, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0, INSERT_VIP 0" *)
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 S00_AXI RREADY" *)
+input wire s00_axi_rready;
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME S00_AXI_CLK, ASSOCIATED_BUSIF S00_AXI, ASSOCIATED_RESET s00_axi_aresetn, FREQ_HZ 100000000, PHASE 0.0, CLK_DOMAIN mb_design_clk_wiz_1_0_clk_out1, INSERT_VIP 0" *)
+(* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 S00_AXI_CLK CLK" *)
+input wire s00_axi_aclk;
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME S00_AXI_RST, POLARITY ACTIVE_LOW, INSERT_VIP 0" *)
+(* X_INTERFACE_INFO = "xilinx.com:signal:reset:1.0 S00_AXI_RST RST" *)
+input wire s00_axi_aresetn;
 
-  hi_speed_sampler_v1_0 #(
-    .C_hi_speed_sampler_DATA_WIDTH(32),  // Width of S_AXI data bus
-    .C_hi_speed_sampler_ADDR_WIDTH(5),  // Width of S_AXI address bus
+  hi_speed_sampler_v21_37 #(
+    .C_S00_AXI_DATA_WIDTH(32),  // Width of S_AXI data bus
+    .C_S00_AXI_ADDR_WIDTH(5),  // Width of S_AXI address bus
     .input_data_width(32)
   ) inst (
-    .hi_speed_sampler_awaddr(hi_speed_sampler_awaddr),
-    .hi_speed_sampler_awprot(hi_speed_sampler_awprot),
-    .hi_speed_sampler_awvalid(hi_speed_sampler_awvalid),
-    .hi_speed_sampler_awready(hi_speed_sampler_awready),
-    .hi_speed_sampler_wdata(hi_speed_sampler_wdata),
-    .hi_speed_sampler_wstrb(hi_speed_sampler_wstrb),
-    .hi_speed_sampler_wvalid(hi_speed_sampler_wvalid),
-    .hi_speed_sampler_wready(hi_speed_sampler_wready),
-    .hi_speed_sampler_bresp(hi_speed_sampler_bresp),
-    .hi_speed_sampler_bvalid(hi_speed_sampler_bvalid),
-    .hi_speed_sampler_bready(hi_speed_sampler_bready),
-    .hi_speed_sampler_araddr(hi_speed_sampler_araddr),
-    .hi_speed_sampler_arprot(hi_speed_sampler_arprot),
-    .hi_speed_sampler_arvalid(hi_speed_sampler_arvalid),
-    .hi_speed_sampler_arready(hi_speed_sampler_arready),
-    .hi_speed_sampler_rdata(hi_speed_sampler_rdata),
-    .hi_speed_sampler_rresp(hi_speed_sampler_rresp),
-    .hi_speed_sampler_rvalid(hi_speed_sampler_rvalid),
     .input_external_data_bus(input_external_data_bus),
-    .hi_speed_sampler_rready(hi_speed_sampler_rready),
-    .hi_speed_sampler_aclk(hi_speed_sampler_aclk),
-    .hi_speed_sampler_aresetn(hi_speed_sampler_aresetn)
+    .s00_axi_awaddr(s00_axi_awaddr),
+    .s00_axi_awprot(s00_axi_awprot),
+    .s00_axi_awvalid(s00_axi_awvalid),
+    .s00_axi_awready(s00_axi_awready),
+    .s00_axi_wdata(s00_axi_wdata),
+    .s00_axi_wstrb(s00_axi_wstrb),
+    .s00_axi_wvalid(s00_axi_wvalid),
+    .s00_axi_wready(s00_axi_wready),
+    .s00_axi_bresp(s00_axi_bresp),
+    .s00_axi_bvalid(s00_axi_bvalid),
+    .s00_axi_bready(s00_axi_bready),
+    .s00_axi_araddr(s00_axi_araddr),
+    .s00_axi_arprot(s00_axi_arprot),
+    .s00_axi_arvalid(s00_axi_arvalid),
+    .s00_axi_arready(s00_axi_arready),
+    .s00_axi_rdata(s00_axi_rdata),
+    .s00_axi_rresp(s00_axi_rresp),
+    .s00_axi_rvalid(s00_axi_rvalid),
+    .s00_axi_rready(s00_axi_rready),
+    .s00_axi_aclk(s00_axi_aclk),
+    .s00_axi_aresetn(s00_axi_aresetn)
   );
 endmodule
