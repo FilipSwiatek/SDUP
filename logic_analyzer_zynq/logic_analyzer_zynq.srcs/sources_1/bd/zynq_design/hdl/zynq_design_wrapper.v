@@ -1,7 +1,7 @@
 //Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2019.1 (win64) Build 2552052 Fri May 24 14:49:42 MDT 2019
-//Date        : Sun Aug 30 15:49:10 2020
+//Date        : Sun Aug 30 19:31:52 2020
 //Host        : Lestaro running 64-bit major release  (build 9200)
 //Command     : generate_target zynq_design_wrapper.bd
 //Design      : zynq_design_wrapper
@@ -31,9 +31,7 @@ module zynq_design_wrapper
     FIXED_IO_ps_clk,
     FIXED_IO_ps_porb,
     FIXED_IO_ps_srstb,
-    external_input,
-    uart_rtl_rxd,
-    uart_rtl_txd);
+    external_input);
   inout [14:0]DDR_addr;
   inout [2:0]DDR_ba;
   inout DDR_cas_n;
@@ -56,8 +54,6 @@ module zynq_design_wrapper
   inout FIXED_IO_ps_porb;
   inout FIXED_IO_ps_srstb;
   input [31:0]external_input;
-  input uart_rtl_rxd;
-  output uart_rtl_txd;
 
   wire [14:0]DDR_addr;
   wire [2:0]DDR_ba;
@@ -81,8 +77,6 @@ module zynq_design_wrapper
   wire FIXED_IO_ps_porb;
   wire FIXED_IO_ps_srstb;
   wire [31:0]external_input;
-  wire uart_rtl_rxd;
-  wire uart_rtl_txd;
 
   zynq_design zynq_design_i
        (.DDR_addr(DDR_addr),
@@ -106,7 +100,5 @@ module zynq_design_wrapper
         .FIXED_IO_ps_clk(FIXED_IO_ps_clk),
         .FIXED_IO_ps_porb(FIXED_IO_ps_porb),
         .FIXED_IO_ps_srstb(FIXED_IO_ps_srstb),
-        .external_input(external_input),
-        .uart_rtl_rxd(uart_rtl_rxd),
-        .uart_rtl_txd(uart_rtl_txd));
+        .external_input(external_input));
 endmodule
