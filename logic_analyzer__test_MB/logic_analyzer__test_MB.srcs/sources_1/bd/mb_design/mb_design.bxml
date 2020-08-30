@@ -2,10 +2,10 @@
 <Root MajorVersion="0" MinorVersion="37">
   <CompositeFile CompositeFileTopName="mb_design" CanBeSetAsTop="false" CanDisplayChildGraph="true">
     <Description>Composite Fileset</Description>
-    <Generation Name="SYNTHESIS" State="GENERATED" Timestamp="1598745831"/>
-    <Generation Name="IMPLEMENTATION" State="GENERATED" Timestamp="1598745831"/>
-    <Generation Name="SIMULATION" State="GENERATED" Timestamp="1598745831"/>
-    <Generation Name="HW_HANDOFF" State="GENERATED" Timestamp="1598745831"/>
+    <Generation Name="SYNTHESIS" State="GENERATED" Timestamp="1598792997"/>
+    <Generation Name="IMPLEMENTATION" State="GENERATED" Timestamp="1598792997"/>
+    <Generation Name="SIMULATION" State="GENERATED" Timestamp="1598792997"/>
+    <Generation Name="HW_HANDOFF" State="GENERATED" Timestamp="1598792997"/>
     <FileCollection Name="SOURCES" Type="SOURCES">
       <File Name="ip\mb_design_axi_gpio_0_0\mb_design_axi_gpio_0_0.xci" Type="IP">
         <Instance HierarchyPath="axi_gpio_0"/>
@@ -104,7 +104,6 @@
         <UsedIn Val="SIMULATION"/>
       </File>
       <File Name="ip\mb_design_microblaze_0_axi_periph_0\mb_design_microblaze_0_axi_periph_0.xci" Type="IP">
-        <Instance HierarchyPath="microblaze_0_axi_periph"/>
         <Properties IsEditable="false" IsVisible="false" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
         <Library Name="xil_defaultlib"/>
         <UsedIn Val="SYNTHESIS"/>
