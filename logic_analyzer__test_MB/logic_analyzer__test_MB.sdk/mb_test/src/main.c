@@ -57,37 +57,14 @@ int main(){
 		}
 	XGpio_SetDataDirection(&gpio_handle,GPIO_CHANNEL,0x000); // set as output
 	XGpio_DiscreteWrite(&gpio_handle,GPIO_CHANNEL,0);
-/*
-	Sampler_Init_t sampler_init_struct;
 
-	sampler_init_struct.cont_mode = 0;
-	sampler_init_struct.mem_depth = 0b1111;
-	sampler_init_struct.prescaling_factor = 0;
-	sampler_init_struct.trigMethod.trigMethod_H = 0xFFFFFFFF;
-	sampler_init_struct.trigMethod.trigMethod_L = 0xFFFFFFFF;
+	Sampler_Init();
 
-	//Sampler_Init(&sampler_init_struct);
-	HI_SPEED_SAMPLER_mWriteReg(XPAR_HI_SPEED_SAMPLER_0_S00_AXI_BASEADDR, 0, 0 );
-	HI_SPEED_SAMPLER_mWriteReg(XPAR_HI_SPEED_SAMPLER_0_S00_AXI_BASEADDR +1 ,0, 1 );
-	HI_SPEED_SAMPLER_mWriteReg(XPAR_HI_SPEED_SAMPLER_0_S00_AXI_BASEADDR, 2, 2 );
-*/
+	Sampler_Enable();
 
 
-	while(1);
-
-
-
-
-
-
-
-
-Sampler_Enable();
-
-while(!Sampler_IsFullyWritten()); // stick to while loop until write buffer is full;
-
-if(Sampler_Read(&value)){
-		XGpio_DiscreteWrite(&gpio_handle,0,value);
+	while(Sampler_Read(&value)){
+		XGpio_DiscreteWrite(&gpio_handle,GPIO_CHANNEL,value);
 	}
 
 
@@ -106,11 +83,11 @@ void Sampler_Init(){
 
 }
 bool Sampler_IsFullyWritten(void){
-	return (bool)HI_SPEED_SAMPLER_mReadReg(XPAR_HI_SPEED_SAMPLER_0_S00_AXI_BASEADDR,CTL_STAT_REG_OFFSET) & 1<<2;
+	return (bool)hi_speed_sampler->ctl_stat & CTL_STAT_REG_ISBUFFULL_MASK;
 }
 bool Sampler_Read(uint32_t* data){
-	if(HI_SPEED_SAMPLER_mReadReg(XPAR_HI_SPEED_SAMPLER_0_S00_AXI_BASEADDR,CTL_STAT_REG_OFFSET) & CTL_STAT_REG_ISTRIGGERED_MASK){ // check if triggered
-		*data = HI_SPEED_SAMPLER_mReadReg(XPAR_HI_SPEED_SAMPLER_0_S00_AXI_BASEADDR, SAMPLE_REG_OFFSET); //
+	if(hi_speed_sampler->ctl_stat & CTL_STAT_REG_ISTRIGGERED_MASK && !(hi_speed_sampler->ctl_stat & CTL_STAT_REG_ISREAD_MASK) ){ // check if triggered and not fully read
+		*data =hi_speed_sampler->sample;
 		return true;
 	}else{
 		return false;
@@ -119,14 +96,10 @@ bool Sampler_Read(uint32_t* data){
 }
 
 void Sampler_Enable(){
-	uint32_t tmp = HI_SPEED_SAMPLER_mReadReg(XPAR_HI_SPEED_SAMPLER_0_S00_AXI_BASEADDR, CTL_STAT_REG_OFFSET);
-	HI_SPEED_SAMPLER_mWriteReg(XPAR_HI_SPEED_SAMPLER_0_S00_AXI_BASEADDR, CTL_STAT_REG_OFFSET, tmp | CTL_STAT_REG_ENABLE_MASK );
-
+	hi_speed_sampler->ctl_stat |= CTL_STAT_REG_ENABLE_MASK;
 }
 void SamplerDisable(){
-	uint32_t tmp = HI_SPEED_SAMPLER_mReadReg(XPAR_HI_SPEED_SAMPLER_0_S00_AXI_BASEADDR, CTL_STAT_REG_OFFSET);
-		HI_SPEED_SAMPLER_mWriteReg(XPAR_HI_SPEED_SAMPLER_0_S00_AXI_BASEADDR, CTL_STAT_REG_OFFSET, tmp & (~CTL_STAT_REG_ENABLE_MASK) );
-
+	hi_speed_sampler->ctl_stat &= ~CTL_STAT_REG_ENABLE_MASK;
 }
 
 
