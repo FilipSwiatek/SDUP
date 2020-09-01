@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Sun Aug 30 15:09:56 2020" VIVADOVERSION="2019.1">
+<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Tue Sep  1 20:58:56 2020" VIVADOVERSION="2019.1">
 
   <SYSTEMINFO ARCH="zynq" BOARD="digilentinc.com:zybo:part0:1.0" DEVICE="7z010" NAME="mb_design" PACKAGE="clg400" SPEEDGRADE="-1"/>
 
@@ -1047,7 +1047,7 @@
         </BUSINTERFACE>
       </BUSINTERFACES>
     </MODULE>
-    <MODULE COREREVISION="5" FULLNAME="/hi_speed_sampler_0" HWVERSION="21.37" INSTANCE="hi_speed_sampler_0" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="hi_speed_sampler" VLNV="xilinx.com:user:hi_speed_sampler:21.37">
+    <MODULE COREREVISION="6" FULLNAME="/hi_speed_sampler_0" HWVERSION="21.37" INSTANCE="hi_speed_sampler_0" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="hi_speed_sampler" VLNV="xilinx.com:user:hi_speed_sampler:21.37">
       <DOCUMENTS/>
       <ADDRESSBLOCKS>
         <ADDRESSBLOCK ACCESS="" INTERFACE="S00_AXI" NAME="S00_AXI_reg" RANGE="4096" USAGE="register"/>

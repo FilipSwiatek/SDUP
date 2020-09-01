@@ -27,14 +27,14 @@
   "../../../bd/mb_design/ip/mb_design_microblaze_0_0/sim/mb_design_microblaze_0_0.vhd" \
 -endlib
 -makelib xcelium_lib/xil_defaultlib -sv \
-  "../../../bd/mb_design/ipshared/52ef/src/bram.sv" \
-  "../../../bd/mb_design/ipshared/52ef/hdl/hi_speed_sampler_v21_37_S00_AXI.v" \
-  "../../../bd/mb_design/ipshared/52ef/src/logic_analyzer.sv" \
-  "../../../bd/mb_design/ipshared/52ef/src/prescaler.sv" \
-  "../../../bd/mb_design/ipshared/52ef/src/sampler.sv" \
+  "../../../bd/mb_design/ipshared/4b60/src/bram.sv" \
+  "../../../bd/mb_design/ipshared/4b60/hdl/hi_speed_sampler_v21_37_S00_AXI.v" \
+  "../../../bd/mb_design/ipshared/4b60/src/logic_analyzer.sv" \
+  "../../../bd/mb_design/ipshared/4b60/src/prescaler.sv" \
+  "../../../bd/mb_design/ipshared/4b60/src/sampler.sv" \
 -endlib
 -makelib xcelium_lib/xil_defaultlib \
-  "../../../bd/mb_design/ipshared/52ef/hdl/hi_speed_sampler_v21_37.v" \
+  "../../../bd/mb_design/ipshared/4b60/hdl/hi_speed_sampler_v21_37.v" \
   "../../../bd/mb_design/ip/mb_design_hi_speed_sampler_0_0/sim/mb_design_hi_speed_sampler_0_0.v" \
 -endlib
 -makelib xcelium_lib/lmb_v10_v3_0_9 \

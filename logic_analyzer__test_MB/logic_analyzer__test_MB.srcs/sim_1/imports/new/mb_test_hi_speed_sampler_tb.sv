@@ -39,6 +39,7 @@ initial begin
     reset = 1;
     samples_in = 0;
     #10 reset = 0;
+    #100
     #666
     for(int i = 0; i<100; i++)begin
           #1 samples_in++;

@@ -53,7 +53,7 @@ module sample_and_hold#(
 	                   end
 	               end
 	               2'b11: begin // rising_or_falling_edge
-	                   if(in_bus[i] != in_bus_prev[i] == 0)begin
+	                   if(in_bus[i] != in_bus_prev[i])begin
 	                       setTriggerAndUpdateOutputImmediately();
 	                   end
 	               end

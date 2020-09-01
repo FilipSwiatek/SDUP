@@ -48,7 +48,7 @@
 
 
 // IP VLNV: xilinx.com:user:hi_speed_sampler:21.37
-// IP Revision: 5
+// IP Revision: 6
 
 `timescale 1ns/1ps
 

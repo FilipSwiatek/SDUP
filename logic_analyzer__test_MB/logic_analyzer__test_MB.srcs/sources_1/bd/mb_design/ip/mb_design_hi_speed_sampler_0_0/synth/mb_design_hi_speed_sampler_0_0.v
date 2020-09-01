@@ -48,11 +48,11 @@
 
 
 // IP VLNV: xilinx.com:user:hi_speed_sampler:21.37
-// IP Revision: 5
+// IP Revision: 6
 
 (* X_CORE_INFO = "hi_speed_sampler_v21_37,Vivado 2019.1" *)
 (* CHECK_LICENSE_TYPE = "mb_design_hi_speed_sampler_0_0,hi_speed_sampler_v21_37,{}" *)
-(* CORE_GENERATION_INFO = "mb_design_hi_speed_sampler_0_0,hi_speed_sampler_v21_37,{x_ipProduct=Vivado 2019.1,x_ipVendor=xilinx.com,x_ipLibrary=user,x_ipName=hi_speed_sampler,x_ipVersion=21.37,x_ipCoreRevision=5,x_ipLanguage=VERILOG,x_ipSimLanguage=VERILOG,C_S00_AXI_DATA_WIDTH=32,C_S00_AXI_ADDR_WIDTH=5,input_data_width=32}" *)
+(* CORE_GENERATION_INFO = "mb_design_hi_speed_sampler_0_0,hi_speed_sampler_v21_37,{x_ipProduct=Vivado 2019.1,x_ipVendor=xilinx.com,x_ipLibrary=user,x_ipName=hi_speed_sampler,x_ipVersion=21.37,x_ipCoreRevision=6,x_ipLanguage=VERILOG,x_ipSimLanguage=VERILOG,C_S00_AXI_DATA_WIDTH=32,C_S00_AXI_ADDR_WIDTH=5,input_data_width=32}" *)
 (* DowngradeIPIdentifiedWarnings = "yes" *)
 module mb_design_hi_speed_sampler_0_0 (
   input_external_data_bus,

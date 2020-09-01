@@ -1,10 +1,10 @@
 -- Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2019.1 (win64) Build 2552052 Fri May 24 14:49:42 MDT 2019
--- Date        : Sun Aug 30 15:40:55 2020
+-- Date        : Tue Sep  1 21:25:39 2020
 -- Host        : Lestaro running 64-bit major release  (build 9200)
 -- Command     : write_vhdl -force -mode synth_stub
---               d:/sem_I/SDUP/logic_analyzer_zynq/logic_analyzer_zynq.srcs/sources_1/bd/zynq_design/ip/zynq_design_hi_speed_sampler_0_0/zynq_design_hi_speed_sampler_0_0_stub.vhdl
+--               D:/sem_I/SDUP/logic_analyzer_zynq/logic_analyzer_zynq.srcs/sources_1/bd/zynq_design/ip/zynq_design_hi_speed_sampler_0_0/zynq_design_hi_speed_sampler_0_0_stub.vhdl
 -- Design      : zynq_design_hi_speed_sampler_0_0
 -- Purpose     : Stub declaration of top-level module interface
 -- Device      : xc7z010clg400-1

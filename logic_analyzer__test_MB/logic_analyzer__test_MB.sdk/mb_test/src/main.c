@@ -1,18 +1,16 @@
 #include "xparameters.h"
 #include "hi_speed_sampler.h"
+#include "xgpio.h"
 #include <stdbool.h>
-//#include <string.h>
-#include "xil_io.h"
-#include <stdio.h>
-#include "platform.h"
-#include "xil_printf.h"
 
-#define CTL_STAT_REG_OFFSET 			0
-#define PRESCALING_FACTOR_REG_OFFSET	1
-#define MEM_DEPTH_REG_OFFSET 			2
-#define SAMPLE_REG_OFFSET				5
-#define TRIG_METHOD_L_OFFSET			4
-#define TRIG_METHOD_H_OFFSET			3
+#define CTL_STAT_REG_OFFSET 			(0 * 4)
+#define PRESCALING_FACTOR_REG_OFFSET	(1 * 4)
+#define MEM_DEPTH_REG_OFFSET 			(2 * 4)
+#define SAMPLE_REG_OFFSET				(5 * 4)
+#define TRIG_METHOD_L_OFFSET			(4 * 4)
+#define TRIG_METHOD_H_OFFSET			(3 * 4)
+
+
 
 
 #define CTL_STAT_REG_ENABLE_MASK 1
@@ -32,7 +30,7 @@ uint32_t trig_method_L;
 uint32_t sample;
 }hi_speed_sampler_t;
 
-//hi_speed_sampler_t* hi_speed_sampler = (hi_speed_sampler_t*)XPAR_HI_SPEED_SAMPLER_0_S00_AXI_BASEADDR;
+hi_speed_sampler_t* hi_speed_sampler = (hi_speed_sampler_t*)XPAR_HI_SPEED_SAMPLER_0_S00_AXI_BASEADDR;
 
 
 typedef enum {
@@ -46,56 +44,51 @@ typedef enum {
 
 bool Sampler_IsFullyWritten(void);
 bool Sampler_Read(uint32_t* data);
-bool Sampler_IsTriggered();
 void Sampler_Init();
 void Sampler_Enable();
 void SamplerDisable();
 
+XGpio gpio_handle;
 
 int main(){
-	uint32_t value;
-	init_platform();
-	char buffer[50];
-	Sampler_Init();
+	uint32_t value = 0;
+	if (XST_SUCCESS != XGpio_Initialize(&gpio_handle,XPAR_GPIO_0_DEVICE_ID)){
+			goto error;
+		}
+	XGpio_SetDataDirection(&gpio_handle,GPIO_CHANNEL,0x000); // set as output
+	XGpio_DiscreteWrite(&gpio_handle,GPIO_CHANNEL,0);
 
-	//print("Eluwina, byczq, inicjalizowansko samplera \n\r");
+	Sampler_Init();
 
 	Sampler_Enable();
 
-
 	while(true){
 		if(Sampler_Read(&value)){
-				sprintf(buffer,"SAMPLE incoming from analyzer: %lx \n\r", value);
-				//print(buffer);
-			}
-		if(!Sampler_IsTriggered()){
-			//print("Jeszcze nie zebrano zadnej probki, byczq\n\r");
+			XGpio_DiscreteWrite(&gpio_handle,GPIO_CHANNEL,value);
 		}
-		for(volatile int i = 0;i<30000000;i++); // delay
 	}
-	cleanup_platform();
+
+
+
+error: while(1);
 }
 
 void Sampler_Init(){
-/*
+
+
 	hi_speed_sampler->ctl_stat = 0;
 	hi_speed_sampler->mem_depth = 0b1111;
 	hi_speed_sampler->prescaling_factor = 0;
 	hi_speed_sampler->trig_method_H = 0xFFFFFFFF;
 	hi_speed_sampler->trig_method_L = 0xFFFFFFFF;
-*/
-	HI_SPEED_SAMPLER_mWriteReg(XPAR_HI_SPEED_SAMPLER_0_S00_AXI_BASEADDR, CTL_STAT_REG_OFFSET, 0);
-	HI_SPEED_SAMPLER_mWriteReg(XPAR_HI_SPEED_SAMPLER_0_S00_AXI_BASEADDR, PRESCALING_FACTOR_REG_OFFSET, 0);
-	HI_SPEED_SAMPLER_mWriteReg(XPAR_HI_SPEED_SAMPLER_0_S00_AXI_BASEADDR, MEM_DEPTH_REG_OFFSET , 0b1111);
-	HI_SPEED_SAMPLER_mWriteReg(XPAR_HI_SPEED_SAMPLER_0_S00_AXI_BASEADDR, TRIG_METHOD_H_OFFSET , 0xFFFFFFFF);
-	HI_SPEED_SAMPLER_mWriteReg(XPAR_HI_SPEED_SAMPLER_0_S00_AXI_BASEADDR, TRIG_METHOD_L_OFFSET , 0xFFFFFFFF);
+
 }
 bool Sampler_IsFullyWritten(void){
-	return (HI_SPEED_SAMPLER_mReadReg(XPAR_HI_SPEED_SAMPLER_0_S00_AXI_BASEADDR, CTL_STAT_REG_OFFSET) & CTL_STAT_REG_ISBUFFULL_MASK) != 0;
+	return (bool)hi_speed_sampler->ctl_stat & CTL_STAT_REG_ISBUFFULL_MASK;
 }
 bool Sampler_Read(uint32_t* data){
-	if(!(HI_SPEED_SAMPLER_mReadReg(XPAR_HI_SPEED_SAMPLER_0_S00_AXI_BASEADDR, CTL_STAT_REG_OFFSET) & CTL_STAT_REG_ISREAD_MASK) && (Sampler_IsTriggered()) ){ // check if triggered and not fully read
-		*data = HI_SPEED_SAMPLER_mReadReg(XPAR_HI_SPEED_SAMPLER_0_S00_AXI_BASEADDR, SAMPLE_REG_OFFSET);
+	if(hi_speed_sampler->ctl_stat & CTL_STAT_REG_ISTRIGGERED_MASK && !(hi_speed_sampler->ctl_stat & CTL_STAT_REG_ISREAD_MASK) ){ // check if triggered and not fully read
+		*data =hi_speed_sampler->sample;
 		return true;
 	}else{
 		return false;
@@ -104,20 +97,10 @@ bool Sampler_Read(uint32_t* data){
 }
 
 void Sampler_Enable(){
-	uint32_t value = HI_SPEED_SAMPLER_mReadReg(XPAR_HI_SPEED_SAMPLER_0_S00_AXI_BASEADDR, CTL_STAT_REG_OFFSET);
-	value |= CTL_STAT_REG_ENABLE_MASK;
-	HI_SPEED_SAMPLER_mWriteReg(XPAR_HI_SPEED_SAMPLER_0_S00_AXI_BASEADDR, CTL_STAT_REG_OFFSET, value);
+	hi_speed_sampler->ctl_stat |= CTL_STAT_REG_ENABLE_MASK;
 }
 void SamplerDisable(){
-	uint32_t value = HI_SPEED_SAMPLER_mReadReg(XPAR_HI_SPEED_SAMPLER_0_S00_AXI_BASEADDR, CTL_STAT_REG_OFFSET);
-	value &= ~CTL_STAT_REG_ENABLE_MASK;
-	HI_SPEED_SAMPLER_mWriteReg(XPAR_HI_SPEED_SAMPLER_0_S00_AXI_BASEADDR, CTL_STAT_REG_OFFSET, value);
-}
-
-bool Sampler_IsTriggered(){
-	uint32_t value;
-	value =  HI_SPEED_SAMPLER_mReadReg(XPAR_HI_SPEED_SAMPLER_0_S00_AXI_BASEADDR, CTL_STAT_REG_OFFSET)  ;
-	return (value & CTL_STAT_REG_ISTRIGGERED_MASK) != 0;
+	hi_speed_sampler->ctl_stat &= ~CTL_STAT_REG_ENABLE_MASK;
 }
 
 

@@ -68,14 +68,14 @@ vcom -work xil_defaultlib -93 \
 "../../../bd/mb_design/ip/mb_design_microblaze_0_0/sim/mb_design_microblaze_0_0.vhd" \
 
 vlog -work xil_defaultlib  -sv2k12 "+incdir+../../../../logic_analyzer__test_MB.srcs/sources_1/bd/mb_design/ipshared/c923" "+incdir+../../../../logic_analyzer__test_MB.srcs/sources_1/bd/mb_design/ipshared/ec67/hdl" \
-"../../../bd/mb_design/ipshared/52ef/src/bram.sv" \
-"../../../bd/mb_design/ipshared/52ef/hdl/hi_speed_sampler_v21_37_S00_AXI.v" \
-"../../../bd/mb_design/ipshared/52ef/src/logic_analyzer.sv" \
-"../../../bd/mb_design/ipshared/52ef/src/prescaler.sv" \
-"../../../bd/mb_design/ipshared/52ef/src/sampler.sv" \
+"../../../bd/mb_design/ipshared/4b60/src/bram.sv" \
+"../../../bd/mb_design/ipshared/4b60/hdl/hi_speed_sampler_v21_37_S00_AXI.v" \
+"../../../bd/mb_design/ipshared/4b60/src/logic_analyzer.sv" \
+"../../../bd/mb_design/ipshared/4b60/src/prescaler.sv" \
+"../../../bd/mb_design/ipshared/4b60/src/sampler.sv" \
 
 vlog -work xil_defaultlib  -v2k5 "+incdir+../../../../logic_analyzer__test_MB.srcs/sources_1/bd/mb_design/ipshared/c923" "+incdir+../../../../logic_analyzer__test_MB.srcs/sources_1/bd/mb_design/ipshared/ec67/hdl" \
-"../../../bd/mb_design/ipshared/52ef/hdl/hi_speed_sampler_v21_37.v" \
+"../../../bd/mb_design/ipshared/4b60/hdl/hi_speed_sampler_v21_37.v" \
 "../../../bd/mb_design/ip/mb_design_hi_speed_sampler_0_0/sim/mb_design_hi_speed_sampler_0_0.v" \
 
 vcom -work lmb_v10_v3_0_9 -93 \

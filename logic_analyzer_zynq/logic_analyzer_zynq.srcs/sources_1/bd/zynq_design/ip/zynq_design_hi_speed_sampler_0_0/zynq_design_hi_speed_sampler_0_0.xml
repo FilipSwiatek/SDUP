@@ -581,11 +581,11 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Sun Aug 30 13:39:26 UTC 2020</spirit:value>
+            <spirit:value>Tue Sep 01 19:24:29 UTC 2020</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:93f26ae9</spirit:value>
+            <spirit:value>9:0707ff2a</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -596,7 +596,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:93f26ae9</spirit:value>
+            <spirit:value>9:0707ff2a</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -612,11 +612,11 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Sun Aug 30 13:39:26 UTC 2020</spirit:value>
+            <spirit:value>Tue Sep 01 19:24:29 UTC 2020</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:93f26ae9</spirit:value>
+            <spirit:value>9:0707ff2a</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -632,11 +632,11 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Sun Aug 30 13:39:26 UTC 2020</spirit:value>
+            <spirit:value>Tue Sep 01 19:24:29 UTC 2020</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:6a682853</spirit:value>
+            <spirit:value>9:fe9dbd90</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -652,11 +652,11 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Sun Aug 30 13:39:26 UTC 2020</spirit:value>
+            <spirit:value>Tue Sep 01 19:24:29 UTC 2020</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:6a682853</spirit:value>
+            <spirit:value>9:fe9dbd90</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -670,11 +670,11 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Sun Aug 30 13:40:55 UTC 2020</spirit:value>
+            <spirit:value>Tue Sep 01 19:25:39 UTC 2020</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:93f26ae9</spirit:value>
+            <spirit:value>9:0707ff2a</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -1047,27 +1047,27 @@
     <spirit:fileSet>
       <spirit:name>xilinx_verilogsynthesis_view_fileset</spirit:name>
       <spirit:file>
-        <spirit:name>../../ipshared/52ef/src/bram.sv</spirit:name>
+        <spirit:name>../../ipshared/4b60/src/bram.sv</spirit:name>
         <spirit:fileType>systemVerilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>../../ipshared/52ef/hdl/hi_speed_sampler_v21_37_S00_AXI.v</spirit:name>
+        <spirit:name>../../ipshared/4b60/hdl/hi_speed_sampler_v21_37_S00_AXI.v</spirit:name>
         <spirit:fileType>systemVerilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>../../ipshared/52ef/src/logic_analyzer.sv</spirit:name>
+        <spirit:name>../../ipshared/4b60/src/logic_analyzer.sv</spirit:name>
         <spirit:fileType>systemVerilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>../../ipshared/52ef/src/prescaler.sv</spirit:name>
+        <spirit:name>../../ipshared/4b60/src/prescaler.sv</spirit:name>
         <spirit:fileType>systemVerilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>../../ipshared/52ef/src/sampler.sv</spirit:name>
+        <spirit:name>../../ipshared/4b60/src/sampler.sv</spirit:name>
         <spirit:fileType>systemVerilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>../../ipshared/52ef/hdl/hi_speed_sampler_v21_37.v</spirit:name>
+        <spirit:name>../../ipshared/4b60/hdl/hi_speed_sampler_v21_37.v</spirit:name>
         <spirit:fileType>verilogSource</spirit:fileType>
       </spirit:file>
     </spirit:fileSet>
@@ -1082,27 +1082,27 @@
     <spirit:fileSet>
       <spirit:name>xilinx_verilogbehavioralsimulation_view_fileset</spirit:name>
       <spirit:file>
-        <spirit:name>../../ipshared/52ef/src/bram.sv</spirit:name>
+        <spirit:name>../../ipshared/4b60/src/bram.sv</spirit:name>
         <spirit:fileType>systemVerilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>../../ipshared/52ef/hdl/hi_speed_sampler_v21_37_S00_AXI.v</spirit:name>
+        <spirit:name>../../ipshared/4b60/hdl/hi_speed_sampler_v21_37_S00_AXI.v</spirit:name>
         <spirit:fileType>systemVerilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>../../ipshared/52ef/src/logic_analyzer.sv</spirit:name>
+        <spirit:name>../../ipshared/4b60/src/logic_analyzer.sv</spirit:name>
         <spirit:fileType>systemVerilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>../../ipshared/52ef/src/prescaler.sv</spirit:name>
+        <spirit:name>../../ipshared/4b60/src/prescaler.sv</spirit:name>
         <spirit:fileType>systemVerilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>../../ipshared/52ef/src/sampler.sv</spirit:name>
+        <spirit:name>../../ipshared/4b60/src/sampler.sv</spirit:name>
         <spirit:fileType>systemVerilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>../../ipshared/52ef/hdl/hi_speed_sampler_v21_37.v</spirit:name>
+        <spirit:name>../../ipshared/4b60/hdl/hi_speed_sampler_v21_37.v</spirit:name>
         <spirit:fileType>verilogSource</spirit:fileType>
       </spirit:file>
     </spirit:fileSet>
@@ -1216,7 +1216,7 @@
   <spirit:vendorExtensions>
     <xilinx:coreExtensions>
       <xilinx:displayName>hi_speed_sampler_v21.37</xilinx:displayName>
-      <xilinx:coreRevision>5</xilinx:coreRevision>
+      <xilinx:coreRevision>6</xilinx:coreRevision>
       <xilinx:tags>
         <xilinx:tag xilinx:name="ui.data.coregen.dd@3351bfe7_ARCHIVE_LOCATION">d:/sem_I/SDUP/ip_repo/hi_speed_sampler_v2/hi_speed_sampler_21.37</xilinx:tag>
         <xilinx:tag xilinx:name="ui.data.coregen.dd@5a92f723_ARCHIVE_LOCATION">d:/sem_I/SDUP/ip_repo/hi_speed_sampler_v2/hi_speed_sampler_21.37</xilinx:tag>
@@ -1268,6 +1268,17 @@
         <xilinx:tag xilinx:name="ui.data.coregen.dd@7d1d32fd_ARCHIVE_LOCATION">d:/sem_I/SDUP/ip_repo/hi_speed_sampler_v2/hi_speed_sampler_21.37</xilinx:tag>
         <xilinx:tag xilinx:name="ui.data.coregen.dd@605eb84a_ARCHIVE_LOCATION">d:/sem_I/SDUP/ip_repo/hi_speed_sampler_v2/hi_speed_sampler_21.37</xilinx:tag>
         <xilinx:tag xilinx:name="ui.data.coregen.dd@6c989b3d_ARCHIVE_LOCATION">d:/sem_I/SDUP/ip_repo/hi_speed_sampler_v2/hi_speed_sampler_21.37</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@44c878f6_ARCHIVE_LOCATION">d:/sem_I/SDUP/ip_repo/hi_speed_sampler_v2/hi_speed_sampler_21.37</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2bbec2fc_ARCHIVE_LOCATION">d:/sem_I/SDUP/ip_repo/hi_speed_sampler_v2/hi_speed_sampler_21.37</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4a054979_ARCHIVE_LOCATION">d:/sem_I/SDUP/ip_repo/hi_speed_sampler_v2/hi_speed_sampler_21.37</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@77d79988_ARCHIVE_LOCATION">d:/sem_I/SDUP/ip_repo/hi_speed_sampler_v2/hi_speed_sampler_21.37</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4dcb5088_ARCHIVE_LOCATION">d:/sem_I/SDUP/ip_repo/hi_speed_sampler_v2/hi_speed_sampler_21.37</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@625e800b_ARCHIVE_LOCATION">d:/sem_I/SDUP/ip_repo/hi_speed_sampler_v2/hi_speed_sampler_21.37</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2bcb3dbe_ARCHIVE_LOCATION">d:/sem_I/SDUP/ip_repo/hi_speed_sampler_v2/hi_speed_sampler_21.37</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@216c85f7_ARCHIVE_LOCATION">d:/sem_I/SDUP/ip_repo/hi_speed_sampler_v2/hi_speed_sampler_21.37</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5e0ac18b_ARCHIVE_LOCATION">d:/sem_I/SDUP/ip_repo/hi_speed_sampler_v2/hi_speed_sampler_21.37</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@19555db0_ARCHIVE_LOCATION">d:/sem_I/SDUP/ip_repo/hi_speed_sampler_v2/hi_speed_sampler_21.37</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3e5aa4b8_ARCHIVE_LOCATION">d:/sem_I/SDUP/ip_repo/hi_speed_sampler_v2/hi_speed_sampler_21.37</xilinx:tag>
       </xilinx:tags>
       <xilinx:configElementInfos>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S00_AXI.ADDR_WIDTH" xilinx:valueSource="auto" xilinx:valuePermission="bd"/>
@@ -1302,7 +1313,7 @@
       <xilinx:xilinxVersion>2019.1</xilinx:xilinxVersion>
       <xilinx:checksum xilinx:scope="busInterfaces" xilinx:value="616027be"/>
       <xilinx:checksum xilinx:scope="memoryMaps" xilinx:value="ed1368d5"/>
-      <xilinx:checksum xilinx:scope="fileGroups" xilinx:value="b69fc851"/>
+      <xilinx:checksum xilinx:scope="fileGroups" xilinx:value="c89317db"/>
       <xilinx:checksum xilinx:scope="ports" xilinx:value="1c99efb0"/>
       <xilinx:checksum xilinx:scope="hdlParameters" xilinx:value="6c377752"/>
       <xilinx:checksum xilinx:scope="parameters" xilinx:value="31d2bebf"/>

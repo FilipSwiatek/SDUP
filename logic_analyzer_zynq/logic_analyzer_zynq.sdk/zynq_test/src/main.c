@@ -82,8 +82,8 @@ void Sampler_Init(){
 	hi_speed_sampler->ctl_stat = 0;
 	hi_speed_sampler->mem_depth = 0b1111;
 	hi_speed_sampler->prescaling_factor = 0;
-	hi_speed_sampler->trig_method_H = //0xFFFFFFFF;
-	hi_speed_sampler->trig_method_L = //0xFFFFFFFF;
+	hi_speed_sampler->trig_method_H = 0xFFFFFFFF;
+	hi_speed_sampler->trig_method_L = 0xFFFFFFFF;
 /*
 	HI_SPEED_SAMPLER_mWriteReg(XPAR_HI_SPEED_SAMPLER_0_S00_AXI_BASEADDR, CTL_STAT_REG_OFFSET, 0);
 	uint32_t value = HI_SPEED_SAMPLER_mReadReg(XPAR_HI_SPEED_SAMPLER_0_S00_AXI_BASEADDR, CTL_STAT_REG_OFFSET);
