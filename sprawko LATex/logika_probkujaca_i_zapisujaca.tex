@@ -1,1 +1,44 @@
 \chapter{Projekt części niezależnej od magistrali AXI}
+
+Moduł odpowiedzialny za akwizycję danych, buforowanie ich i odczyt został w pełni napisany w języku SystemVerilog. Składa się on z następujących submodułów:
+
+\begin{enumerate}
+	\item samplera
+	\item preskalera
+	\item pamięci BRAM
+\end{enumerate}
+
+
+\section{Sampler}
+
+Pierwszym elementem, który należało wykonać był układ próbkujący. To on odpowiedzialny jest za wyzwolenie zapisu próbek do pamięci i jego kontrolę. Z każdym narastającym zboczem zegara, kiedy sygnał \emph{ce} jest wysoki, następuje sprawdzanie, czy sygnał wejściowy się zmienił w określony sposób. Rodzaje śledzonych zmian zależą od wejścia \emph{trig\_method}. Wejście to dzieli się na 32 2-bitowych wektorów, których wartości przekładają się na zdarzenie wyzwalające zapis danych. Dla każdego z 32 wejść są to kolejno:
+	
+	\begin{itemize}
+		\item "00" - brak wzoru wyzwalającego
+		\item "01" - wyzwolenie zboczem narastającym
+		\item "10" - wyzwalanie zboczem opadającym
+		\item "11" - wyzwalanie zarówno zboczem narastającym jak i opadającym
+	\end{itemize}
+	
+Sygnał \emph{out\_bus} jest przepisywany z wejścia \emph{in\_bus} za każdym razem, kiedy sygnał \emph{ce} jest w stanie wysokim i kiedy nastąpiło wyzwolenie.
+
+Włączenie wyzwolenia można wymusić ustawiając stan wysoki na wejściu \emph{continuous\_mode}. Wyzwolenie następuje wtedy natychmiast po włączeniu.
+
+Włączenie całego modułu następuje poprzez ustawienie stanu niskiego na wejściu \emph{rst}.
+
+\section{Preskaler}
+	Układ ten w odróżnieniu od pozostałych, zmienia stan sygnału wejściowego na opadającym zboczu zegara.
+Przekłada się to na wysoce ułatwioną analizę poprawności pracy modułów. Jest to preskaler, który steruje wyjściem
+\emph{ce} w taki sposób, aby miało wysoki stan po doliczeniu do liczby, która znajduje się na jego wejściu \emph{FACTOR} lub od parametru podanego podczas jego deklaracji. W tym projekcie nie używaliśmy predefiniowanego współczynnika preskalera. Moduł został zaprojektowany na potrzebę innego projektu, jednakże z powodu jego elastyczności zdecydowano się na jego recykling.
+
+\section{Pamięć BRAM}
+	Jest to blok wykonany ze zmodyfikowanego szablonu dwuportowej pamięci RAM zaprojektowanego przez producenta układu FPGA. Warto zaznaczyć, że odczyt danych następuje z latencją 2 cykli zegarowych, o czym świadomość mieliśmy na dalszym etapie projektu, buforując dane wyjściowe.
+	
+\section{Moduł analizatora stanów logicznych}
+
+Jest to instancjalizacja wszystkich powyższych modułów oraz ich połączenie z dodaniem sterownika adresu odczytu próbki. Układ posiada sygnał wejściowy \emph{preload\_new\_sample}, którego wysoki stan powoduje inkrementację adresu odczytywanej próbki. wejście \emph{reset} zastąpiono tutaj wejściem \emph{enable} odwracając jego działanie. Sygnał \emph{valid} informuje o poprawności danych wyjściowych zawierających odczytaną z bufora próbkę.
+
+Sygnały \emph{isBufferFullyWritten} i \emph{isBufferFullyRead} informują kolejno o całkowitym zapisie i odczycie bufora.
+
+W tym bloku również umieszczono wskaźnik wyzwolenia analizatora, którego rolę pełni sygnał \emph{isAnalyzerTriggered}
+

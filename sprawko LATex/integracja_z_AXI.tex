@@ -1,1 +1,33 @@
 \chapter{Implementacja urządzenia jako peryferium z magistralą AXI-Lite}
+
+Aby Urządzenie mogło pracować z magistralą AXI-Lite, należało odpowiednio zmapować jego wyprowadzenia do rejestrów.
+
+Zdecydowano się na użycie 6 rejestrów.
+
+Są to kolejno \begin{enumerate}
+	\item \emph{ctl\_stat\_reg} - rejestr kontrolno-statusowy. Jego celem jest sterowanie oraz wskazywanie jednobitowych sygnałów kontrolnych.
+		Używane bity przedstawiają się następująco:
+		\begin{itemize}
+			\item \textbf{0} - enable - bit sterujący włączaniem i wyłączaniem analizatora
+			\item \textbf{1} - cont\_mode - bit włączający wyzwolenie analizatora natychmiast po jego włączeniu
+			\item \textbf{2} - isBufferFullyWritten - bit sygnalizujący zapełnienie bufora 
+			\item \textbf{3} - isAnalyzerTriggered - bit sygnalizujący wyzwolenie analizatora
+			\item \textbf{4} - isBufferFullyRead - bit sygnalizujący pełne odczytanie bufora.
+	\end{itemize}
+	
+	\item \emph{prescaling\_factor} - rejestr zawierający współczynnik preskalera na pierwszych 29 bitach. Rzeczywisty współczynnik preskalera $W$ wyraża się jednak wzorem \ref{prescaling_factor}
+		\begin{equation}
+			W = prescaling\_factor +1
+		\label{prescaling_factor}
+		\end{equation}
+	\item \emph{mem\_depth} - 10 bitowa wartość roamiaru bufora. Rzeczywistą wielkość bufora $S$ wyraża się jednak wzorem \ref{memory_size}
+		\begin{equation}
+			S = mem\_depth +1
+			\label{memory_size}
+		\end{equation}
+	\item \emph{trig\_method\_h} - 32 bitowy wektor konfigurujący sposób wyzwalania analizatora. Należy go interpretować jak spakowaną tablicę 2-bitowych wartości po 16 elementów. Ten rejestr ustala sposób wyzwalania dla bitów analizatora o numerach 16-31
+	\item \emph{trig\_method\_l} - 32 bitowy wektor konfigurujący sposób wyzwalania analizatora. Należy go interpretować jak spakowaną tablicę 2-bitowych wartości po 16 elementów. Ten rejestr ustala sposób wyzwalania dla bitów analizatora o numerach 0-15
+	\item \emph{sample\_reg} - rejestr służący do odczytu danych z bufora analizatora. Jego odczyt powoduje wstępne załadowanie kolejnej wartości z bufora, aby można było ją odczytać z tego samego rejestru.
+
+	
+\end{enumerate}
