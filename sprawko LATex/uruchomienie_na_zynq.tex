@@ -1,1 +1,29 @@
 \chapter{Uruchomienie projektu na platformie Digilent Zybo}
+
+Aby uruchomić na platformie Zybo program  wykorzystujący peryferium zaprojektowane wcześniej, należało utworzyć nowy projekt.
+Schemat blokowy projektu przedstawiono na rysunku \ref{design_block_diagram}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width = 0.75 \paperwidth]{images/zynq_block_diagram}
+	\caption{Schemat blokowy wartsty top projektu}
+	\label{design_block_diagram}
+\end{figure} 
+
+Wykorzystanie zasobów układu FPGA przedstawiono na rysunku \ref{utilization_plot}. Jest to projekt z peryferium w wersji zredukowanej, czyli znacznie pomniejszonej. Po podpięciu pełnej wersji peryferium, zasoby użyte w projekcie wzrosły. Przedstawiono je na rysunku \ref{utilization_plot_extended}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width = 0.5 \paperwidth]{images/utilization.png}
+	\caption{Wykres zużytych zasobów w wersji zredukowanej}
+	\label{utilization_plot}
+\end{figure} 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width = 0.5 \paperwidth]{images/utilization_extended.png}
+	\caption{Wykres zużytych zasobów w wersji pełnej}
+	\label{utilization_plot_extended}
+\end{figure} 
+
+
